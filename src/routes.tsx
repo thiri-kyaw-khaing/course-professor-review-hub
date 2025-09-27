@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router";
 
-import RootLayout from "./components/page components/RootLayout";
+import RootLayout from "./components/page-components/RootLayout";
 import HomePage from "@/pages/Home";
-import AuthRootLayout from "./components/page components/AuthRootLayout";
+import AuthRootLayout from "./components/page-components/AuthRootLayout";
 import SignUpPage from "./pages/auth/signUp";
+import OTPPage from "./pages/auth/OTPpage";
+import CreateAccForm from "./pages/auth/createAcc";
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +18,8 @@ export const router = createBrowserRouter([
     Component: AuthRootLayout,
     children: [
       { index: true, Component: SignUpPage },
-      //   { path: "create-acc", Component: CreateAccPage },
+      { path: "otp", Component: OTPPage },
+      { path: "create", Component: CreateAccForm },
     ],
   },
 ]);
