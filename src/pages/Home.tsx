@@ -1,5 +1,6 @@
+import Card from "@/components/page-components/Card";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Book, BookOpen, Search, Star, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -38,6 +39,25 @@ export default function HomePage() {
               Find Professors
             </Button>
           </Link>
+        </div>
+
+        {/* Card Components */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          <Card
+            title="Total Professors"
+            description="2,233"
+            icon={<User size={60} />}
+          />
+          <Card
+            title="Total Courses"
+            description="1,234"
+            icon={<BookOpen size={60} />}
+          />
+          <Card
+            title="Total Reviews"
+            description="5,678"
+            icon={<Star size={60} />}
+          />
         </div>
       </div>
     </>
