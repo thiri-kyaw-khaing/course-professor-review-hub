@@ -4,8 +4,8 @@ export const siteConfig = {
   description: "Empowering users through authentic reviews.",
   mainNav: [
     { title: "Home", href: "/" },
-    { title: "Courses", href: "courses" },
-    { title: "Professors", href: "professors" },
-    { title: "My Reviews", href: "my-reviews" },
+    { title: "Courses", href: "/courses" },
+    { title: "Professors", href: "/professors" },
+    { title: "My Reviews", href: "/my-reviews" },
   ],
 };
