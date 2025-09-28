@@ -62,7 +62,7 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           {/* Top Rated Professors */}
-          <div className="border border-gray-300 rounded-lg p-4 mt-6 w-1/2 md:w-full">
+          <div className="border border-gray-300 rounded-lg p-4 mt-6 ">
             <div className="flex gap-4">
               <TrendingUp className=" text-[#8B0000] mb-2" size={30} />
               <h2 className="text-xl font-semibold mb-4">
@@ -73,7 +73,7 @@ export default function HomePage() {
               Professors with the highest student ratings
             </span>
             {professors.map((professor) => (
-              <div className="">
+              <div key={professor.id}>
                 <RatingCard
                   key={professor.id}
                   name={professor.name}

@@ -21,7 +21,7 @@ export default function RatingCard({
   const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
   return (
     <>
-      <div className=" flex gap-4 border border-gray-300 rounded-lg p-4 mt-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className=" flex gap-4 border border-gray-300 rounded-lg p-4 mt-6">
         <img
           src={image}
           alt="Top Rated Professors"
