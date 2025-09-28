@@ -5,3 +5,18 @@ export interface NavItem {
 }
 
 export type MainNavItem = NavItem;
+
+export type Professor = {
+  id: number;
+  name: string;
+  title: string; // e.g., "Associate Professor"
+  rating: number; // e.g., 4.8
+  faculty: string; // e.g., "School of Information Technology"
+  office: string; // e.g., "IT Building, Room 301"
+  email: string;
+  phone: string;
+  specializations: string[]; // ["Software Engineering", "Database Systems"]
+  education: string[]; // ["Ph.D. Computer Science - Chulalongkorn University", "M.Sc. Information Technology - MFU"]
+  image?: string;
+  reviews?: number;
+};

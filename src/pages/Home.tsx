@@ -1,8 +1,9 @@
 import Card from "@/components/page-components/Card";
+import RatingCard from "@/components/page-components/ratingCard";
 import { Button } from "@/components/ui/button";
 import { Book, BookOpen, Search, Star, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { professors } from "@/data";
 export default function HomePage() {
   return (
     <>
@@ -59,16 +60,31 @@ export default function HomePage() {
             icon={<Star size={60} />}
           />
         </div>
-
-        {/* Top Rated Professors */}
-        <div className="border border-gray-300 rounded-lg p-4 mt-6">
-          <div className="flex gap-4">
-            <TrendingUp className=" text-[#8B0000] mb-2" size={30} />
-            <h2 className="text-xl font-semibold mb-4">Top Rated Professors</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          {/* Top Rated Professors */}
+          <div className="border border-gray-300 rounded-lg p-4 mt-6 w-1/2 md:w-full">
+            <div className="flex gap-4">
+              <TrendingUp className=" text-[#8B0000] mb-2" size={30} />
+              <h2 className="text-xl font-semibold mb-4">
+                Top Rated Professors
+              </h2>
+            </div>
+            <span className="text-gray-500">
+              Professors with the highest student ratings
+            </span>
+            {professors.map((professor) => (
+              <div className="">
+                <RatingCard
+                  key={professor.id}
+                  name={professor.name}
+                  department={professor.faculty}
+                  image={professor.image}
+                  rating={professor.rating}
+                  reviews={professor.reviews}
+                />
+              </div>
+            ))}
           </div>
-          <span className="text-gray-500">
-            Professors with the highest student ratings
-          </span>
         </div>
       </div>
     </>
