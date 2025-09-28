@@ -1,6 +1,6 @@
 import Card from "@/components/page-components/Card";
 import { Button } from "@/components/ui/button";
-import { Book, BookOpen, Search, Star, User } from "lucide-react";
+import { Book, BookOpen, Search, Star, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -58,6 +58,17 @@ export default function HomePage() {
             description="5,678"
             icon={<Star size={60} />}
           />
+        </div>
+
+        {/* Top Rated Professors */}
+        <div className="border border-gray-300 rounded-lg p-4 mt-6">
+          <div className="flex gap-4">
+            <TrendingUp className=" text-[#8B0000] mb-2" size={30} />
+            <h2 className="text-xl font-semibold mb-4">Top Rated Professors</h2>
+          </div>
+          <span className="text-gray-500">
+            Professors with the highest student ratings
+          </span>
         </div>
       </div>
     </>
