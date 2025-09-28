@@ -35,6 +35,40 @@ export const professors: Professor[] = [
     image: "/src/assets/profile3.jpeg",
     reviews: 28,
   },
+  {
+    id: 3,
+    name: "Somchai Wattanakul",
+    title: "Professor",
+    rating: 4.5,
+    faculty: "School of Management",
+    office: "Business Building, Room 210",
+    email: "somchai.w@mfu.ac.th",
+    phone: "+66-2-555-0202",
+    specializations: ["Marketing", "Business Analytics"],
+    education: [
+      "Ph.D. Business Administration - Thammasat University",
+      "MBA - MFU",
+    ],
+    image: "/src/assets/profile3.jpeg",
+    reviews: 28,
+  },
+  {
+    id: 4,
+    name: "Somchai Wattanakul",
+    title: "Professor",
+    rating: 4.5,
+    faculty: "School of Management",
+    office: "Business Building, Room 210",
+    email: "somchai.w@mfu.ac.th",
+    phone: "+66-2-555-0202",
+    specializations: ["Marketing", "Business Analytics"],
+    education: [
+      "Ph.D. Business Administration - Thammasat University",
+      "MBA - MFU",
+    ],
+    image: "/src/assets/profile3.jpeg",
+    reviews: 28,
+  },
 ];
 
 import type { Course } from "@/types";

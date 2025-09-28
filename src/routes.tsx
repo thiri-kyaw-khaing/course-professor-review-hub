@@ -6,12 +6,16 @@ import AuthRootLayout from "./components/page-components/AuthRootLayout";
 import SignUpPage from "./pages/auth/signUp";
 import OTPPage from "./pages/auth/OTPpage";
 import CreateAccForm from "./pages/auth/createAcc";
+import Courses from "./pages/Courses";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
-    children: [{ index: true, Component: HomePage }],
+    children: [
+      { index: true, Component: HomePage },
+      { path: "courses", Component: Courses },
+    ],
   },
   {
     path: "/register",

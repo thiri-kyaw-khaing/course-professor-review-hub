@@ -30,10 +30,10 @@ export default function Navigation({ items }: NavigationProps) {
                   <NavigationMenuLink
                     href={item.href || "#"}
                     className={cn(
-                      "px-3 py-2 rounded-md transition-colors",
+                      "px-3 py-2 rounded-md ",
                       isActive
-                        ? "bg-[#8B0000] text-white"
-                        : "text-muted-foreground hover:text-primary"
+                        ? "bg-[#8B0000] text-white hover:bg-[#8B0000] hover:text-white"
+                        : "text-muted-foreground  hover:bg-[#8B0000] hover:text-white"
                     )}
                   >
                     {item.title}

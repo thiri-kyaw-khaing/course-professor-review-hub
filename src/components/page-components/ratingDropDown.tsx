@@ -11,25 +11,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const names = [
-  "School of Cosmetic_Science",
-  "School of Health Science",
-  "School of Applied Digital Technology",
-  "School of Integrative_Medicine",
-  "School of Law",
-  "School of Liberal Arts",
-  "School of Management",
-  "School of Nursing",
-  "School of Science",
-  "School of Sinology",
-  "School of Social Innovation",
-  "School of Dentistry",
-];
+const ratings = ["All Ratings", "5 Stars", "4+ Stars", "3+ Stars"];
 
-export default function FacultyDropdown() {
+export default function RatingDropdown() {
   const [open, setOpen] = React.useState(false);
-  const [selectedName, setSelectedName] =
-    React.useState<string>("Select Faculty");
+  const [selectedName, setSelectedName] = React.useState<string>("Rating");
 
   return (
     <div className="flex flex-col gap-3 w-full ">
@@ -51,19 +37,19 @@ export default function FacultyDropdown() {
           </PopoverTrigger>
           <PopoverContent className="w-full p-0" align="start">
             <div className="flex flex-col">
-              {names.map((name) => (
+              {ratings.map((rating) => (
                 <button
-                  key={name}
+                  key={rating}
                   type="button"
                   className={`w-full px-4 py-2 text-left text-sm font-normal hover:bg-gray-100 dark:hover:bg-gray-700 ${
                     open === true ? "bg-gray-200 dark:bg-gray-800" : ""
                   }`}
                   onClick={() => {
-                    setSelectedName(name);
+                    setSelectedName(rating.toString());
                     setOpen(false);
                   }}
                 >
-                  {name}
+                  {rating}
                 </button>
               ))}
             </div>

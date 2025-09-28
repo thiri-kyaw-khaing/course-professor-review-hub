@@ -60,7 +60,7 @@ export default function RatingCard({
               ))}
             </div>
 
-            <span className="text-lg text-gray-600 font-semibold">
+            <span className="text-lg text-gray-600 font-semibold p-0">
               {rating.toFixed(1)}/5
             </span>
             <h1 className="text-sm">{reviews} Reviews</h1>

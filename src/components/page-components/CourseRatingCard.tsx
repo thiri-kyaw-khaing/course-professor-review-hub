@@ -32,7 +32,7 @@ export default function CourseRatingCard({
       </div>
       {/* Rating */}
       <div className="ml-auto flex flex-col justify-center items-end">
-        <div className=" items-center gap-6 mt-2">
+        <div className=" items-center gap-6">
           <div className="flex">
             {/* Full stars */}
             {[...Array(filledStars)].map((_, i) => (

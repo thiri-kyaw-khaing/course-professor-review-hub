@@ -55,6 +55,7 @@ export default function createAccForm({
               />
             </div>
             <div className="grid gap-3">
+              <Label htmlFor="faculty">Faculty</Label>
               <FacultyDropdown />
             </div>
             <Link to="/register/otp">
