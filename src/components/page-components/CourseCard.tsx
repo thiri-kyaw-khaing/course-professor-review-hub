@@ -20,22 +20,26 @@ export default function CourseCard({
   return (
     <>
       <div className="border border-gray-300 rounded-lg p-4 mt-4">
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-between items-center mb-2">
           <h2 className="text-md font-semibold">{code}</h2>
 
-          <p className="text-gray-500">{name}</p>
-        </div>
-        <div className="ml-auto flex flex-col justify-center items-end">
-          <p
+          <p className="">{name}</p>
+          <span
             className={cn(
-              "border rounded-md px-2 text-sm py-1",
+              "border rounded-md px-2 text-sm py-1 items-end w-fit gap-4",
               status === "active" ? "bg-green-500" : "bg-red-500"
             )}
           >
             {status}
-          </p>
+          </span>
         </div>
-        <p className="text-gray-500 text-sm">{faculty}</p>
+
+        <div className="flex items-center gap-2">
+          <p className="text-gray-600 text-sm">{faculty}</p>
+          <h1>-</h1>
+          <span className="text-gray-600 text-sm">{credits} credits</span>
+        </div>
+        <p className="text-gray-600 text-sm mt-6">{description}</p>
       </div>
     </>
   );
