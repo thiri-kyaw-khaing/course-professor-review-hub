@@ -11,7 +11,7 @@ export default function Card({
 }) {
   return (
     <>
-      <div className="border border-gray-300 rounded-lg p-4  bg-white flex gap-4">
+      <div className="border border-gray-300 rounded-lg p-4  bg-white flex gap-4 sm:gap-6 items-center">
         <div className="border border-gray-300 rounded-lg p-2 flex items-center justify-center bg-red-100">
           {icon && <div className="text-[#8B0000]">{icon}</div>}
         </div>
