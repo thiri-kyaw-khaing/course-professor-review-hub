@@ -19,10 +19,12 @@ export default function CourseCard({
 }: CourseCardProps) {
   return (
     <>
-      <div className="flex gap-2 border border-gray-300 rounded-lg p-4 mt-4">
-        <h2 className="text-md font-semibold">{code}</h2>
+      <div className="border border-gray-300 rounded-lg p-4 mt-4">
+        <div className="flex gap-2">
+          <h2 className="text-md font-semibold">{code}</h2>
 
-        <p className="text-gray-500">{name}</p>
+          <p className="text-gray-500">{name}</p>
+        </div>
         <div className="ml-auto flex flex-col justify-center items-end">
           <p
             className={cn(
@@ -33,6 +35,7 @@ export default function CourseCard({
             {status}
           </p>
         </div>
+        <p className="text-gray-500 text-sm">{faculty}</p>
       </div>
     </>
   );
