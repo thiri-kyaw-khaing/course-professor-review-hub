@@ -3,7 +3,8 @@ import RatingCard from "@/components/page-components/ratingCard";
 import { Button } from "@/components/ui/button";
 import { Book, BookOpen, Search, Star, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import { professors } from "@/data";
+import { courses, professors } from "@/data";
+import CourseRatingCard from "@/components/page-components/CourseRatingCard";
 export default function HomePage() {
   return (
     <>
@@ -81,6 +82,36 @@ export default function HomePage() {
                   image={professor.image}
                   rating={professor.rating}
                   reviews={professor.reviews}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="border border-gray-300 rounded-lg p-4 mt-6 ">
+            <div className="flex gap-4">
+              <BookOpen className=" text-[#8B0000] mb-2" size={30} />
+              <h2 className="text-xl font-semibold mb-4">
+                Most Popular Courses
+              </h2>
+            </div>
+            <span className="text-gray-500">
+              Courses with the most student reviews
+            </span>
+            {courses.map((course) => (
+              <div key={course.id}>
+                {/* <RatingCard
+                  key={professor.id}
+                  name={professor.name}
+                  department={professor.faculty}
+                  image={professor.image}
+                  rating={professor.rating}
+                  reviews={professor.reviews}
+                /> */}
+                <CourseRatingCard
+                  code={course.code}
+                  name={course.name}
+                  faculty={course.faculty}
+                  rating={course.rating}
+                  reviews={course.reviews}
                 />
               </div>
             ))}

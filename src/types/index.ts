@@ -20,3 +20,15 @@ export type Professor = {
   image?: string;
   reviews?: number;
 };
+
+export type Course = {
+  id: number;
+  code: string;
+  name: string;
+  faculty: string;
+  credits: number;
+  description: string;
+  status?: "active" | "inactive";
+  rating?: number;
+  reviews?: number;
+};
