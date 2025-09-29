@@ -1,6 +1,7 @@
 import CourseCard from "@/components/page-components/CourseCard";
 import FacultyDropdown from "@/components/page-components/FacultyDropDown";
 import RatingDropdown from "@/components/page-components/ratingDropDown";
+import { Button } from "@/components/ui/button";
 import { courses } from "@/data";
 import { Search } from "lucide-react";
 
@@ -31,6 +32,9 @@ export default function Courses() {
           <div className="mt-4 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
             <RatingDropdown />
           </div>
+          <Button className="mt-4 bg-[#8B0000] text-white w-full sm:w-auto">
+            Search
+          </Button>
         </div>
       </div>
       {/* Course Cards */}
