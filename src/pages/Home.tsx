@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Book, BookOpen, Search, Star, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { courses, professors } from "@/data";
-import CourseRatingCard from "@/components/page-components/CourseRatingCard";
+import CourseRatingCard from "@/components/page-components/CourseRelate/CourseRatingCard";
 export default function HomePage() {
   return (
     <>
@@ -80,8 +80,8 @@ export default function HomePage() {
                   name={professor.name}
                   department={professor.faculty}
                   image={professor.image}
-                  rating={professor.rating}
-                  reviews={professor.reviews}
+                  rating={professor.averageRating}
+                  reviews={professor.totalReviews}
                 />
               </div>
             ))}
@@ -110,8 +110,8 @@ export default function HomePage() {
                   code={course.code}
                   name={course.name}
                   faculty={course.faculty}
-                  rating={course.rating}
-                  reviews={course.reviews}
+                  averageRating={course.averageRating}
+                  totalReviews={course.totalReviews}
                 />
               </div>
             ))}

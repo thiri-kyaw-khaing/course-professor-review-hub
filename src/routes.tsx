@@ -8,7 +8,7 @@ import OTPPage from "./pages/auth/OTPpage";
 import CreateAccForm from "./pages/auth/createAcc";
 import Courses from "./pages/Courses";
 import CourseDetailPage from "./pages/CourseDetailPage";
-import CourseRootLayout from "./components/page-components/CourseRootLayout";
+import CourseRootLayout from "./components/page-components/CourseRelate/CourseRootLayout";
 
 export const router = createBrowserRouter([
   {

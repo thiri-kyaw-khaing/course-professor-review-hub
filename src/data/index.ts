@@ -5,7 +5,7 @@ export const professors: Professor[] = [
     id: 1,
     name: "Siriporn Thanakit",
     title: "Associate Professor",
-    rating: 3.5,
+    averageRating: 3.5,
     faculty: "School of Information Technology",
     office: "IT Building, Room 301",
     email: "siriporn.t@mfu.ac.th",
@@ -16,13 +16,13 @@ export const professors: Professor[] = [
       "M.Sc. Information Technology - Mae Fah Luang University",
     ],
     image: "/src/assets/profile3.jpeg",
-    reviews: 34,
+    totalReviews: 34,
   },
   {
     id: 2,
     name: "Somchai Wattanakul",
     title: "Professor",
-    rating: 4.5,
+    averageRating: 4.5,
     faculty: "School of Management",
     office: "Business Building, Room 210",
     email: "somchai.w@mfu.ac.th",
@@ -33,13 +33,13 @@ export const professors: Professor[] = [
       "MBA - MFU",
     ],
     image: "/src/assets/profile3.jpeg",
-    reviews: 28,
+    totalReviews: 28,
   },
   {
     id: 3,
     name: "Somchai Wattanakul",
     title: "Professor",
-    rating: 4.5,
+    averageRating: 4.5,
     faculty: "School of Management",
     office: "Business Building, Room 210",
     email: "somchai.w@mfu.ac.th",
@@ -50,13 +50,13 @@ export const professors: Professor[] = [
       "MBA - MFU",
     ],
     image: "/src/assets/profile3.jpeg",
-    reviews: 28,
+    totalReviews: 28,
   },
   {
     id: 4,
     name: "Somchai Wattanakul",
     title: "Professor",
-    rating: 4.5,
+    averageRating: 4.5,
     faculty: "School of Management",
     office: "Business Building, Room 210",
     email: "somchai.w@mfu.ac.th",
@@ -67,7 +67,7 @@ export const professors: Professor[] = [
       "MBA - MFU",
     ],
     image: "/src/assets/profile3.jpeg",
-    reviews: 28,
+    totalReviews: 28,
   },
 ];
 
@@ -83,8 +83,28 @@ export const courses: Course[] = [
     description:
       "Fundamentals of programming using Python, problem-solving, and algorithms.",
     status: "active",
-    rating: 4.8,
-    reviews: 127,
+    averageRating: 4.8,
+    totalReviews: 127,
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Great introduction to coding! The professor explained concepts very clearly.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment:
+          "Good course, but assignments were a bit too challenging for beginners.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment:
+          "I wish there were more practical projects, but overall very useful.",
+        rating: 3,
+      },
+    ],
   },
   {
     id: 2,
@@ -95,8 +115,8 @@ export const courses: Course[] = [
     description:
       "Fundamentals of business management and organizational behavior.",
     status: "active",
-    rating: 4.5,
-    reviews: 89,
+    averageRating: 4.5,
+    totalReviews: 89,
   },
   {
     id: 3,
@@ -107,8 +127,28 @@ export const courses: Course[] = [
     description:
       "Design, implementation, and management of relational databases.",
     status: "inactive",
-    rating: 4.2,
-    reviews: 64,
+    averageRating: 4.2,
+    totalReviews: 64,
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Great introduction to coding! The professor explained concepts very clearly.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment:
+          "Good course, but assignments were a bit too challenging for beginners.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment:
+          "I wish there were more practical projects, but overall very useful.",
+        rating: 3,
+      },
+    ],
   },
   {
     id: 4,
@@ -118,7 +158,27 @@ export const courses: Course[] = [
     credits: 4,
     description: "Detailed study of the human body structure and its systems.",
     status: "active",
-    rating: 4.9,
-    reviews: 210,
+    averageRating: 4.9,
+    totalReviews: 210,
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Great introduction to coding! The professor explained concepts very clearly.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment:
+          "Good course, but assignments were a bit too challenging for beginners.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment:
+          "I wish there were more practical projects, but overall very useful.",
+        rating: 3,
+      },
+    ],
   },
 ];

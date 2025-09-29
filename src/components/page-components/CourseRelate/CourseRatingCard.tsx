@@ -5,19 +5,19 @@ interface CourseRatingCardProps {
   code: string;
   name: string;
   faculty: string;
-  rating: number;
-  reviews?: number;
+  averageRating?: number;
+  totalReviews?: number;
 }
 
 export default function CourseRatingCard({
   code,
   name,
   faculty,
-  rating,
-  reviews,
+  averageRating,
+  totalReviews,
 }: CourseRatingCardProps) {
-  const filledStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
+  const filledStars = Math.floor(averageRating);
+  const hasHalfStar = averageRating % 1 >= 0.5;
   //   const emptyStars = 5 - filledStars;
   const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
   return (
@@ -59,9 +59,9 @@ export default function CourseRatingCard({
           </div>
 
           <span className="text-lg text-gray-600 font-semibold">
-            {rating.toFixed(1)}/5
+            {averageRating.toFixed(1)}/5
           </span>
-          <h1 className="text-sm">{reviews} Reviews</h1>
+          <h1 className="text-sm">{totalReviews} Reviews</h1>
         </div>
       </div>
     </div>

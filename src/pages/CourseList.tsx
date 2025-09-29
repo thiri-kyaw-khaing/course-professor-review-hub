@@ -1,4 +1,4 @@
-import CourseCard from "@/components/page-components/CourseCard";
+import CourseCard from "@/components/page-components/CourseRelate/CourseCard";
 import type { Course } from "@/types";
 import { Link } from "react-router-dom";
 interface CourseListPageProps {

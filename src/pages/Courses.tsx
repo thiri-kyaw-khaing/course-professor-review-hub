@@ -1,4 +1,4 @@
-import CourseCard from "@/components/page-components/CourseCard";
+import CourseCard from "@/components/page-components/CourseRelate/CourseCard";
 import FacultyDropdown from "@/components/page-components/FacultyDropDown";
 import RatingDropdown from "@/components/page-components/ratingDropDown";
 import { Button } from "@/components/ui/button";
