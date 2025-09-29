@@ -4,6 +4,8 @@ import RatingDropdown from "@/components/page-components/ratingDropDown";
 import { Button } from "@/components/ui/button";
 import { courses } from "@/data";
 import { Search } from "lucide-react";
+import { Link } from "react-router";
+import CourseListPage from "./CourseList";
 
 export default function Courses() {
   return (
@@ -37,24 +39,7 @@ export default function Courses() {
           </Button>
         </div>
       </div>
-      {/* Course Cards */}
-      {courses.length === 0 ? (
-        <p className="text-center text-gray-500 mt-6">No courses found.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-          {courses.map((course) => (
-            <CourseCard
-              key={course.id}
-              code={course.code}
-              name={course.name}
-              faculty={course.faculty}
-              credits={course.credits}
-              description={course.description}
-              status={course.status}
-            />
-          ))}
-        </div>
-      )}
+      <CourseListPage courses={courses} />
     </>
   );
 }

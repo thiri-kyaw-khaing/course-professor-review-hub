@@ -7,6 +7,8 @@ import SignUpPage from "./pages/auth/signUp";
 import OTPPage from "./pages/auth/OTPpage";
 import CreateAccForm from "./pages/auth/createAcc";
 import Courses from "./pages/Courses";
+import CourseDetailPage from "./pages/CourseDetailPage";
+import CourseRootLayout from "./components/page-components/CourseRootLayout";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +16,14 @@ export const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: HomePage },
-      { path: "courses", Component: Courses },
+      {
+        path: "courses",
+        Component: CourseRootLayout,
+        children: [
+          { index: true, Component: Courses },
+          { path: ":courseId", Component: CourseDetailPage },
+        ],
+      },
     ],
   },
   {
