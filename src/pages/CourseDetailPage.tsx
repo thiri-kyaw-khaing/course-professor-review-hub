@@ -27,29 +27,39 @@ export default function CourseDetailPage() {
       </Link>
       {/* Course Details */}
       {course ? (
-        <div className="border border-gray-300 rounded-lg p-6 mt-4 lg:w-3/4 sm:w-full">
-          <div className="flex items-center gap-4">
-            <span className="text-3xl font-bold  mr-2">{course.code}</span>
-            <span className="text-2xl text-[#8B0000] font-semibold">
-              {course.name}
-            </span>
-            {/* <span className="border border-gray-300 rounded-md px-4 py-2 text-sm text-semibold ml-auto text-white bg-[#8B0000] items-end sm:items-start">
+        <div className="flex flex-col lg:flex-row gap-6 mt-4">
+          <div className="border border-gray-300 rounded-lg p-6 mt-4 lg:w-3/4 sm:w-full">
+            <div className="flex items-center gap-4">
+              <span className="text-3xl font-bold  mr-2">{course.code}</span>
+              <span className="text-2xl text-[#8B0000] font-semibold">
+                {course.name}
+              </span>
+              {/* <span className="border border-gray-300 rounded-md px-4 py-2 text-sm text-semibold ml-auto text-white bg-[#8B0000] items-end sm:items-start">
               {course.credits} Credits
             </span> */}
-            <div className="mt-2 sm:mt-0 sm:ml-auto">
-              <span className="border border-gray-300 rounded-md px-4 py-2 text-sm font-semibold text-white bg-[#8B0000] w-fit whitespace-nowrap">
-                {course.credits} Credits
-              </span>
+              <div className="mt-2 sm:mt-0 sm:ml-auto">
+                <span className="border border-gray-300 rounded-md px-4 py-2 text-sm font-semibold text-white bg-[#8B0000] w-fit whitespace-nowrap">
+                  {course.credits} Credits
+                </span>
+              </div>
+            </div>
+
+            <h1 className="text-xl font-semibold mt-4 text-gray-500">
+              {course.faculty}
+            </h1>
+
+            <div className="border border-gray-300 rounded-md mt-6 p-6">
+              <h2 className="text-lg font-semibold">Course Description</h2>
+              <h2 className="text-gray-600 text-sm mt-3">
+                {course.description}
+              </h2>
             </div>
           </div>
-
-          <h1 className="text-xl font-semibold mt-4 text-gray-500">
-            {course.faculty}
-          </h1>
-
-          <div className="border border-gray-300 rounded-md mt-6 p-6">
-            <h2 className="text-lg font-semibold">Course Description</h2>
-            <h2 className="text-gray-600 text-sm mt-3">{course.description}</h2>
+          <div className="border border-gray-300 rounded-md mt-4 p-6 lg:w-1/3 sm:w-full">
+            <h2 className="text-lg font-semibold">Overall Course Rating</h2>
+            <h1 className="text-3xl font-bold justify-center items-center flex ">
+              {course.averageRating}
+            </h1>
           </div>
         </div>
       ) : (
@@ -57,7 +67,7 @@ export default function CourseDetailPage() {
       )}
 
       {/* Student Reviews */}
-      <div className="lg:w-3/4 sm:w-full border border-gray-300 rounded-lg p-6 mt-4">
+      <div className="lg:w-full sm:w-full border border-gray-300 rounded-lg p-6 mt-4">
         <div className="flex items-center gap-2">
           <MessageSquare className="h-6 w-6" />
 
