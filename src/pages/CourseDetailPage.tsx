@@ -16,7 +16,9 @@ export default function CourseDetailPage() {
   const { courseId } = useParams();
 
   const course = courses.find((course) => course.id === Number(courseId));
-
+  const filledStars = Math.floor(course?.averageRating || 0);
+  const hasHalfStar = (course?.averageRating ?? 0) % 1 >= 0.5;
+  const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
   return (
     <>
       <Link to="/courses" className="flex items-center mt-4">
@@ -57,9 +59,43 @@ export default function CourseDetailPage() {
           </div>
           <div className="border border-gray-300 rounded-md mt-4 p-6 lg:w-1/3 sm:w-full">
             <h2 className="text-lg font-semibold">Overall Course Rating</h2>
-            <h1 className="text-3xl font-bold justify-center items-center flex ">
+            <h1 className="text-4xl font-bold justify-center items-center text-center flex mt-6">
               {course.averageRating}
             </h1>
+            {/* Rating */}
+            <div className="flex items-center mb-2 ml-auto mt-6 justify-center">
+              {[...Array(filledStars)].map((_, i) => (
+                <Star
+                  key={`filled-${course.id}-${i}`}
+                  className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                />
+              ))}
+
+              {hasHalfStar && (
+                <div className="relative">
+                  <Star className="h-5 w-5 text-gray-300" />
+                  <div className="absolute left-0 top-0 w-1/2 overflow-hidden">
+                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  </div>
+                </div>
+              )}
+
+              {[...Array(emptyStars)].map((_, i) => (
+                <Star
+                  key={`empty-${course.id}-${i}`}
+                  className="h-5 w-5 text-gray-300"
+                />
+              ))}
+
+              <div className="flex text-center flex mt-2">
+                <h1 className="ml-2 text-sm text-gray-600">
+                  {course.averageRating}/5
+                </h1>
+                <h1 className="text-sm text-gray-600 ml-2">
+                  (Based on {course.totalReviews} Reviews)
+                </h1>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
