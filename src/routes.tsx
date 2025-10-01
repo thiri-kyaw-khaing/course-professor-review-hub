@@ -9,6 +9,9 @@ import CreateAccForm from "./pages/auth/createAcc";
 import Courses from "./pages/Courses";
 import CourseDetailPage from "./pages/CourseDetailPage";
 import CourseRootLayout from "./components/page-components/CourseRelate/CourseRootLayout";
+import ProfessorRootLayout from "./components/professors/professorRootLayout";
+import ProfessorsPage from "./pages/Professors/professors";
+import professorDetailPage from "./pages/Professors/professorDetailPage";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +25,14 @@ export const router = createBrowserRouter([
         children: [
           { index: true, Component: Courses },
           { path: ":courseId", Component: CourseDetailPage },
+        ],
+      },
+      {
+        path: "professors",
+        Component: ProfessorRootLayout,
+        children: [
+          { index: true, Component: ProfessorsPage },
+          { path: ":professorId", Component: professorDetailPage },
         ],
       },
     ],
