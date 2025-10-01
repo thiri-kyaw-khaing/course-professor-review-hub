@@ -79,9 +79,35 @@ export default function ProfessorListPage({
                   <p>{professor.phone}</p>
                 </div>
               </CardContent>
-              <Separator className="text-gray-600 w-[1px]" />
-              <CardFooter>
-                <p>Rating: {professor.averageRating} / 5</p>
+              {/* <Separator className="text-gray-600 w-[1px]" /> */}
+              <CardFooter className="flex flex-wrap gap-2 items-center">
+                <div>
+                  <p className="">Specializations: </p>
+                  {professor.specializations.map((spec, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-100 text-gray-800 text-sm px-2 py-1 rounded-lg pl-2 mr-2 mb-2 font-semibold"
+                    >
+                      {spec}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Education */}
+                <div>
+                  <p className="">Education: </p>
+                  {professor.education.map((edu, index) => (
+                    <div>
+                      {/* <PrizeIcon className="inline mr-1 h-4 w-4"/> */}
+                      <h1
+                        key={index}
+                        className=" text-sm px-2 py-1  pl-2 mr-1 mb-1"
+                      >
+                        {edu}
+                      </h1>
+                    </div>
+                  ))}
+                </div>
               </CardFooter>
             </Card>
           ))}
