@@ -27,7 +27,7 @@ export default function StarRating({
       {[...Array(filledStars)].map((_, i) => (
         <Star
           key={`filled-${i}`}
-          className="h-6 w-6 fill-yellow-400 text-yellow-400 cursor-pointer hover:scale-110 transition-transform"
+          className="h-4 w-4 fill-yellow-400 text-yellow-400 cursor-pointer hover:scale-110 transition-transform"
           onClick={() => handleClick(i)}
         />
       ))}
@@ -36,16 +36,16 @@ export default function StarRating({
           className="relative cursor-pointer hover:scale-110 transition-transform"
           onClick={() => handleClick(filledStars)}
         >
-          <Star className="h-6 w-6 text-gray-300" />
+          <Star className="h-4 w-4 text-gray-300" />
           <div className="absolute left-0 top-0 w-1/2 overflow-hidden">
-            <Star className="h-6 w-6 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
           </div>
         </div>
       )}
       {[...Array(emptyStars)].map((_, i) => (
         <Star
           key={`empty-${i}`}
-          className="h-6 w-6 text-gray-300 cursor-pointer hover:scale-110 transition-transform"
+          className="h-4 w-4 text-gray-300 cursor-pointer hover:scale-110 transition-transform"
           onClick={() => handleClick(filledStars + (hasHalfStar ? 1 : 0) + i)}
         />
       ))}

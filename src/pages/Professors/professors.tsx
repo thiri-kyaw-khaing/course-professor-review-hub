@@ -2,6 +2,8 @@ import FacultyDropdown from "@/components/page-components/FacultyDropDown";
 import RatingDropdown from "@/components/page-components/ratingDropDown";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import ProfessorListPage from "./professorlist";
+import { professors } from "@/data";
 
 export default function ProfessorsPage() {
   return (
@@ -37,6 +39,7 @@ export default function ProfessorsPage() {
           </div>
         </div>
         {/* <CourseListPage courses={courses} /> */}
+        <ProfessorListPage professors={professors} />
       </>
     </>
   );

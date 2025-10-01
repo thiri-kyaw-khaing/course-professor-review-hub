@@ -20,6 +20,7 @@ export type Professor = {
   image?: string;
   totalReviews: number;
   reviews?: { id: number; comment: string; rating: number }[];
+  imageUrl?: string;
 };
 
 export type Course = {

@@ -17,6 +17,7 @@ export const professors: Professor[] = [
     ],
     image: "/src/assets/profile3.jpeg",
     totalReviews: 34,
+    imageUrl: "/src/assets/profile3.jpeg",
   },
   {
     id: 2,
@@ -34,6 +35,7 @@ export const professors: Professor[] = [
     ],
     image: "/src/assets/profile3.jpeg",
     totalReviews: 28,
+    imageUrl: "/src/assets/profile3.jpeg",
   },
   {
     id: 3,
@@ -51,6 +53,7 @@ export const professors: Professor[] = [
     ],
     image: "/src/assets/profile3.jpeg",
     totalReviews: 28,
+    imageUrl: "/src/assets/profile3.jpeg",
   },
   {
     id: 4,
@@ -68,6 +71,7 @@ export const professors: Professor[] = [
     ],
     image: "/src/assets/profile3.jpeg",
     totalReviews: 28,
+    imageUrl: "/src/assets/profile3.jpeg",
   },
 ];
 
