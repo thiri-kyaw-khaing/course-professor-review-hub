@@ -11,6 +11,20 @@ import {
   Text,
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import StarRating from "@/components/page-components/StarRating";
 
 export default function CourseDetailPage() {
   const { courseId } = useParams();
@@ -19,6 +33,7 @@ export default function CourseDetailPage() {
   const filledStars = Math.floor(course?.averageRating || 0);
   const hasHalfStar = (course?.averageRating ?? 0) % 1 >= 0.5;
   const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
+  const [rating, setRating] = useState(0);
   return (
     <>
       <Link to="/courses" className="flex items-center mt-4">
@@ -108,18 +123,71 @@ export default function CourseDetailPage() {
           <MessageSquare className="h-6 w-6" />
 
           <span className="text-lg ">Student Reviews</span>
-          <Link
+          {/* <Link
             to={`/courses/${courseId}/reviews`}
             className="text-sm text-blue-500 hover:underline ml-auto"
           >
             <Button
               variant="secondary"
-              className="px-0 text-white bg-[#8B0000] items-center"
+              className="px-0 text-white bg-[#8B0000] items-center hover:bg-[#8B0000]"
             >
               <PlusIcon className=" h-4 w-4 text-white" />
               Write a Review
             </Button>
-          </Link>
+          </Link> */}
+          {/* Write review dialog */}
+          <div className="ml-auto">
+            <Dialog>
+              <form>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className=" text-white bg-[#8B0000] items-center hover:bg-[#8B0000]"
+                  >
+                    <PlusIcon className=" h-4 w-4 text-white" />
+                    Write a Review
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Write a Review</DialogTitle>
+                    <DialogDescription>
+                      Share your experience with Professor Unknown to help other
+                      students.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4">
+                    <div>
+                      <Label className="mb-1 block text-sm font-medium">
+                        Rating
+                      </Label>
+                      <StarRating value={rating} onChange={setRating} />
+                    </div>
+                    <div className="grid gap-3">
+                      {/* Comment Box */}
+                      <div>
+                        <Label htmlFor="comment">Your Review</Label>
+                        <textarea
+                          id="comment"
+                          rows={4}
+                          className="w-full mt-1 rounded-md border bg-muted p-3 text-sm"
+                          placeholder="Share your thoughts about this course..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    {/* <DialogClose asChild>
+                      <Button variant="outline">Cancel</Button>
+                    </DialogClose> */}
+                    <Button type="submit" className="bg-[#8B0000] w-full">
+                      Submit Review
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </form>
+            </Dialog>
+          </div>
         </div>
         <h1 className="text-gray-500">Reviews from Students</h1>
 
