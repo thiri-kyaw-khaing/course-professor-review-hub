@@ -12,6 +12,7 @@ import CourseRootLayout from "./components/page-components/CourseRelate/CourseRo
 import ProfessorRootLayout from "./components/professors/professorRootLayout";
 import ProfessorsPage from "./pages/Professors/professors";
 import professorDetailPage from "./pages/Professors/professorDetailPage";
+import MyReviewsPage from "./pages/MyReviews";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
           { index: true, Component: ProfessorsPage },
           { path: ":professorId", Component: professorDetailPage },
         ],
+      },
+      {
+        path: "my-reviews",
+        Component: MyReviewsPage,
       },
     ],
   },

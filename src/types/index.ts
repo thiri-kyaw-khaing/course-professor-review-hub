@@ -34,4 +34,32 @@ export type Course = {
   averageRating?: number;
   totalReviews: number;
   reviews?: { id: number; comment: string; rating: number }[];
+  title?: string;
+};
+
+export type Review = {
+  id: number;
+  rating: number;
+  comment: string;
+  courseId: number | null;
+  professorId: number | null;
+  authorId: number;
+  updatedAt: string;
+  course: MyCourse | null;
+  professor: MyProfessor | null;
+};
+
+export type MyCourse = {
+  id: number;
+  title: string;
+  code: string;
+  faculty: string;
+  totalReviews: number;
+};
+
+export type MyProfessor = {
+  id: number;
+  name: string;
+  faculty: string;
+  totalReviews: number;
 };
