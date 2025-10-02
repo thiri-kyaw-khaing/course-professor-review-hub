@@ -312,7 +312,7 @@ export const reviews: Review[] = [
   {
     id: 1,
     rating: 5,
-    comment: "Prof. Aung Ko explained complex topics very clearly.",
+    comment: "Prof.Som Prasara explained complex topics very clearly.",
     courseId: null,
     professorId: 1,
     authorId: 1,
@@ -320,7 +320,7 @@ export const reviews: Review[] = [
     course: null,
     professor: {
       id: 1,
-      name: "Dr. Aung Ko",
+      name: "Dr.Som Prasara",
       faculty: "School_of_Computer_Science",
       totalReviews: 12,
     },
@@ -353,7 +353,7 @@ export const reviews: Review[] = [
     course: null,
     professor: {
       id: 2,
-      name: "Dr. Nilar Myint",
+      name: "Dr.Watcharawan Jareon",
       faculty: "School_of_Data_Analytics",
       totalReviews: 6,
     },
@@ -378,7 +378,7 @@ export const reviews: Review[] = [
   {
     id: 5,
     rating: 4,
-    comment: "Prof. Tun Tun is very inspiring and supportive.",
+    comment: "Prof.Som Prasara is very inspiring and supportive.",
     courseId: null,
     professorId: 3,
     authorId: 3,
@@ -386,7 +386,7 @@ export const reviews: Review[] = [
     course: null,
     professor: {
       id: 3,
-      name: "Dr. Tun Tun",
+      name: "Dr.Som Prasara",
       faculty: "School_of_IT",
       totalReviews: 7,
     },

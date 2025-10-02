@@ -1,3 +1,4 @@
+import MyReviewCard from "@/components/page-components/MyReviewCard";
 import MyReviewCourse from "@/components/page-components/MyReviewCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { reviews } from "@/data";
@@ -17,30 +18,36 @@ export default function MyReviewsPage() {
               value="all"
               className="data-[state=active]:bg-white data-[state=active]:text-black flex-1 rounded-full"
             >
-              All Reviews (5)
+              All Reviews
             </TabsTrigger>
             <TabsTrigger
               value="courses"
               className="data-[state=active]:bg-white data-[state=active]:text-black flex-1 rounded-full"
             >
-              Courses (3)
+              Courses
             </TabsTrigger>
             <TabsTrigger
               value="professors"
               className="data-[state=active]:bg-white data-[state=active]:text-black flex-1 rounded-full"
             >
-              Professors (2)
+              Professors
             </TabsTrigger>
           </TabsList>
 
           {/* Content below (optional) */}
           <TabsContent value="all">
             {" "}
-            <MyReviewCourse reviews={reviews} />
+            <MyReviewCard reviews={reviews} />
           </TabsContent>
-          <TabsContent value="courses"></TabsContent>
+          <TabsContent value="courses">
+            <MyReviewCard
+              reviews={reviews.filter((review) => review.courseId !== null)}
+            />
+          </TabsContent>
           <TabsContent value="professors">
-            Professors reviews content here...
+            <MyReviewCard
+              reviews={reviews.filter((review) => review.professorId !== null)}
+            />
           </TabsContent>
         </Tabs>
       </div>
