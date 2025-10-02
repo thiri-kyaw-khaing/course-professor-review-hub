@@ -18,6 +18,36 @@ export const professors: Professor[] = [
     image: "/src/assets/profile3.jpeg",
     totalReviews: 34,
     imageUrl: "/src/assets/profile3.jpeg",
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Very knowledgeable and approachable. Always open to questions.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment: "Explains concepts clearly but sometimes goes too fast.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment: "Hard to understand during lectures, but notes were helpful.",
+        rating: 3,
+      },
+      {
+        id: 4,
+        comment:
+          "Strict grading but fair. You’ll learn a lot if you pay attention.",
+        rating: 4,
+      },
+      {
+        id: 5,
+        comment:
+          "Sometimes unorganized, but very passionate about the subject.",
+        rating: 3,
+      },
+    ],
   },
   {
     id: 2,
@@ -36,6 +66,36 @@ export const professors: Professor[] = [
     image: "/src/assets/profile3.jpeg",
     totalReviews: 28,
     imageUrl: "/src/assets/profile3.jpeg",
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Very knowledgeable and approachable. Always open to questions.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment: "Explains concepts clearly but sometimes goes too fast.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment: "Hard to understand during lectures, but notes were helpful.",
+        rating: 3,
+      },
+      {
+        id: 4,
+        comment:
+          "Strict grading but fair. You’ll learn a lot if you pay attention.",
+        rating: 4,
+      },
+      {
+        id: 5,
+        comment:
+          "Sometimes unorganized, but very passionate about the subject.",
+        rating: 3,
+      },
+    ],
   },
   {
     id: 3,
@@ -54,6 +114,36 @@ export const professors: Professor[] = [
     image: "/src/assets/profile3.jpeg",
     totalReviews: 28,
     imageUrl: "/src/assets/profile3.jpeg",
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Very knowledgeable and approachable. Always open to questions.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment: "Explains concepts clearly but sometimes goes too fast.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment: "Hard to understand during lectures, but notes were helpful.",
+        rating: 3,
+      },
+      {
+        id: 4,
+        comment:
+          "Strict grading but fair. You’ll learn a lot if you pay attention.",
+        rating: 4,
+      },
+      {
+        id: 5,
+        comment:
+          "Sometimes unorganized, but very passionate about the subject.",
+        rating: 3,
+      },
+    ],
   },
   {
     id: 4,
@@ -72,6 +162,36 @@ export const professors: Professor[] = [
     image: "/src/assets/profile3.jpeg",
     totalReviews: 28,
     imageUrl: "/src/assets/profile3.jpeg",
+    reviews: [
+      {
+        id: 1,
+        comment:
+          "Very knowledgeable and approachable. Always open to questions.",
+        rating: 5,
+      },
+      {
+        id: 2,
+        comment: "Explains concepts clearly but sometimes goes too fast.",
+        rating: 4,
+      },
+      {
+        id: 3,
+        comment: "Hard to understand during lectures, but notes were helpful.",
+        rating: 3,
+      },
+      {
+        id: 4,
+        comment:
+          "Strict grading but fair. You’ll learn a lot if you pay attention.",
+        rating: 4,
+      },
+      {
+        id: 5,
+        comment:
+          "Sometimes unorganized, but very passionate about the subject.",
+        rating: 3,
+      },
+    ],
   },
 ];
 
