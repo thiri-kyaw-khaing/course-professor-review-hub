@@ -1,4 +1,4 @@
-import type { Professor } from "@/types";
+import type { Professor, User } from "@/types";
 
 export const professors: Professor[] = [
   {
@@ -409,3 +409,11 @@ export const reviews: Review[] = [
     professor: null,
   },
 ];
+
+export const currentUser: UserInfo = {
+  id: 12,
+  name: "Anonymous Student 12",
+  faculty: "School of ADT",
+  academicYear: 2566,
+  avatarUrl: "/avatars/student12.png", // optional
+};

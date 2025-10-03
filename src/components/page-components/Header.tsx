@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site";
 import Navigation from "./Navigation";
 import ProfileAvatar from "./profileAvatar";
 import MobileNav from "./MobileNav";
+import { currentUser } from "@/data";
 
 export default function Header() {
   return (
@@ -16,7 +17,7 @@ export default function Header() {
           <MobileNav items={siteConfig.mainNav} />
         </div>
         <div className="ml-4">
-          <ProfileAvatar />
+          <ProfileAvatar user={currentUser} />
         </div>
       </nav>
     </header>

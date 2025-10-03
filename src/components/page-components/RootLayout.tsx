@@ -9,7 +9,7 @@ export default function RootLayout() {
       <main className="flex-1 container mx-auto px-4 py-6 pt-16">
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

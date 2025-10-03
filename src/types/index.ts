@@ -63,3 +63,11 @@ export type MyProfessor = {
   faculty: string;
   totalReviews: number;
 };
+
+export type UserInfo = {
+  id: number;
+  name: string; // "Anonymous Student 12"
+  faculty: string; // "School of ADT"
+  academicYear: number; // 2566
+  avatarUrl?: string; // optional, for profile image
+};
