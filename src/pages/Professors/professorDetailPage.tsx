@@ -69,6 +69,10 @@ export default function ProfessorDetailPage() {
                       <MapPin className="inline mr-1 h-4 w-4" />
                       <p>{professor.office}</p>
                     </div>
+                    <div className="flex items-center gap-1 text-gray-600">
+                      <Mail className="inline mr-1 h-5 w-5" />
+                      <p>{professor.email}</p>
+                    </div>
                     <div className="flex items-center gap-1 mt-1">
                       <StarRating
                         value={professor.averageRating ?? 0}
@@ -80,7 +84,7 @@ export default function ProfessorDetailPage() {
                 </CardHeader>
               </Card>
 
-              {/* Contact & Office */}
+              {/* Contact & Office
               <Card>
                 <CardHeader className="space-y-2">
                   <CardTitle>Contact & Office</CardTitle>
@@ -93,7 +97,7 @@ export default function ProfessorDetailPage() {
                     <p>{professor.office}</p>
                   </div>
                 </CardHeader>
-              </Card>
+              </Card> */}
 
               {/* Student Reviews */}
               <div className="border border-gray-300 rounded-lg p-6">
@@ -202,7 +206,7 @@ export default function ProfessorDetailPage() {
                 </ul>
               </Card>
 
-              <Card className="border border-gray-300 rounded-md p-6 w-full">
+              {/* <Card className="border border-gray-300 rounded-md p-6 w-full">
                 <h2 className="text-lg font-semibold ">Areas of Expertise</h2>
                 <ul className="list-disc ml-5 text-sm text-gray-700">
                   {professor.specializations.map((e, i) => (
@@ -214,7 +218,7 @@ export default function ProfessorDetailPage() {
                     </div>
                   ))}
                 </ul>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </div>

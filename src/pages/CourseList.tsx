@@ -13,7 +13,11 @@ export default function CourseListPage({ courses }: CourseListPageProps) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {courses.map((course) => (
-            <Link key={course.id} to={`/courses/${course.id}`}>
+            <Link
+              key={course.id}
+              to={`/courses/${course.id}`}
+              className="hover:shadow-lg transition-shadow"
+            >
               <CourseCard
                 key={course.id}
                 code={course.code}
