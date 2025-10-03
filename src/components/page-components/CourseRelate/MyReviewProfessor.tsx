@@ -16,13 +16,15 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
         <CardHeader>
           <CardTitle>{review.professor?.name}</CardTitle>
           <CardDescription>
-            <div className="flex mr-1 text-xs text-muted-foreground">
+            <div className="flex flex-wrap mr-1 text-xs text-muted-foreground sm:mt-0">
               {`Professor: ${review.professor?.name} (${review.professor?.faculty})`}
-              <div className="flex items-center gap-2 ml-auto">
-                <StarRating value={review.rating} readOnly />
-                <span className="text-sm text-gray-500">
-                  {review.rating} / 5
-                </span>
+              <div className="flex items-center gap-2 lg:ml-auto pr-2">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <StarRating value={review.rating} readOnly />
+                  <span className="text-sm text-gray-500  ">
+                    {review.rating} / 5
+                  </span>
+                </div>
                 <div className="flex space-x-1 ml-4">
                   <Button
                     variant="ghost"
