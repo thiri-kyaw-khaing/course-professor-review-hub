@@ -3,6 +3,7 @@ import Navigation from "../Navigation";
 import MobileNav from "../MobileNav";
 import ProfileAvatar from "../profileAvatar";
 import { currentUser } from "@/data";
+import ProfileAdminAvatar from "./adminProfileAvatar";
 
 export default function AdminHeader() {
   return (
@@ -18,7 +19,7 @@ export default function AdminHeader() {
             <MobileNav items={siteConfig.adminMainNav} />
           </div>
           <div className="ml-4">
-            <ProfileAvatar user={currentUser} />
+            <ProfileAdminAvatar user={currentUser} />
           </div>
         </nav>
       </header>
