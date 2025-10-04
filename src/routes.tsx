@@ -13,6 +13,9 @@ import ProfessorRootLayout from "./components/professors/professorRootLayout";
 import ProfessorsPage from "./pages/Professors/professors";
 import professorDetailPage from "./pages/Professors/professorDetailPage";
 import MyReviewsPage from "./pages/MyReviews";
+import { LoginForm } from "./components/page-components/auth/Login-form";
+import LoginPage from "./pages/auth/Login";
+import AdminDashboardPage from "./pages/admin/adminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +50,25 @@ export const router = createBrowserRouter([
     Component: AuthRootLayout,
     children: [
       { index: true, Component: SignUpPage },
+      { path: "otp", Component: OTPPage },
+      { path: "create", Component: CreateAccForm },
+    ],
+  },
+  {
+    path: "/admin",
+    Component: RootLayout,
+    children: [
+      { index: true, Component: AdminDashboardPage },
+      { path: "register", Component: SignUpPage },
+      { path: "otp", Component: OTPPage },
+      { path: "create", Component: CreateAccForm },
+    ],
+  },
+  {
+    path: "/login",
+    Component: AuthRootLayout,
+    children: [
+      { index: true, Component: LoginPage },
       { path: "otp", Component: OTPPage },
       { path: "create", Component: CreateAccForm },
     ],

@@ -8,4 +8,9 @@ export const siteConfig = {
     { title: "Professors", href: "/professors" },
     { title: "My Reviews", href: "/my-reviews" },
   ],
+  adminMainNav: [
+    { title: "Dashboard", href: "/admin" },
+    { title: "Manage Courses", href: "/admin/courses" },
+    { title: "Manage Professors", href: "/admin/professors" },
+  ],
 };
