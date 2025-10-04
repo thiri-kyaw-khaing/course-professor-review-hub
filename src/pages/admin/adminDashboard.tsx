@@ -1,8 +1,11 @@
 import AdminDashboardCard from "@/components/page-components/admin/adminDashboardCard";
+import PieChartComponent from "@/components/page-components/admin/piechart";
 import {
   BookOpen,
   GraduationCap,
   MessageCircle,
+  PieChart,
+  PieChartIcon,
   User2,
   UserCog,
   UserSquare2,
@@ -37,6 +40,14 @@ export default function AdminDashboardPage() {
           description="5678"
           icon={<MessageCircle className="text-[#8B0000]" size={40} />}
         />
+      </div>
+
+      <div className="mt-6 bg-white p-4 rounded-lg border w-[700px] mx-auto p-6">
+        <h2 className="text-xl font-semibold mb-4">Rating Distribution</h2>
+        <p className="text-gray-500 mb-4">
+          Overall distribution of all ratings (1–5 stars)
+        </p>
+        <PieChartComponent />
       </div>
     </div>
   );
