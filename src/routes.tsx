@@ -16,6 +16,7 @@ import MyReviewsPage from "./pages/MyReviews";
 import { LoginForm } from "./components/page-components/auth/Login-form";
 import LoginPage from "./pages/auth/Login";
 import AdminDashboardPage from "./pages/admin/adminDashboard";
+import AdminRootLayout from "./components/page-components/admin/adminRootLayout";
 
 export const router = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: RootLayout,
+    Component: AdminRootLayout,
     children: [
       { index: true, Component: AdminDashboardPage },
       { path: "register", Component: SignUpPage },
