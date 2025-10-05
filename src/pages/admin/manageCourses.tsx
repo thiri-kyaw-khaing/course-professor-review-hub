@@ -1,4 +1,19 @@
+import CourseForm from "@/components/page-components/admin/CourseForm";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Plus, Search } from "lucide-react";
+import { useState } from "react";
+
 export default function ManageCoursesPage() {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
       <div>
@@ -7,6 +22,36 @@ export default function ManageCoursesPage() {
         <p className="text-gray-500 mt-2">
           Add, edit, and manage course information and enrollment.
         </p>
+      </div>
+
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="relative flex-1 max-w-md mt-4 w-full">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            placeholder="Search courses, professors, departments..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-[#8B0000] text-white hover:bg-red-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Course
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Add New Course</DialogTitle>
+              <DialogDescription>
+                Create a new course with all required information and settings.
+              </DialogDescription>
+            </DialogHeader>
+            <CourseForm />
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );
