@@ -17,6 +17,7 @@ import { LoginForm } from "./components/page-components/auth/Login-form";
 import LoginPage from "./pages/auth/Login";
 import AdminDashboardPage from "./pages/admin/adminDashboard";
 import AdminRootLayout from "./components/page-components/admin/adminRootLayout";
+import ManageCoursesPage from "./pages/admin/manageCourses";
 
 export const router = createBrowserRouter([
   {
@@ -60,7 +61,7 @@ export const router = createBrowserRouter([
     Component: AdminRootLayout,
     children: [
       { index: true, Component: AdminDashboardPage },
-      { path: "register", Component: SignUpPage },
+      { path: "courses", Component: ManageCoursesPage },
       { path: "otp", Component: OTPPage },
       { path: "create", Component: CreateAccForm },
     ],
