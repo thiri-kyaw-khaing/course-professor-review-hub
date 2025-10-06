@@ -10,7 +10,7 @@ export type Professor = {
   id: number;
   name: string;
   title: string; // e.g., "Associate Professor"
-  averageRating?: number; // e.g., 4.8
+  averageRating: number; // e.g., 4.8
   faculty: string; // e.g., "School of Information Technology"
   office: string; // e.g., "IT Building, Room 301"
   email: string;

@@ -1,6 +1,7 @@
 import CourseForm from "@/components/page-components/admin/CourseForm";
 import CourseMangeCard from "@/components/page-components/admin/CourseMangeCard";
 import ProfessorForm from "@/components/page-components/admin/ProfessorForm";
+import ProfessorMangeCard from "@/components/page-components/admin/ProfessorManageCard";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { courses } from "@/data";
+import { courses, professors } from "@/data";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 
@@ -58,7 +59,7 @@ export default function ManageProfessorsPage() {
           </DialogContent>
         </Dialog>
       </div>
-      <CourseMangeCard courses={courses} />
+      <ProfessorMangeCard professors={professors} />
     </>
   );
 }

@@ -70,7 +70,7 @@ export default function ProfessorForm() {
             <Field>
               <EducationInput />
             </Field>
-
+            {/* 
             <Field>
               <FieldLabel htmlFor="description">Description</FieldLabel>
               <textarea
@@ -79,7 +79,7 @@ export default function ProfessorForm() {
                 required
                 className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-[#8B0000] focus:ring focus:ring-[#8B0000] focus:ring-opacity-50"
               />
-            </Field>
+            </Field> */}
           </FieldGroup>
         </FieldSet>
         <div className="flex justify-end space-x-4">
