@@ -20,11 +20,13 @@ import {
 import { Edit } from "lucide-react";
 import CourseForm from "./CourseForm";
 import CourseEditForm from "./CourseEditForm";
+import { useState } from "react";
 interface CourseMangeCardProps {
   // Define any props if needed
   courses?: Course[];
 }
 export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   return (
     <>
       <div className="flex lg:grid lg:grid-cols-2 gap-4  lg:gap-8 sm:gap-6 flex-wrap justify-center">
@@ -43,7 +45,10 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
               <div>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="bg-gray-300 text-black hover:bg-gray-400">
+                    <Button
+                      className="bg-gray-300 text-black hover:bg-gray-400"
+                      onClick={() => setIsAddDialogOpen(true)}
+                    >
                       <Edit className="h-4 w-4" />
                       Edit
                     </Button>
@@ -57,7 +62,8 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
                       </DialogDescription> */}
                     </DialogHeader>
                     {/* Course Forms */}
-                    <CourseEditForm />
+
+                    <CourseEditForm key={course.id} course={course} />
                   </DialogContent>
                 </Dialog>
               </div>
