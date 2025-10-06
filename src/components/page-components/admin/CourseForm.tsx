@@ -18,7 +18,7 @@ import {
 
 export default function CourseForm() {
   return (
-    <div>
+    <div className="">
       <div className="w-full max-w-md space-y-6">
         <FieldSet>
           {/* <FieldLegend>Address Information</FieldLegend>
