@@ -9,6 +9,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { Course } from "@/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Edit } from "lucide-react";
+import CourseForm from "./CourseForm";
+import CourseEditForm from "./CourseEditForm";
 interface CourseMangeCardProps {
   // Define any props if needed
   courses?: Course[];
@@ -30,12 +41,31 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
             </CardContent>
             <CardFooter className="flex gap-4">
               <div>
-                <Button variant="outline" className="bg-gray-200 text-black ">
-                  Edit
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-gray-300 text-black hover:bg-gray-400">
+                      <Edit className="h-4 w-4" />
+                      Edit
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Edit Course</DialogTitle>
+                      {/* <DialogDescription>
+                        Create a new course with all required information and
+                        settings.
+                      </DialogDescription> */}
+                    </DialogHeader>
+                    {/* Course Forms */}
+                    <CourseEditForm />
+                  </DialogContent>
+                </Dialog>
               </div>
               <div>
-                <Button variant="outline" className="bg-[#8B0000] text-white">
+                <Button
+                  variant="outline"
+                  className="bg-[#8B0000] text-white hover:bg-red-700"
+                >
                   Delete
                 </Button>
               </div>

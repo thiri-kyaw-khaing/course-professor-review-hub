@@ -51,6 +51,7 @@ export default function ManageCoursesPage() {
                 Create a new course with all required information and settings.
               </DialogDescription>
             </DialogHeader>
+            {/* Course Forms */}
             <CourseForm />
           </DialogContent>
         </Dialog>
