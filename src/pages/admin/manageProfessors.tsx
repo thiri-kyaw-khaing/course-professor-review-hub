@@ -1,5 +1,6 @@
 import CourseForm from "@/components/page-components/admin/CourseForm";
 import CourseMangeCard from "@/components/page-components/admin/CourseMangeCard";
+import ProfessorForm from "@/components/page-components/admin/ProfessorForm";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,9 +21,9 @@ export default function ManageProfessorsPage() {
     <>
       <div>
         {" "}
-        <h1 className="text-3xl font-semibold mt-4">Manage Courses</h1>
+        <h1 className="text-3xl font-semibold mt-4">Manage Professors</h1>
         <p className="text-gray-500 mt-2">
-          Add, edit, and manage course information and enrollment.
+          Add, edit, and manage professor profiles and information.
         </p>
       </div>
 
@@ -41,18 +42,19 @@ export default function ManageProfessorsPage() {
           <DialogTrigger asChild>
             <Button className="bg-[#8B0000] text-white hover:bg-red-700">
               <Plus className="h-4 w-4 mr-2" />
-              Add Course
+              Add Professor
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Add New Course</DialogTitle>
+              <DialogTitle>Add New Professor</DialogTitle>
               <DialogDescription>
-                Create a new course with all required information and settings.
+                Create a new professor profile with contact information and
+                academic details.
               </DialogDescription>
             </DialogHeader>
             {/* Course Forms */}
-            <CourseForm />
+            <ProfessorForm />
           </DialogContent>
         </Dialog>
       </div>
