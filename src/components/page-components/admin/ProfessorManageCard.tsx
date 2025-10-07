@@ -64,6 +64,15 @@ export default function ProfessorMangeCard({
                 <p>{professor?.averageRating}</p>
                 <p>({professor?.totalReviews} reviews)</p>
               </div>
+
+              <div>
+                <h4 className="font-semibold mt-4 mb-2">Education:</h4>
+                <ul className="list-disc list-inside">
+                  {professor.education.map((edu, index) => (
+                    <li key={index}>{edu}</li>
+                  ))}
+                </ul>
+              </div>
             </CardContent>
             <CardFooter className="flex gap-4">
               <div>
