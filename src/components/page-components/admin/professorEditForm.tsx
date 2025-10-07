@@ -48,7 +48,7 @@ export default function ProfessorEditForm({
   const handleDepartmentChange = (value: string) => {
     setFormData((prev) => ({
       ...prev,
-      department: value,
+      faculty: value,
     }));
   };
   // Step 4: handle submit
@@ -66,6 +66,7 @@ export default function ProfessorEditForm({
     });
   };
 
+  console.log("professor edit form data:", formData);
   return (
     <div className="">
       <div className="w-full max-w-md space-y-6">
@@ -115,14 +116,43 @@ export default function ProfessorEditForm({
                   <SelectValue placeholder="Choose faculty" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="engineering">Engineering</SelectItem>
-                  <SelectItem value="design">Design</SelectItem>
-                  <SelectItem value="marketing">Marketing</SelectItem>
-                  <SelectItem value="sales">Sales</SelectItem>
-                  <SelectItem value="support">Customer Support</SelectItem>
-                  <SelectItem value="hr">Human Resources</SelectItem>
-                  <SelectItem value="finance">Finance</SelectItem>
-                  <SelectItem value="operations">Operations</SelectItem>
+                  <SelectItem value="School_of_Agro_Industry">
+                    School of Agro Industry
+                  </SelectItem>
+                  <SelectItem value="School_of_Cosmetic_Science">
+                    School of Cosmetic Science
+                  </SelectItem>
+                  <SelectItem value="School_of_Health_Science">
+                    School of Health Science
+                  </SelectItem>
+                  <SelectItem value="School_of_Applied_Digital_Technology">
+                    School of Applied Digital Technology
+                  </SelectItem>
+                  <SelectItem value="School_of_Integrative_Medicine">
+                    School of Integrative Medicine
+                  </SelectItem>
+                  <SelectItem value="School_of_Law">School of Law</SelectItem>
+                  <SelectItem value="School_of_Liberal_Arts">
+                    School of Liberal Arts
+                  </SelectItem>
+                  <SelectItem value="School_of_Management">
+                    School of Management
+                  </SelectItem>
+                  <SelectItem value="School_of_Nursing">
+                    School of Nursing
+                  </SelectItem>
+                  <SelectItem value="School_of_Science">
+                    School of Science
+                  </SelectItem>
+                  <SelectItem value="School_of_Sinology">
+                    School of Sinology
+                  </SelectItem>
+                  <SelectItem value="School_of_Social_Innovation">
+                    School of Social Innovation
+                  </SelectItem>
+                  <SelectItem value="School_of_Dentistry">
+                    School of Dentistry
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </Field>
