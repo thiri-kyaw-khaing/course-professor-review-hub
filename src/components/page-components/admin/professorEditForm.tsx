@@ -32,6 +32,40 @@ export default function ProfessorEditForm({
     // Add other fields as necessary
     education: professor.education || [""],
   });
+
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+
+  // Step 3: handle changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+  const handleDepartmentChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      department: value,
+    }));
+  };
+  // Step 4: handle submit
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Updated course:", formData);
+    // TODO: call your API to update course
+  };
+
+  const handleEducationChange = (index: number, value: string) => {
+    setFormData((prev) => {
+      const updated = [...prev.education]; // copy old array
+      updated[index] = value; // replace one value
+      return { ...prev, education: updated };
+    });
+  };
+
   return (
     <div className="">
       <div className="w-full max-w-md space-y-6">
@@ -40,50 +74,86 @@ export default function ProfessorEditForm({
           <FieldDescription>
             We need your address to deliver your order.
           </FieldDescription> */}
+          {/* Name full width */}
+          <div className="grid grid-cols-1 mb-4">
+            <Field className="w-full">
+              <FieldLabel htmlFor="name">Name*</FieldLabel>
+              <Input
+                id="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John Doe"
+                required
+                className="w-full"
+              />
+            </Field>
+          </div>
+
+          {/* Email + Faculty side by side */}
           <div className="grid grid-cols-2 gap-4">
-            <Field>
-              <FieldLabel htmlFor="firstName">First Name*</FieldLabel>
-              <Input id="firstName" type="text" placeholder="John" required />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="lastName">Last Name*</FieldLabel>
-              <Input id="lastName" type="text" placeholder="Doe" required />
-            </Field>
-            <Field>
+            <Field className="w-full">
               <FieldLabel htmlFor="email">Email*</FieldLabel>
               <Input
                 id="email"
                 type="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="john.doe@example.com"
                 required
+                className="w-full"
               />
             </Field>
-            {/* Department Dropdown */}
-            <div className="w-full max-w-md">
-              <Field>
-                <FieldLabel>Faculty</FieldLabel>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose faculty" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="engineering">Engineering</SelectItem>
-                    <SelectItem value="design">Design</SelectItem>
-                    <SelectItem value="marketing">Marketing</SelectItem>
-                    <SelectItem value="sales">Sales</SelectItem>
-                    <SelectItem value="support">Customer Support</SelectItem>
-                    <SelectItem value="hr">Human Resources</SelectItem>
-                    <SelectItem value="finance">Finance</SelectItem>
-                    <SelectItem value="operations">Operations</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-            </div>
+
+            <Field className="w-full">
+              <FieldLabel>Faculty</FieldLabel>
+              <Select
+                value={formData.faculty}
+                onValueChange={handleDepartmentChange}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Choose faculty" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="engineering">Engineering</SelectItem>
+                  <SelectItem value="design">Design</SelectItem>
+                  <SelectItem value="marketing">Marketing</SelectItem>
+                  <SelectItem value="sales">Sales</SelectItem>
+                  <SelectItem value="support">Customer Support</SelectItem>
+                  <SelectItem value="hr">Human Resources</SelectItem>
+                  <SelectItem value="finance">Finance</SelectItem>
+                  <SelectItem value="operations">Operations</SelectItem>
+                </SelectContent>
+              </Select>
+            </Field>
           </div>
+
           <FieldGroup>
             <Field>
-              <EducationInput />
+              <EducationInput
+                value={formData.education}
+                onChange={(index, value) =>
+                  setFormData((prev) => {
+                    const updated = [...prev.education];
+                    updated[index] = value;
+                    return { ...prev, education: updated };
+                  })
+                }
+                onAdd={(newValue) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    education: [...prev.education, newValue],
+                  }))
+                }
+                onRemove={(index) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    education: prev.education.filter((_, i) => i !== index),
+                  }))
+                }
+              />
             </Field>
+
             {/* 
             <Field>
               <FieldLabel htmlFor="description">Description</FieldLabel>

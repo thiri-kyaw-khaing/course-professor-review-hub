@@ -1,26 +1,42 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
+import { useState } from "react";
 
-export default function EducationInput() {
+interface EducationInputProps {
+  value: string[]; // comes from parent
+  onChange: (index: number, value: string) => void; // updates parent state
+  onAdd?: (newValue: string) => void; // optional callback to add new education
+  onRemove?: (index: number) => void; // optional callback to remove education
+}
+
+export default function EducationInput({
+  value,
+  onChange,
+  onAdd,
+  onRemove,
+}: EducationInputProps) {
   const [inputValue, setInputValue] = useState("");
-  const [educations, setEducations] = useState<string[]>([]);
 
   const handleAdd = () => {
     if (inputValue.trim() === "") return;
-    setEducations([...educations, inputValue.trim()]);
+    if (onAdd) {
+      onAdd(inputValue.trim());
+    }
     setInputValue("");
   };
 
   const handleRemove = (index: number) => {
-    setEducations(educations.filter((_, i) => i !== index));
+    if (onRemove) {
+      onRemove(index);
+    }
   };
 
   return (
     <div className="space-y-2">
       <label className="font-medium text-gray-700">Education</label>
 
+      {/* Add Input */}
       <div className="flex items-center gap-2">
         <Input
           placeholder="Ph.D. Computer Science - MIT"
@@ -37,13 +53,18 @@ export default function EducationInput() {
         </Button>
       </div>
 
+      {/* Display Added Educations */}
       <div className="space-y-2">
-        {educations.map((edu, index) => (
+        {value.map((edu, index) => (
           <div
             key={index}
             className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-md"
           >
-            <span>{edu}</span>
+            <Input
+              value={edu}
+              onChange={(e) => onChange(index, e.target.value)}
+              className="bg-transparent border-none shadow-none focus-visible:ring-0"
+            />
             <button
               type="button"
               onClick={() => handleRemove(index)}
