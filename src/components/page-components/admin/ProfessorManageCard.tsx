@@ -23,6 +23,7 @@ import CourseEditForm from "./CourseEditForm";
 import { useState } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import StarRating from "../StarRating";
+import ProfessorEditForm from "./professorEditForm";
 interface ProfessorMangeCardProps {
   // Define any props if needed
   professors?: Professor[];
@@ -80,7 +81,8 @@ export default function ProfessorMangeCard({
                   </DialogTrigger>
                   <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                      <DialogTitle>Edit Course</DialogTitle>
+                      <DialogTitle>Edit Professor</DialogTitle>
+                      <ProfessorEditForm professor={professor} />
                       {/* <DialogDescription>
                         Create a new course with all required information and
                         settings.
