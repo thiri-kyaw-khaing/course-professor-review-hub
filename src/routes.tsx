@@ -19,13 +19,13 @@ import AdminDashboardPage from "./pages/admin/adminDashboard";
 import AdminRootLayout from "./components/page-components/admin/adminRootLayout";
 import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
-
+import { homeLoader } from "@/router/loader";
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
     children: [
-      { index: true, Component: HomePage },
+      { index: true, Component: HomePage, loader: homeLoader },
       {
         path: "courses",
         Component: CourseRootLayout,
