@@ -8,9 +8,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { useNavigation } from "react-router-dom";
-import { useActionData } from "react-router-dom";
-// import { useState } from "react";
+import { useNavigation, useActionData, useSubmit } from "react-router-dom";
+
+//
+// ✅ Zod schema
+//
 const formSchema = z.object({
   email: z
     .string()
@@ -22,10 +24,11 @@ const formSchema = z.object({
     ),
   password: z
     .string()
-    .min(6, "password must be 6 digits")
-    .max(6, "password must be 6 digits")
-    .regex(/^\d+$/, "password must be numbers"),
+    .min(8, "Password must be 8 digits")
+    .max(8, "Password must be 8 digits")
+    .regex(/^\d+$/, "Password must be numbers"),
 });
+
 export function LoginForm({
   className,
   ...props
@@ -37,97 +40,125 @@ export function LoginForm({
       password: "",
     },
   });
-  //to show loading/submitting
-  const navigation = useNavigation();
 
+  const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  //for error message
   const actionData = useActionData() as {
     error?: string;
     message?: string;
   };
-  //to submit form using action
-  // const submit = useSubmit();
+
+  const submit = useSubmit();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values);
-    // setLoading(true);
-    // Call api
-    // submit(values, { method: "POST", action: "/login" });
-    console.log("✅ Form submitted with:", values);
+    // Send to /login action via React Router
+    console.log("Login form submitted:", values);
+    submit(values, { method: "POST", action: "/login" });
   }
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center min-h-screen px-4",
+        className
+      )}
+      {...props}
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid w-full pr-8 lg:pr-0"
+          className="flex flex-col gap-6 w-full max-w-sm text-center"
           autoComplete="off"
+          noValidate
         >
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-center gap-2">
-              <a
-                href="#"
-                className="flex flex-col items-center gap-2 font-medium"
-              >
-                <div className="flex size-8 items-center justify-center rounded-md">
-                  {siteConfig.logo && (
-                    <img src={siteConfig.logo} alt="Logo" className="h-8 w-8" />
-                  )}
-                </div>
-                <span className="sr-only">RateWise</span>
-              </a>
-              <h1 className="text-xl font-bold">Welcome Back</h1>
-              <div className="text-center text-sm text-muted-foreground">
-                {/* Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
-                Sign up
-              </a> */}
-                Register with your MFU email to join the course review community
+          {/* Logo */}
+          <div className="flex flex-col items-center gap-2">
+            <a
+              href="#"
+              className="flex flex-col items-center gap-2 font-medium"
+            >
+              <div className="flex size-12 items-center justify-center rounded-full overflow-hidden">
+                {siteConfig.logo && (
+                  <img
+                    src={siteConfig.logo}
+                    alt="Logo"
+                    className="h-12 w-12 object-contain"
+                  />
+                )}
               </div>
+              <span className="sr-only">RateWise</span>
+            </a>
+
+            {/* Header */}
+            <h1 className="text-2xl font-bold text-black">Welcome Back</h1>
+            <p className="text-sm text-gray-500 max-w-xs">
+              Register with your MFU email to join the course review community
+            </p>
+          </div>
+
+          {/* Inputs */}
+          <div className="flex flex-col gap-4 text-left">
+            {/* Email */}
+            <div>
+              <Label htmlFor="email" className="font-semibold text-black">
+                MFU Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@mfu.lamduan.ac.th"
+                className="bg-white border-gray-300 focus:border-[#8B0000] focus:ring-[#8B0000]"
+                {...form.register("email")}
+              />
+              {form.formState.errors.email && (
+                <p className="text-sm text-red-600 mt-1">
+                  {form.formState.errors.email.message}
+                </p>
+              )}
             </div>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="email">MFU Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@mfu.lamduan.ac.th"
-                  {...form.register("email")}
-                />
-                {form.formState.errors.email && (
-                  <p className="text-sm text-red-600">
-                    {form.formState.errors.email.message}
-                  </p>
-                )}
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="********"
-                  {...form.register("password")}
-                />
-                {form.formState.errors.password && (
-                  <p className="text-sm text-red-600">
-                    {form.formState.errors.password.message}
-                  </p>
-                )}
-              </div>
-              {actionData?.error && (
-                <p className="text-center text-sm text-red-600">
-                  {actionData.error}
+
+            {/* Password */}
+            <div>
+              <Label htmlFor="password" className="font-semibold text-black">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="********"
+                className="bg-white border-gray-300 focus:border-[#8B0000] focus:ring-[#8B0000]"
+                {...form.register("password")}
+              />
+              {form.formState.errors.password && (
+                <p className="text-sm text-red-600 mt-1">
+                  {form.formState.errors.password.message}
                 </p>
-              )}{" "}
-              <Button type="submit" className="w-full bg-[#8B0000] text-white">
-                {isSubmitting ? "Submitting..." : "Log In"}
-              </Button>
-              <div>
-                <p className="text-center text-sm  underline-offset-4 underline text-[#8B0000]">
-                  Don't have an account?{""} <Link to="/register">Sign up</Link>
-                </p>
-              </div>
+              )}
             </div>
           </div>
+
+          {/* Server-side error */}
+          {actionData?.error && (
+            <p className="text-sm text-red-600 text-center">
+              {actionData.error}
+            </p>
+          )}
+
+          {/* Submit */}
+          <Button
+            type="submit"
+            className="w-full bg-[#8B0000] hover:bg-red-800 text-white py-2 rounded-md"
+          >
+            {isSubmitting ? "Submitting..." : "Log In"}
+          </Button>
+
+          {/* Signup link */}
+          <p className="text-sm text-[#8B0000] underline underline-offset-4">
+            Don&apos;t have an account?{" "}
+            <Link to="/register" className="hover:text-red-800">
+              Sign up
+            </Link>
+          </p>
         </form>
       </Form>
     </div>

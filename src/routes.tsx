@@ -13,13 +13,14 @@ import ProfessorRootLayout from "./components/professors/professorRootLayout";
 import ProfessorsPage from "./pages/Professors/professors";
 import professorDetailPage from "./pages/Professors/professorDetailPage";
 import MyReviewsPage from "./pages/MyReviews";
-import { LoginForm } from "./components/page-components/auth/Login-form";
+// import  LoginForm  from "./components/page-components/auth/Login-form";
 import LoginPage from "./pages/auth/Login";
 import AdminDashboardPage from "./pages/admin/adminDashboard";
 import AdminRootLayout from "./components/page-components/admin/adminRootLayout";
 import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
 import { homeLoader } from "@/router/loader";
+import { loginAction } from "@/router/action";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -69,11 +70,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    Component: AuthRootLayout,
-    children: [
-      { index: true, Component: LoginPage },
-      { path: "otp", Component: OTPPage },
-      { path: "create", Component: CreateAccForm },
-    ],
+    Component: LoginPage,
+    action: loginAction,
   },
 ]);
