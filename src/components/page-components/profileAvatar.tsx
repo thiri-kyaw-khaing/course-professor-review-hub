@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { UserInfo } from "@/types";
-import { BookOpen, Calendar, LogOut, PersonStanding, User } from "lucide-react";
+import { BookOpen, Calendar, LogOut, User } from "lucide-react";
 import { Form } from "react-router";
 interface ProfileAvatarProps {
   // Define any props if needed
@@ -45,8 +45,8 @@ export default function ProfileAvatar({ user }: ProfileAvatarProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Form method="post" action="/logout">
-              <LogOut className="inline mr-2 h-4 w-4 text-[#8B0000]" />
               <button type="submit" className="w-full">
+                <LogOut className="inline mr-2 h-4 w-4 text-[#8B0000]" />
                 Log Out
               </button>
             </Form>

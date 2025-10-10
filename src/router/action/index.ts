@@ -1,7 +1,7 @@
 import type { ActionFunctionArgs } from "react-router-dom";
 import { redirect } from "react-router-dom";
 import { AxiosError } from "axios";
-import authApi from "@/api";
+import { authApi } from "@/api";
 import api from "@/api";
 export const loginAction = async ({ request }: ActionFunctionArgs) => {
   // request=user input to login
@@ -30,11 +30,9 @@ export const loginAction = async ({ request }: ActionFunctionArgs) => {
 
 export const logoutAction = async () => {
   try {
-    const response = await api.post("logout");
-    if (response.status == 200) {
-      return redirect("/login");
-    }
-    return { error: response.data || "Logout failed" };
+    await api.post("logout");
+
+    return redirect("/login");
   } catch (error) {
     console.log("logout failed", error);
   }

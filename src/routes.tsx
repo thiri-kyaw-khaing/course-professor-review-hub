@@ -21,6 +21,7 @@ import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
 import { homeLoader } from "@/router/loader";
 import { loginAction, logoutAction } from "@/router/action";
+import { LoginForm } from "./components/page-components/auth/Login-form";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -70,7 +71,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    Component: LoginPage,
+    Component: LoginForm,
     action: loginAction,
   },
   {

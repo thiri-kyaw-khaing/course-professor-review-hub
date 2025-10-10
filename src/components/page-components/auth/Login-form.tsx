@@ -48,6 +48,8 @@ export function LoginForm({
     message?: string;
   };
 
+  console.log("Action Data:", actionData);
+
   const submit = useSubmit();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -95,7 +97,6 @@ export function LoginForm({
               Register with your MFU email to join the course review community
             </p>
           </div>
-
           {/* Inputs */}
           <div className="flex flex-col gap-4 text-left">
             {/* Email */}
@@ -106,7 +107,7 @@ export function LoginForm({
               <Input
                 id="email"
                 type="email"
-                placeholder="m@mfu.lamduan.ac.th"
+                placeholder="student@lamduan.mfu.ac.th"
                 className="bg-white border-gray-300 focus:border-[#8B0000] focus:ring-[#8B0000]"
                 {...form.register("email")}
               />
@@ -136,14 +137,12 @@ export function LoginForm({
               )}
             </div>
           </div>
-
           {/* Server-side error */}
-          {actionData?.error && (
-            <p className="text-sm text-red-600 text-center">
-              {actionData.error}
+          {actionData && (
+            <p className="text-xs text-start text-red-500">
+              {actionData?.message}
             </p>
           )}
-
           {/* Submit */}
           <Button
             type="submit"
@@ -151,7 +150,6 @@ export function LoginForm({
           >
             {isSubmitting ? "Submitting..." : "Log In"}
           </Button>
-
           {/* Signup link */}
           <p className="text-sm text-[#8B0000] underline underline-offset-4">
             Don&apos;t have an account?{" "}

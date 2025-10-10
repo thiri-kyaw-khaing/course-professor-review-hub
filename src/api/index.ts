@@ -18,11 +18,12 @@ api.interceptors.response.use(
   }
 );
 
-const authApi = axios.create({
+export const authApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
   withCredentials: true,
 });
+
 export default api;
