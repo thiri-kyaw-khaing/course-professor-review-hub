@@ -20,7 +20,7 @@ import AdminRootLayout from "./components/page-components/admin/adminRootLayout"
 import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
 import { homeLoader } from "@/router/loader";
-import { loginAction } from "@/router/action";
+import { loginAction, logoutAction } from "@/router/action";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -72,5 +72,9 @@ export const router = createBrowserRouter([
     path: "/login",
     Component: LoginPage,
     action: loginAction,
+  },
+  {
+    path: "/logout",
+    action: logoutAction,
   },
 ]);

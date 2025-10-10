@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { UserInfo } from "@/types";
 import { BookOpen, Calendar, LogOut, PersonStanding, User } from "lucide-react";
+import { Form } from "react-router";
 interface ProfileAvatarProps {
   // Define any props if needed
   user: User;
@@ -43,8 +44,12 @@ export default function ProfileAvatar({ user }: ProfileAvatarProps) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <LogOut className="inline mr-2 h-4 w-4 text-[#8B0000]" />
-            Log Out
+            <Form method="post" action="/logout">
+              <LogOut className="inline mr-2 h-4 w-4 text-[#8B0000]" />
+              <button type="submit" className="w-full">
+                Log Out
+              </button>
+            </Form>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
