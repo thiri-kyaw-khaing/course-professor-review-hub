@@ -209,7 +209,7 @@ export default function CourseDetailPage() {
                     </h1>
                     {/* Rating */}
                     <div className="flex items-center mb-2 ml-auto">
-                      {[...Array(filledStars)].map((_, i) => (
+                      {/* {[...Array(filledStars)].map((_, i) => (
                         <Star
                           key={`filled-${review.id}-${i}`}
                           className="h-5 w-5 fill-yellow-400 text-yellow-400"
@@ -230,7 +230,8 @@ export default function CourseDetailPage() {
                           key={`empty-${review.id}-${i}`}
                           className="h-5 w-5 text-gray-300"
                         />
-                      ))}
+                      ))} */}
+                      <StarRating value={review?.rating || 0} readOnly />
 
                       <span className="ml-2 text-sm text-gray-600">
                         {review?.rating}/5
