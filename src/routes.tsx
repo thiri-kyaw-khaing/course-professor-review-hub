@@ -19,15 +19,17 @@ import AdminDashboardPage from "./pages/admin/adminDashboard";
 import AdminRootLayout from "./components/page-components/admin/adminRootLayout";
 import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
-import { homeLoader } from "@/router/loader";
+// import { homeLoader } from "@/router/loader";
 import { loginAction, logoutAction } from "@/router/action";
 import { LoginForm } from "./components/page-components/auth/Login-form";
+import ErrorPage from "./pages/Error";
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement: <ErrorPage />,
     children: [
-      { index: true, Component: HomePage, loader: homeLoader },
+      { index: true, Component: HomePage },
       {
         path: "courses",
         Component: CourseRootLayout,

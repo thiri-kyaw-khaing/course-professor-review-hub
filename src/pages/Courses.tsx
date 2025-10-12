@@ -2,12 +2,29 @@ import CourseCard from "@/components/page-components/CourseRelate/CourseCard";
 import FacultyDropdown from "@/components/page-components/FacultyDropDown";
 import RatingDropdown from "@/components/page-components/ratingDropDown";
 import { Button } from "@/components/ui/button";
-import { courses } from "@/data";
+// import { courses } from "@/data";
 import { Search } from "lucide-react";
 import { Link } from "react-router";
 import CourseListPage from "./CourseList";
+import { courseQuery } from "@/api/query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Courses() {
+  const {
+    data: coursesData,
+    isLoading: coursesLoading,
+    isError: coursesError,
+  } = useQuery(courseQuery);
+
+  if (coursesLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (coursesError) {
+    return <div>Error loading courses.</div>;
+  }
+
+  // const courses = coursesData || [];
   return (
     <>
       {/* Search professor and course card */}
@@ -39,7 +56,7 @@ export default function Courses() {
           </Button>
         </div>
       </div>
-      <CourseListPage courses={courses} />
+      <CourseListPage courses={coursesData?.courses || []} />
     </>
   );
 }

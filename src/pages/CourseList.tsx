@@ -12,7 +12,7 @@ export default function CourseListPage({ courses }: CourseListPageProps) {
         <p className="text-center text-gray-500 mt-6">No courses found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-          {courses.map((course) => (
+          {courses?.map((course) => (
             <Link
               key={course.id}
               to={`/courses/${course.id}`}
@@ -21,7 +21,7 @@ export default function CourseListPage({ courses }: CourseListPageProps) {
               <CourseCard
                 key={course.id}
                 code={course.code}
-                name={course.name}
+                title={course.title}
                 faculty={course.faculty}
                 credits={course.credits}
                 description={course.description}

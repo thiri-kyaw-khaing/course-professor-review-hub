@@ -5,7 +5,7 @@ import { Star } from "lucide-react";
 interface RatingCardProps {
   name: string;
   department: string;
-  image?: string;
+  image: string;
   rating: number;
   reviews?: number;
 }
@@ -20,9 +20,7 @@ export default function RatingCard({
   const filledStars = Math.max(0, Math.floor(safeAverage)); // ✅ use safeAverage
   const hasHalfStar = safeAverage % 1 >= 0.5; // ✅ safeAverage
   const emptyStars = Math.max(0, 5 - filledStars - (hasHalfStar ? 1 : 0)); // ✅ prevent negatives
-  {
-    console.log("🖼️ Final image URL:", image);
-  }
+
   return (
     <>
       <div className=" flex gap-4 border border-gray-300 rounded-lg p-4 mt-6">
@@ -30,6 +28,8 @@ export default function RatingCard({
           src={image}
           alt="Top Rated Professors"
           className="rounded-full w-16 h-16"
+          loading="lazy" // ✅ load only when visible
+          decoding="async" // ✅ don't block rendering
         />
 
         <div>

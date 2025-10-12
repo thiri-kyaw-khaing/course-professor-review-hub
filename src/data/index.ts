@@ -1,4 +1,4 @@
-import type { Professor, User } from "@/types";
+import type { Professor, UserInfo } from "@/types";
 
 export const professors: Professor[] = [
   {
@@ -207,7 +207,7 @@ export const courses: Course[] = [
     description:
       "Fundamentals of programming using Python, problem-solving, and algorithms.",
     status: "active",
-    averageRating: 4.8,
+    averageRate: 4.8,
     totalReviews: 127,
     reviews: [
       {
@@ -239,7 +239,7 @@ export const courses: Course[] = [
     description:
       "Fundamentals of business management and organizational behavior.",
     status: "active",
-    averageRating: 4.5,
+    averageRate: 4.5,
     totalReviews: 89,
   },
   {
@@ -251,7 +251,7 @@ export const courses: Course[] = [
     description:
       "Design, implementation, and management of relational databases.",
     status: "inactive",
-    averageRating: 4.2,
+    averageRate: 4.2,
     totalReviews: 64,
     reviews: [
       {
@@ -282,7 +282,7 @@ export const courses: Course[] = [
     credits: 4,
     description: "Detailed study of the human body structure and its systems.",
     status: "active",
-    averageRating: 4.9,
+    averageRate: 4.9,
     totalReviews: 210,
     reviews: [
       {
