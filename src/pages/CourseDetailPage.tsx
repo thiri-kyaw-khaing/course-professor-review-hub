@@ -78,7 +78,7 @@ export default function CourseDetailPage() {
             </h1>
             {/* Rating */}
             <div className="flex items-center mb-2 ml-auto mt-6 justify-center">
-              {[...Array(filledStars)].map((_, i) => (
+              {/* {[...Array(filledStars)].map((_, i) => (
                 <Star
                   key={`filled-${course.id}-${i}`}
                   className="h-5 w-5 fill-yellow-400 text-yellow-400"
@@ -99,7 +99,8 @@ export default function CourseDetailPage() {
                   key={`empty-${course.id}-${i}`}
                   className="h-5 w-5 text-gray-300"
                 />
-              ))}
+              ))} */}
+              <StarRating value={course.data?.averageRate || 0} readOnly />
 
               <div className="flex text-center flex mt-2">
                 <h1 className="ml-2 text-sm text-gray-600">
