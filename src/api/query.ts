@@ -29,3 +29,20 @@ export const courseQuery = {
   queryKey: ["courses"],
   queryFn: () => fetchCourses(),
 };
+
+const fetchOneCourse = async (id: number) => {
+  const course = await api.get(`users/courses/${id}`);
+
+  if (!course) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return course.data;
+};
+
+export const oneCourseQuery = (id: number) => ({
+  queryKey: ["courses", "detail", id],
+  queryFn: () => fetchOneCourse(id),
+});

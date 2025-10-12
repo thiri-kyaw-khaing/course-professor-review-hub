@@ -1,16 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { courses } from "@/data";
-import { Arrow } from "@radix-ui/react-popover";
-import {
-  ArrowLeft,
-  Edit2Icon,
-  EditIcon,
-  MessageSquare,
-  PlusIcon,
-  Star,
-  Text,
-} from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+
+import { ArrowLeft, MessageSquare, PlusIcon, Star } from "lucide-react";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogClose,
@@ -21,17 +13,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import StarRating from "@/components/page-components/StarRating";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { oneCourseQuery } from "@/api/query";
+import type { Review } from "@/types";
 
 export default function CourseDetailPage() {
-  const { courseId } = useParams();
+  const { courseId } = useLoaderData();
+  const { data: course } = useSuspenseQuery(oneCourseQuery(courseId));
+  // const { courseId } = useParams();
 
-  const course = courses.find((course) => course.id === Number(courseId));
-  const filledStars = Math.floor(course?.averageRating || 0);
-  const hasHalfStar = (course?.averageRating ?? 0) % 1 >= 0.5;
+  // const course = courses.find((course) => course.id === Number(courseId));
+  const filledStars = Math.floor(course?.averageRate || 0);
+  const hasHalfStar = (course?.averageRate ?? 0) % 1 >= 0.5;
   const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
   const [rating, setRating] = useState(0);
   return (
@@ -47,35 +44,37 @@ export default function CourseDetailPage() {
         <div className="flex flex-col lg:flex-row gap-6 mt-4">
           <div className="border border-gray-300 rounded-lg p-6 mt-4 lg:w-3/4 sm:w-full">
             <div className="flex items-center gap-4">
-              <span className="text-3xl font-bold  mr-2">{course.code}</span>
-              <span className="text-2xl text-[#8B0000] font-semibold">
-                {course.name}
+              <span className="text-3xl font-bold  mr-2">
+                {course.data?.code}
+              </span>
+              <span className="text-3xl text-[#8B0000] font-semibold">
+                {course.data?.title}
               </span>
               {/* <span className="border border-gray-300 rounded-md px-4 py-2 text-sm text-semibold ml-auto text-white bg-[#8B0000] items-end sm:items-start">
               {course.credits} Credits
             </span> */}
               <div className="mt-2 sm:mt-0 sm:ml-auto">
                 <span className="border border-gray-300 rounded-md px-4 py-2 text-sm font-semibold text-white bg-[#8B0000] w-fit whitespace-nowrap">
-                  {course.credits} Credits
+                  {course.data?.credits} Credits
                 </span>
               </div>
             </div>
 
             <h1 className="text-xl font-semibold mt-4 text-gray-500">
-              {course.faculty}
+              {course.data?.faculty}
             </h1>
 
             <div className="border border-gray-300 rounded-md mt-6 p-6">
               <h2 className="text-lg font-semibold">Course Description</h2>
               <h2 className="text-gray-600 text-sm mt-3">
-                {course.description}
+                {course.data?.description}
               </h2>
             </div>
           </div>
           <div className="border border-gray-300 rounded-md mt-4 p-6 lg:w-1/3 sm:w-full">
             <h2 className="text-lg font-semibold">Overall Course Rating</h2>
             <h1 className="text-4xl font-bold justify-center items-center text-center flex mt-6">
-              {course.averageRating}
+              {course.data?.averageRate}
             </h1>
             {/* Rating */}
             <div className="flex items-center mb-2 ml-auto mt-6 justify-center">
@@ -104,10 +103,10 @@ export default function CourseDetailPage() {
 
               <div className="flex text-center flex mt-2">
                 <h1 className="ml-2 text-sm text-gray-600">
-                  {course.averageRating}/5
+                  {course.data?.averageRate}/5
                 </h1>
                 <h1 className="text-sm text-gray-600 ml-2">
-                  (Based on {course.totalReviews} Reviews)
+                  (Based on {course.data?.totalReviews} Reviews)
                 </h1>
               </div>
             </div>
@@ -192,12 +191,13 @@ export default function CourseDetailPage() {
         <h1 className="text-gray-500">Reviews from Students</h1>
 
         <div className="border border-gray-300 rounded-md mt-6 p-6">
-          {!course?.reviews || course.reviews.length === 0 ? (
+          {!course?.data?.reviews || course.data.reviews.length === 0 ? (
             <h2 className="text-lg font-semibold">No reviews found.</h2>
           ) : (
-            course.reviews.map((review) => {
-              const filledStars = Math.floor(review.rating);
-              const hasHalfStar = review.rating % 1 >= 0.5;
+            course.data.reviews.map((review: Review) => {
+              const average = course.data?.averageRate ?? 0;
+              const filledStars = Math.floor(average);
+              const hasHalfStar = average % 1 >= 0.5;
               const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
 
               return (
@@ -232,7 +232,7 @@ export default function CourseDetailPage() {
                       ))}
 
                       <span className="ml-2 text-sm text-gray-600">
-                        {review.rating}/5
+                        {review?.rating}/5
                       </span>
                     </div>
                   </div>
