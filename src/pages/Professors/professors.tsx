@@ -4,8 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import ProfessorListPage from "./professorlist";
 import { professors } from "@/data";
+import { professorQuery } from "@/api/query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ProfessorsPage() {
+  const {
+    data: professorsData,
+    isLoading: professorsLoading,
+    isError: professorsError,
+  } = useQuery(professorQuery);
+
+  if (professorsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (professorsError) {
+    return <div>Error loading professors.</div>;
+  }
+
   return (
     <>
       <>
@@ -39,7 +55,7 @@ export default function ProfessorsPage() {
           </div>
         </div>
         {/* <CourseListPage courses={courses} /> */}
-        <ProfessorListPage professors={professors} />
+        <ProfessorListPage professors={professorsData?.professors} />
       </>
     </>
   );

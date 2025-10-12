@@ -75,10 +75,10 @@ export default function ProfessorDetailPage() {
                     </div>
                     <div className="flex items-center gap-1 mt-1">
                       <StarRating
-                        value={professor.averageRating ?? 0}
+                        value={professor.averageRate ?? 0}
                         readOnly={true}
                       />
-                      <span>{professor.averageRating} / 5</span>
+                      <span>{professor.averageRate} / 5</span>
                     </div>
                   </div>
                 </CardHeader>
@@ -184,11 +184,11 @@ export default function ProfessorDetailPage() {
               <Card className="border border-gray-300 rounded-md p-6 w-full">
                 <h2 className="text-lg font-semibold">Overall Course Rating</h2>
                 <h1 className="text-4xl font-bold justify-center items-center text-center flex mt-6">
-                  {professor.averageRating}
+                  {professor.averageRate}
                 </h1>
                 <div className="flex justify-center mt-2">
                   <StarRating
-                    value={professor.averageRating ?? 0}
+                    value={professor.averageRate ?? 0}
                     readOnly={true}
                   />
                 </div>

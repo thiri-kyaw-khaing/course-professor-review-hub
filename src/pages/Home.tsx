@@ -241,7 +241,7 @@ export default function HomePage() {
                   ? professor.image
                   : `${imgUrl}${professor.image ?? ""}`
               }
-              rating={professor.averageRating ?? 0}
+              rating={professor.averageRate ?? 0}
               reviews={professor.totalReviews ?? 0}
             />
           ))}
