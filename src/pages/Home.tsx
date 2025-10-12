@@ -5,7 +5,14 @@ import { Book, BookOpen, Search, Star, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { courses, professors } from "@/data";
 import CourseRatingCard from "@/components/page-components/CourseRelate/CourseRatingCard";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { courseQuery, professorQuery } from "@/api/query";
+import type { Course, Professor } from "@/types";
 export default function HomePage() {
+  const imgUrl = import.meta.env.VITE_IMG_URL;
+
+  const { data: professorsData } = useSuspenseQuery(professorQuery);
+  const { data: coursesData } = useSuspenseQuery(courseQuery);
   return (
     <>
       <div className="space-y-4">
@@ -73,18 +80,20 @@ export default function HomePage() {
             <span className="text-gray-500">
               Professors with the highest student ratings
             </span>
-            {professors.map((professor) => (
-              <div key={professor.id}>
-                <RatingCard
-                  key={professor.id}
-                  name={professor.name}
-                  department={professor.faculty}
-                  image={professor.image}
-                  rating={professor.averageRating}
-                  reviews={professor.totalReviews}
-                />
-              </div>
-            ))}
+            {professorsData?.professors
+              ?.slice(0, 4)
+              .map((professor: Professor) => (
+                <div key={professor.id}>
+                  <RatingCard
+                    key={professor.id}
+                    name={professor.name}
+                    department={professor.faculty}
+                    image={imgUrl + professor?.image}
+                    rating={professor.averageRating}
+                    reviews={professor.totalReviews}
+                  />
+                </div>
+              ))}
           </div>
           <div className="border border-gray-300 rounded-lg p-4 mt-6 ">
             <div className="flex gap-4">
@@ -96,7 +105,7 @@ export default function HomePage() {
             <span className="text-gray-500">
               Courses with the most student reviews
             </span>
-            {courses.map((course) => (
+            {coursesData?.courses?.slice(0, 4).map((course: Course) => (
               <div key={course.id}>
                 {/* <RatingCard
                   key={professor.id}
@@ -108,9 +117,9 @@ export default function HomePage() {
                 /> */}
                 <CourseRatingCard
                   code={course.code}
-                  name={course.name}
+                  name={course.title}
                   faculty={course.faculty}
-                  averageRating={course.averageRating}
+                  averageRating={course.averageRate}
                   totalReviews={course.totalReviews}
                 />
               </div>

@@ -1,6 +1,7 @@
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Star } from "lucide-react";
+// import { s } from "node_modules/react-router/dist/development/context-BqL5Eckq.d.mts";
 interface RatingCardProps {
   name: string;
   department: string;
@@ -15,10 +16,13 @@ export default function RatingCard({
   rating,
   reviews,
 }: RatingCardProps) {
-  const filledStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
-  //   const emptyStars = 5 - filledStars;
-  const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
+  const safeAverage = Number(rating ?? 0);
+  const filledStars = Math.max(0, Math.floor(safeAverage)); // ✅ use safeAverage
+  const hasHalfStar = safeAverage % 1 >= 0.5; // ✅ safeAverage
+  const emptyStars = Math.max(0, 5 - filledStars - (hasHalfStar ? 1 : 0)); // ✅ prevent negatives
+  {
+    console.log("🖼️ Final image URL:", image);
+  }
   return (
     <>
       <div className=" flex gap-4 border border-gray-300 rounded-lg p-4 mt-6">
@@ -27,6 +31,7 @@ export default function RatingCard({
           alt="Top Rated Professors"
           className="rounded-full w-16 h-16"
         />
+
         <div>
           <h3 className="text-lg font-semibold">{name}</h3>
           <p className="text-gray-500">{department}</p>
@@ -61,7 +66,7 @@ export default function RatingCard({
             </div>
 
             <span className="text-lg text-gray-600 font-semibold p-0">
-              {rating.toFixed(1)}/5
+              {safeAverage.toFixed(1)}/5
             </span>
             <h1 className="text-sm">{reviews} Reviews</h1>
           </div>

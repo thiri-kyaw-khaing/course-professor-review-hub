@@ -16,9 +16,13 @@ export const loginAction = async ({ request }: ActionFunctionArgs) => {
   try {
     const response = await authApi.post("login", authData);
     if (response.status == 200) {
-      const redirectTo =
-        new URL(request.url).searchParams.get("redirect") || "/";
-      return redirect(redirectTo);
+      if (response.data.userRole === "USER") {
+        const redirectTo =
+          new URL(request.url).searchParams.get("redirect") || "/";
+        return redirect(redirectTo);
+      } else {
+        return redirect("/admin");
+      }
     }
     return { error: response.data || "Login failed" };
   } catch (error) {

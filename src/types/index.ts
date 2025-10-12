@@ -31,7 +31,7 @@ export type Course = {
   credits: number;
   description: string;
   status?: "active" | "inactive";
-  averageRating?: number;
+  averageRate?: number;
   totalReviews: number;
   reviews?: { id: number; comment: string; rating: number }[];
   title?: string;
