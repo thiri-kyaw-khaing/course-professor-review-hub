@@ -8,7 +8,7 @@ import {
   MessageSquare,
   PlusIcon,
 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import StarRating from "@/components/page-components/StarRating";
@@ -23,12 +23,17 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { oneProfessorQuery } from "@/api/query";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import type { Review } from "@/types";
 
 export default function ProfessorDetailPage() {
-  const { professorId } = useParams();
-  const professor = professors.find((p) => p.id === Number(professorId));
+  // const { professorId } = useParams();
+  // const professor = professors.find((p) => p.id === Number(professorId));
+  const { professorId } = useLoaderData();
+  const { data: professor } = useSuspenseQuery(oneProfessorQuery(professorId));
   const [rating, setRating] = useState(0);
-
+  const imgUrl = import.meta.env.VITE_IMG_URL;
   return (
     <>
       {professor ? (
@@ -49,10 +54,10 @@ export default function ProfessorDetailPage() {
               <Card>
                 <CardHeader className="flex flex-col lg:flex-row gap-4 items-center">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage src={professor.imageUrl} />
+                    <AvatarImage src={imgUrl + professor.data.image} />
                     <AvatarFallback className="bg-mfu-red text-white text-3xl">
-                      {professor.name
-                        ? professor.name
+                      {professor.data.name
+                        ? professor.data.name
                             .split(" ")
                             .map((n: string) => n[0])
                             .join("")
@@ -60,25 +65,25 @@ export default function ProfessorDetailPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="text-center lg:text-left space-y-2">
-                    <CardTitle>{professor.name}</CardTitle>
+                    <CardTitle>{professor.data.name}</CardTitle>
                     <div className="flex items-center gap-1 text-gray-600">
                       <GraduationCap className="inline mr-1 h-5 w-5" />
-                      <p>{professor.faculty}</p>
+                      <p>{professor.data.faculty}</p>
                     </div>
-                    <div className="flex items-center gap-1 text-gray-600">
+                    {/* <div className="flex items-center gap-1 text-gray-600">
                       <MapPin className="inline mr-1 h-4 w-4" />
-                      <p>{professor.office}</p>
-                    </div>
+                      <p>{professor.data.office}</p>
+                    </div> */}
                     <div className="flex items-center gap-1 text-gray-600">
                       <Mail className="inline mr-1 h-5 w-5" />
-                      <p>{professor.email}</p>
+                      <p>{professor.data.email}</p>
                     </div>
                     <div className="flex items-center gap-1 mt-1">
                       <StarRating
-                        value={professor.averageRate ?? 0}
+                        value={professor.data.averageRate ?? 0}
                         readOnly={true}
                       />
-                      <span>{professor.averageRate} / 5</span>
+                      <span>{professor.data.averageRate} / 5</span>
                     </div>
                   </div>
                 </CardHeader>
@@ -121,7 +126,7 @@ export default function ProfessorDetailPage() {
                             <DialogTitle>Write a Review</DialogTitle>
                             <DialogDescription>
                               Share your experience with Professor{" "}
-                              {professor.name} to help other students.
+                              {professor.data.name} to help other students.
                             </DialogDescription>
                           </DialogHeader>
                           <div className="grid gap-4">
@@ -158,10 +163,10 @@ export default function ProfessorDetailPage() {
                 </div>
                 <h1 className="text-gray-500 mb-4">Reviews from Students</h1>
 
-                {professor?.reviews?.length === 0 ? (
+                {professor?.data?.reviews?.length === 0 ? (
                   <h2 className="text-lg font-semibold">No reviews found.</h2>
                 ) : (
-                  professor?.reviews?.map((review) => (
+                  professor?.reviews?.map((review: Review) => (
                     <div key={review.id} className="mb-4 border rounded-md p-4">
                       <div className="flex items-center mb-2">
                         <h1 className="text-md font-semibold ">
@@ -184,24 +189,24 @@ export default function ProfessorDetailPage() {
               <Card className="border border-gray-300 rounded-md p-6 w-full">
                 <h2 className="text-lg font-semibold">Overall Course Rating</h2>
                 <h1 className="text-4xl font-bold justify-center items-center text-center flex mt-6">
-                  {professor.averageRate}
+                  {professor.data.averageRate}
                 </h1>
                 <div className="flex justify-center mt-2">
                   <StarRating
-                    value={professor.averageRate ?? 0}
+                    value={professor.data.averageRate ?? 0}
                     readOnly={true}
                   />
                 </div>
                 <p className="text-gray-600 mt-2 text-center">
-                  {professor.totalReviews} Reviews
+                  {professor.data.totalReviews} Reviews
                 </p>
               </Card>
 
               <Card className="border border-gray-300 rounded-md p-6 w-full">
                 <h2 className="text-lg font-semibold mb-2">Education</h2>
                 <ul className="list-disc ml-5 text-sm text-gray-700">
-                  {professor.education.map((e, i) => (
-                    <li key={i}>{e}</li>
+                  {professor.data.education.map((edu, index) => (
+                    <li key={index}>{edu.degree}</li>
                   ))}
                 </ul>
               </Card>

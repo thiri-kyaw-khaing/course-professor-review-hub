@@ -23,7 +23,7 @@ import ManageProfessorsPage from "./pages/admin/manageProfessors";
 import { loginAction, logoutAction } from "@/router/action";
 import { LoginForm } from "./components/page-components/auth/Login-form";
 import ErrorPage from "./pages/Error";
-import { oneCourseLoader } from "./router/loader";
+import { oneCourseLoader, oneProfessorLoader } from "./router/loader";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -48,7 +48,11 @@ export const router = createBrowserRouter([
         Component: ProfessorRootLayout,
         children: [
           { index: true, Component: ProfessorsPage },
-          { path: ":professorId", Component: professorDetailPage },
+          {
+            path: ":professorId",
+            Component: professorDetailPage,
+            loader: oneProfessorLoader,
+          },
         ],
       },
       {

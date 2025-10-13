@@ -16,7 +16,7 @@ export type Professor = {
   email: string;
   phone: string;
   specializations: string[]; // ["Software Engineering", "Database Systems"]
-  education: string[]; // ["Ph.D. Computer Science - Chulalongkorn University", "M.Sc. Information Technology - MFU"]
+  education: { degree: string }[]; // ["Ph.D. Computer Science - Chulalongkorn University", "M.Sc. Information Technology - MFU"]
   image?: string;
   totalReviews: number;
   reviews?: { id: number; comment: string; rating: number }[];

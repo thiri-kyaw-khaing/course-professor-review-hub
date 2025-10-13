@@ -46,3 +46,20 @@ export const oneCourseQuery = (id: number) => ({
   queryKey: ["courses", "detail", id],
   queryFn: () => fetchOneCourse(id),
 });
+
+export const fetchOneProfessor = async (id: number) => {
+  const professor = await api.get(`users/professors/${id}`);
+
+  if (!professor) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return professor.data;
+};
+
+export const oneProfessorQuery = (id: number) => ({
+  queryKey: ["professors", "detail", id],
+  queryFn: () => fetchOneProfessor(id),
+});

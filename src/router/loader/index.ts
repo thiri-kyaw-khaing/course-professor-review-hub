@@ -1,5 +1,10 @@
 import api from "@/api";
-import { courseQuery, oneCourseQuery, queryClient } from "@/api/query";
+import {
+  courseQuery,
+  oneCourseQuery,
+  oneProfessorQuery,
+  queryClient,
+} from "@/api/query";
 import type { LoaderFunctionArgs } from "react-router-dom";
 
 // export const homeLoader = async () => {
@@ -21,3 +26,15 @@ export const oneCourseLoader = async ({ params }: LoaderFunctionArgs) => {
   await queryClient.ensureQueryData(oneCourseQuery(Number(params.courseId)));
   return { courseId: params.courseId };
 };
+
+export const oneProfessorLoader = async ({ params }: LoaderFunctionArgs) => {
+  if (!params.professorId) {
+    throw new Error("No professor ID provided");
+  }
+  await queryClient.ensureQueryData(
+    oneProfessorQuery(Number(params.professorId))
+  );
+  return { professorId: params.professorId };
+};
+
+// Assuming you have a similar query for fetching a single professor
