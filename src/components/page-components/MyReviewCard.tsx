@@ -29,9 +29,9 @@ export default function MyReviewCard({ reviews = [] }: MyReviewCardProps) {
     <div className="grid gap-4 mt-6">
       {reviews.map((review) => {
         if (review.professorId === null) {
-          return <MyReviewCourse review={review} />;
+          return <MyReviewCourse review={review} key={review.id} />;
         } else {
-          return <MyReviewProfessor review={review} />;
+          return <MyReviewProfessor review={review} key={review.id} />;
         }
 
         // const isProfessorReview = !!review.professor;

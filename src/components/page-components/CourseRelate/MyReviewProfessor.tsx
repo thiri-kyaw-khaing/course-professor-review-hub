@@ -53,14 +53,6 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
                   </span>
                 </div>
                 <div className="flex space-x-1 ml-4">
-                  {/* <Button
-                    variant="ghost"
-                    size="sm"
-                    //   onClick={() => handleEditReview(review)}
-                    className="text-blue-600 hover:text-blue-700 p-1"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button> */}
                   <Button
                     variant="ghost"
                     size="sm"
