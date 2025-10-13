@@ -5,8 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { reviews } from "@/data";
 import type { Review } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-
+import { useReviewsStore } from "@/store/reviewStore";
 export default function MyReviewsPage() {
+  // const { reviews, setReviews, removeReview } = useReviewsStore();
   const {
     data: allReviews,
     isLoading: allReviewsLoading,

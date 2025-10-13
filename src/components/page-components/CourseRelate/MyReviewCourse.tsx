@@ -8,8 +8,10 @@ import type { Review } from "@/types";
 import StarRating from "../StarRating";
 import { Calendar, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+// import { useReviewsStore } from "@/store/reviewStore";
 
 export default function MyReviewCourse({ review }: { review: Review }) {
+  // const { reviews, removeReview } = useReviewsStore();
   return (
     <>
       <Card key={review.id}>
@@ -26,15 +28,16 @@ export default function MyReviewCourse({ review }: { review: Review }) {
                   </span>
                 </div>
                 <div className="flex space-x-1 ml-4">
-                  <Button
+                  {/* <Button
                     variant="ghost"
                     size="sm"
                     //   onClick={() => handleEditReview(review)}
                     className="text-blue-600 hover:text-blue-700 p-1"
                   >
                     <Edit className="h-4 w-4" />
-                  </Button>
+                  </Button> */}
                   <Button
+                    // onClick={() => removeReview(review.id)}
                     variant="ghost"
                     size="sm"
                     //   onClick={() => handleDeleteReview(review.id)}

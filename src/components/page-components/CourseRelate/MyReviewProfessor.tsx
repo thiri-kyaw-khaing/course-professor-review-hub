@@ -8,8 +8,35 @@ import type { Review } from "@/types";
 import StarRating from "../StarRating";
 import { Calendar, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useReviewsStore } from "@/store/reviewStore";
+import api from "@/api";
+import axios from "axios";
 
 export default function MyReviewProfessor({ review }: { review: Review }) {
+  const { removeReview } = useReviewsStore();
+
+  const handleDeleteReview = async (reviewId: number) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+
+    try {
+      // ✅ Simulate or perform real API call (same as Postman)
+      const res = await api.delete(
+        "users/reviews",
+        { data: { reviewId: reviewId } } // <-- important: send body in DELETE request
+      );
+
+      if (res.data.success) {
+        alert(res.data.message || "Review deleted successfully.");
+        // ✅ Remove it from local Zustand store
+        removeReview(reviewId);
+      } else {
+        alert("Failed to delete review. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      alert("Something went wrong while deleting the review.");
+    }
+  };
   return (
     <>
       <Card key={review.id}>
@@ -26,18 +53,18 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
                   </span>
                 </div>
                 <div className="flex space-x-1 ml-4">
-                  <Button
+                  {/* <Button
                     variant="ghost"
                     size="sm"
                     //   onClick={() => handleEditReview(review)}
                     className="text-blue-600 hover:text-blue-700 p-1"
                   >
                     <Edit className="h-4 w-4" />
-                  </Button>
+                  </Button> */}
                   <Button
                     variant="ghost"
                     size="sm"
-                    //   onClick={() => handleDeleteReview(review.id)}
+                    onClick={() => handleDeleteReview(review.id)}
                     className="text-red-600 hover:text-red-700 p-1"
                   >
                     <Trash2 className="h-4 w-4" />
