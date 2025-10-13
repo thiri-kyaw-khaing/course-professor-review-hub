@@ -1,9 +1,25 @@
+import { allReviewsQuery } from "@/api/query";
 import MyReviewCard from "@/components/page-components/MyReviewCard";
 import MyReviewCourse from "@/components/page-components/MyReviewCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { reviews } from "@/data";
+import type { Review } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MyReviewsPage() {
+  const {
+    data: allReviews,
+    isLoading: allReviewsLoading,
+    isError: allReviewsError,
+  } = useQuery(allReviewsQuery);
+
+  if (allReviewsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (allReviewsError) {
+    return <div>Error loading reviews.</div>;
+  }
   return (
     <>
       <div>
@@ -37,16 +53,20 @@ export default function MyReviewsPage() {
           {/* Content below (optional) */}
           <TabsContent value="all">
             {" "}
-            <MyReviewCard reviews={reviews} />
+            <MyReviewCard reviews={allReviews.data} />
           </TabsContent>
           <TabsContent value="courses">
             <MyReviewCard
-              reviews={reviews.filter((review) => review.courseId !== null)}
+              reviews={allReviews.data.filter(
+                (review: Review) => review.courseId !== null
+              )}
             />
           </TabsContent>
           <TabsContent value="professors">
             <MyReviewCard
-              reviews={reviews.filter((review) => review.professorId !== null)}
+              reviews={allReviews.data.filter(
+                (review: Review) => review.professorId !== null
+              )}
             />
           </TabsContent>
         </Tabs>

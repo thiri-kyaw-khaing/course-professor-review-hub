@@ -63,3 +63,13 @@ export const oneProfessorQuery = (id: number) => ({
   queryKey: ["professors", "detail", id],
   queryFn: () => fetchOneProfessor(id),
 });
+
+const fetchAllReviews = async () => {
+  const response = await api.get("users/reviews");
+  return response.data;
+};
+
+export const allReviewsQuery = {
+  queryKey: ["all-reviews"],
+  queryFn: () => fetchAllReviews(),
+};
