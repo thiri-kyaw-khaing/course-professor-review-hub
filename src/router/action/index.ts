@@ -64,3 +64,26 @@ export const reviewProfessorAction = async ({
     return { error: error.response?.data?.message || "Server error" };
   }
 };
+
+export const reviewCourseAction = async ({ request }: ActionFunctionArgs) => {
+  alert("course review action called");
+  const formData = await request.formData();
+  const reviewData = {
+    courseId: formData.get("courseId"),
+    rating: formData.get("rating"),
+    comment: formData.get("comment"),
+  };
+
+  console.log("📤 Sending review data:", reviewData);
+
+  try {
+    const response = await api.post("users/reviews", reviewData);
+    if (response.status === 201 || response.data.success) {
+      return redirect(`/courses/${reviewData.courseId}`);
+    } else {
+      return { error: response.data.message || "Failed to post review" };
+    }
+  } catch (error: any) {
+    return { error: error.response?.data?.message || "Server error" };
+  }
+};

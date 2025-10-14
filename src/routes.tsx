@@ -23,6 +23,7 @@ import ManageProfessorsPage from "./pages/admin/manageProfessors";
 import {
   loginAction,
   logoutAction,
+  reviewCourseAction,
   reviewProfessorAction,
 } from "@/router/action";
 import { LoginForm } from "./components/page-components/auth/Login-form";
@@ -44,6 +45,7 @@ export const router = createBrowserRouter([
             path: ":courseId",
             Component: CourseDetailPage,
             loader: oneCourseLoader,
+            action: reviewCourseAction,
           },
         ],
       },

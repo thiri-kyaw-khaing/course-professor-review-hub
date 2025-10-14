@@ -156,7 +156,11 @@ export default function ProfessorDetailPage() {
                           </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4">
-                          <Form method="post" className="space-y-4">
+                          <Form
+                            method="post"
+                            className="space-y-4"
+                            action={`/professors/${professorId}`}
+                          >
                             <input
                               type="hidden"
                               name="professorId"

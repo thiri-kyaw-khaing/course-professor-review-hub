@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { courses } from "@/data";
 
 import { ArrowLeft, MessageSquare, PlusIcon, Star } from "lucide-react";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Form, Link, useLoaderData, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogClose,
@@ -20,10 +20,13 @@ import StarRating from "@/components/page-components/StarRating";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { oneCourseQuery } from "@/api/query";
 import type { Review } from "@/types";
-
+import { useNavigation } from "react-router-dom";
 export default function CourseDetailPage() {
   const { courseId } = useLoaderData();
   const { data: course } = useSuspenseQuery(oneCourseQuery(courseId));
+  const [open, setOpen] = useState(false);
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
   // const { courseId } = useParams();
 
   // const course = courses.find((course) => course.id === Number(courseId));
@@ -138,30 +141,36 @@ export default function CourseDetailPage() {
           {/* Write review dialog */}
           <div className="ml-auto">
             <Dialog>
-              <form>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className=" text-white bg-[#8B0000] items-center hover:bg-[#8B0000]"
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className=" text-white bg-[#8B0000] items-center hover:bg-[#8B0000]"
+                >
+                  <PlusIcon className=" h-4 w-4 text-white" />
+                  Write a Review
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Write a Review</DialogTitle>
+                  <DialogDescription>
+                    Share your experience with Professor Unknown to help other
+                    students.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4">
+                  <Form
+                    method="post"
+                    className="space-y-4 "
+                    action={`/courses/${courseId}`}
                   >
-                    <PlusIcon className=" h-4 w-4 text-white" />
-                    Write a Review
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Write a Review</DialogTitle>
-                    <DialogDescription>
-                      Share your experience with Professor Unknown to help other
-                      students.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-4">
+                    <input type="hidden" name="courseId" value={courseId} />
                     <div>
                       <Label className="mb-1 block text-sm font-medium">
                         Rating
                       </Label>
                       <StarRating value={rating} onChange={setRating} />
+                      <input type="hidden" name="rating" value={rating} />
                     </div>
                     <div className="grid gap-3">
                       {/* Comment Box */}
@@ -169,23 +178,24 @@ export default function CourseDetailPage() {
                         <Label htmlFor="comment">Your Review</Label>
                         <textarea
                           id="comment"
+                          name="comment"
                           rows={4}
                           className="w-full mt-1 rounded-md border bg-muted p-3 text-sm"
                           placeholder="Share your thoughts about this course..."
                         />
                       </div>
                     </div>
-                  </div>
-                  <DialogFooter>
-                    {/* <DialogClose asChild>
+                    <DialogFooter>
+                      {/* <DialogClose asChild>
                       <Button variant="outline">Cancel</Button>
                     </DialogClose> */}
-                    <Button type="submit" className="bg-[#8B0000] w-full">
-                      Submit Review
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </form>
+                      <Button type="submit" className="bg-[#8B0000] w-full">
+                        Submit Review
+                      </Button>
+                    </DialogFooter>
+                  </Form>
+                </div>
+              </DialogContent>
             </Dialog>
           </div>
         </div>
