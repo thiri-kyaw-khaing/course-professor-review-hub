@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { professors } from "@/data";
+import { professors, reviews } from "@/data";
 import {
   ArrowLeft,
   GraduationCap,
@@ -8,7 +8,7 @@ import {
   MessageSquare,
   PlusIcon,
 } from "lucide-react";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Form, Link, useLoaderData, useParams } from "react-router-dom";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import StarRating from "@/components/page-components/StarRating";
@@ -22,11 +22,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { oneProfessorQuery } from "@/api/query";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { Review } from "@/types";
-
+import api from "@/api";
+import { useNavigation } from "react-router-dom";
+import { useActionData } from "react-router-dom";
 export default function ProfessorDetailPage() {
   // const { professorId } = useParams();
   // const professor = professors.find((p) => p.id === Number(professorId));
@@ -34,6 +36,28 @@ export default function ProfessorDetailPage() {
   const { data: professor } = useSuspenseQuery(oneProfessorQuery(professorId));
   const [rating, setRating] = useState(0);
   const imgUrl = import.meta.env.VITE_IMG_URL;
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  const actionData = useActionData() as {
+    error?: string;
+    message?: string;
+  };
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    // Only close dialog when submission is finished and no error exists
+    if (navigation.state === "idle" && !actionData?.error) {
+      setOpen(false);
+      setRating(0);
+    }
+  }, [actionData, navigation.state]);
+
+  // Reset rating when professorId changes
+  useEffect(() => {
+    setOpen(false);
+    setRating(0);
+  }, [professorId]);
+
   return (
     <>
       {professor ? (
@@ -110,54 +134,76 @@ export default function ProfessorDetailPage() {
                   <MessageSquare className="h-6 w-6" />
                   <span className="text-lg">Student Reviews</span>
                   <div className="ml-auto">
-                    <Dialog>
-                      <form>
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="text-white bg-[#8B0000] hover:bg-[#8B0000]"
-                          >
-                            <PlusIcon className="h-4 w-4 text-white" />
-                            Write a Review
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Write a Review</DialogTitle>
-                            <DialogDescription>
-                              Share your experience with Professor{" "}
-                              {professor.data.name} to help other students.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="grid gap-4">
-                            <div>
+                    <Dialog open={open} onOpenChange={setOpen}>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="text-white bg-[#8B0000] hover:bg-[#8B0000]"
+                        >
+                          <PlusIcon className="h-4 w-4 text-white" />
+                          Write a Review
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Write a Review</DialogTitle>
+                          <DialogDescription>
+                            Share your experience with Professor{" "}
+                            {professor.data.name} to help other students.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4">
+                          <Form method="post" className="space-y-4">
+                            <input
+                              type="hidden"
+                              name="professorId"
+                              value={professorId}
+                            />
+                            <div className="space-y-4">
                               <Label className="mb-1 block text-sm font-medium">
                                 Rating
                               </Label>
                               <StarRating value={rating} onChange={setRating} />
+                              <input
+                                type="hidden"
+                                name="rating"
+                                value={rating}
+                              />
                             </div>
                             <div className="grid gap-3">
                               <div>
                                 <Label htmlFor="comment">Your Review</Label>
                                 <textarea
                                   id="comment"
+                                  name="comment"
                                   rows={4}
                                   className="w-full mt-1 rounded-md border bg-muted p-3 text-sm"
                                   placeholder="Share your thoughts about this professor..."
                                 />
                               </div>
                             </div>
-                          </div>
-                          <DialogFooter>
-                            <Button
-                              type="submit"
-                              className="bg-[#8B0000] w-full"
-                            >
-                              Submit Review
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </form>
+                            <DialogFooter>
+                              <div className="flex flex-col items-center w-full">
+                                {actionData && (
+                                  <p className="text-sm text-red-600 mb-2 text-center w-full">
+                                    {actionData?.message || actionData?.error}
+                                  </p>
+                                )}
+
+                                <Button
+                                  type="submit"
+                                  className="bg-[#8B0000] w-full"
+                                  disabled={isSubmitting}
+                                >
+                                  {isSubmitting
+                                    ? "Submitting..."
+                                    : "Submit Review"}
+                                </Button>
+                              </div>
+                            </DialogFooter>
+                          </Form>
+                        </div>
+                      </DialogContent>
                     </Dialog>
                   </div>
                 </div>

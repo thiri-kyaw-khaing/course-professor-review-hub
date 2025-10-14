@@ -41,3 +41,26 @@ export const logoutAction = async () => {
     console.log("logout failed", error);
   }
 };
+
+export const reviewProfessorAction = async ({
+  request,
+}: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const reviewData = {
+    professorId: formData.get("professorId"),
+    rating: Number(formData.get("rating")),
+    comment: formData.get("comment"),
+  };
+
+  try {
+    const response = await api.post("users/reviews", reviewData);
+    if (response.status === 201 || response.data.success) {
+      // optionally redirect or return success
+      return redirect(`/professors/${reviewData.professorId}`);
+    } else {
+      return { error: response.data.message || "Failed to post review" };
+    }
+  } catch (error: any) {
+    return { error: error.response?.data?.message || "Server error" };
+  }
+};

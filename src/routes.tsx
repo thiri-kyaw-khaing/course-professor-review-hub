@@ -20,7 +20,11 @@ import AdminRootLayout from "./components/page-components/admin/adminRootLayout"
 import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
 // import { homeLoader } from "@/router/loader";
-import { loginAction, logoutAction } from "@/router/action";
+import {
+  loginAction,
+  logoutAction,
+  reviewProfessorAction,
+} from "@/router/action";
 import { LoginForm } from "./components/page-components/auth/Login-form";
 import ErrorPage from "./pages/Error";
 import { oneCourseLoader, oneProfessorLoader } from "./router/loader";
@@ -51,6 +55,7 @@ export const router = createBrowserRouter([
           {
             path: ":professorId",
             Component: professorDetailPage,
+            action: reviewProfessorAction,
             loader: oneProfessorLoader,
           },
         ],
