@@ -66,7 +66,6 @@ export const reviewProfessorAction = async ({
 };
 
 export const reviewCourseAction = async ({ request }: ActionFunctionArgs) => {
-  alert("course review action called");
   const formData = await request.formData();
   const reviewData = {
     courseId: formData.get("courseId"),

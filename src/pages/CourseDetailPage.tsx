@@ -20,13 +20,14 @@ import StarRating from "@/components/page-components/StarRating";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { oneCourseQuery } from "@/api/query";
 import type { Review } from "@/types";
-import { useNavigation } from "react-router-dom";
+import { useNavigation, useActionData } from "react-router-dom";
 export default function CourseDetailPage() {
   const { courseId } = useLoaderData();
   const { data: course } = useSuspenseQuery(oneCourseQuery(courseId));
   const [open, setOpen] = useState(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  const actionData = useActionData();
   // const { courseId } = useParams();
 
   // const course = courses.find((course) => course.id === Number(courseId));
@@ -189,9 +190,20 @@ export default function CourseDetailPage() {
                       {/* <DialogClose asChild>
                       <Button variant="outline">Cancel</Button>
                     </DialogClose> */}
-                      <Button type="submit" className="bg-[#8B0000] w-full">
-                        Submit Review
-                      </Button>
+                      <div className="flex flex-col items-center w-full">
+                        {actionData && (
+                          <p className="text-sm text-red-500">
+                            {actionData?.message || actionData?.error}
+                          </p>
+                        )}
+
+                        <Button
+                          type="submit"
+                          className="bg-[#8B0000] w-full mt-2"
+                        >
+                          {isSubmitting ? "Submitting..." : "Submit Review"}
+                        </Button>
+                      </div>
                     </DialogFooter>
                   </Form>
                 </div>
