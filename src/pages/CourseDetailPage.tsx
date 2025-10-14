@@ -21,9 +21,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { oneCourseQuery } from "@/api/query";
 import type { Review } from "@/types";
 import { useNavigation, useActionData } from "react-router-dom";
+import { useEffect } from "react";
 export default function CourseDetailPage() {
   const { courseId } = useLoaderData();
-  const { data: course } = useSuspenseQuery(oneCourseQuery(courseId));
+  const { data: course, refetch } = useSuspenseQuery(oneCourseQuery(courseId));
   const [open, setOpen] = useState(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -35,6 +36,19 @@ export default function CourseDetailPage() {
   const hasHalfStar = (course?.averageRate ?? 0) % 1 >= 0.5;
   const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
   const [rating, setRating] = useState(0);
+
+  useEffect(() => {
+    if (navigation.state === "idle" && !actionData?.error) {
+      refetch();
+      setOpen(false);
+      setRating(0);
+    }
+  }, [actionData, navigation.state]);
+  // Reset rating when professorId changes
+  useEffect(() => {
+    setOpen(false);
+    setRating(0);
+  }, [courseId]);
   return (
     <>
       <Link to="/courses" className="flex items-center mt-4">
@@ -141,7 +155,7 @@ export default function CourseDetailPage() {
           </Link> */}
           {/* Write review dialog */}
           <div className="ml-auto">
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button
                   variant="outline"
