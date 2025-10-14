@@ -29,9 +29,6 @@ export default function ProfessorListPage({
 }: ProfessorListPageProps) {
   const imgUrl = import.meta.env.VITE_IMG_URL;
 
-  professors.map((professor) => {
-    console.log(professor.image);
-  });
   return (
     <>
       {professors.length === 0 ? (

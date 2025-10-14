@@ -12,6 +12,7 @@ export default function ProfessorsPage() {
     data: professorsData,
     isLoading: professorsLoading,
     isError: professorsError,
+    refetch,
   } = useQuery(professorQuery);
 
   if (professorsLoading) {

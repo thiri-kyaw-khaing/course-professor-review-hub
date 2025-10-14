@@ -33,7 +33,9 @@ export default function ProfessorDetailPage() {
   // const { professorId } = useParams();
   // const professor = professors.find((p) => p.id === Number(professorId));
   const { professorId } = useLoaderData();
-  const { data: professor } = useSuspenseQuery(oneProfessorQuery(professorId));
+  const { data: professor, refetch } = useSuspenseQuery(
+    oneProfessorQuery(professorId)
+  );
   const [rating, setRating] = useState(0);
   const imgUrl = import.meta.env.VITE_IMG_URL;
   const navigation = useNavigation();
@@ -47,6 +49,7 @@ export default function ProfessorDetailPage() {
   useEffect(() => {
     // Only close dialog when submission is finished and no error exists
     if (navigation.state === "idle" && !actionData?.error) {
+      refetch();
       setOpen(false);
       setRating(0);
     }
@@ -212,7 +215,7 @@ export default function ProfessorDetailPage() {
                 {professor?.data?.reviews?.length === 0 ? (
                   <h2 className="text-lg font-semibold">No reviews found.</h2>
                 ) : (
-                  professor?.reviews?.map((review: Review) => (
+                  professor?.data?.reviews?.map((review: Review) => (
                     <div key={review.id} className="mb-4 border rounded-md p-4">
                       <div className="flex items-center mb-2">
                         <h1 className="text-md font-semibold ">
