@@ -31,6 +31,8 @@ interface ProfessorMangeCardProps {
 export default function ProfessorMangeCard({
   professors,
 }: ProfessorMangeCardProps) {
+  const imgUrl = import.meta.env.VITE_IMG_URL;
+  professors?.map((professor) => console.log(`${imgUrl + professor.image}`));
   //   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   return (
     <>
@@ -40,7 +42,7 @@ export default function ProfessorMangeCard({
             <CardHeader className="flex items-center space-x-4">
               <Avatar className="h-10 w-10 rounded-full overflow-hidden">
                 <img
-                  src={professor.image}
+                  src={imgUrl + professor.image}
                   alt={professor.name}
                   className="h-full w-full object-cover"
                 />
@@ -60,15 +62,15 @@ export default function ProfessorMangeCard({
               {professor.email}
 
               <div className="flex items-center mt-2 space-x-2">
-                <StarRating value={professor?.averageRating} readOnly />
-                <p>{professor?.averageRating}</p>
+                <StarRating value={professor?.averageRate} readOnly />
+                <p>{professor?.averageRate}</p>
                 <p>({professor?.totalReviews} reviews)</p>
               </div>
 
               <div>
                 <h4 className="font-semibold mt-4 mb-2">Education:</h4>
                 <ul className="list-disc list-inside">
-                  {professor.education.map((edu, index) => (
+                  {professor.education?.map((edu, index) => (
                     <li key={index}>{edu}</li>
                   ))}
                 </ul>

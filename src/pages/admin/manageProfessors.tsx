@@ -1,3 +1,4 @@
+import { professorQuery } from "@/api/query";
 import CourseForm from "@/components/page-components/admin/CourseForm";
 import CourseMangeCard from "@/components/page-components/admin/CourseMangeCard";
 import ProfessorForm from "@/components/page-components/admin/ProfessorForm";
@@ -14,10 +15,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { courses, professors } from "@/data";
 import { Plus, Search } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function ManageProfessorsPage() {
+  const {
+    data: professorsData,
+    isLoading: professorsLoading,
+    isError: professorsError,
+    refetch,
+  } = useQuery(professorQuery);
   const [searchTerm, setSearchTerm] = useState("");
+
+  if (professorsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (professorsError) {
+    return <div>Error loading professors.</div>;
+  }
+
   return (
     <>
       <div>
@@ -59,7 +76,7 @@ export default function ManageProfessorsPage() {
           </DialogContent>
         </Dialog>
       </div>
-      <ProfessorMangeCard professors={professors} />
+      <ProfessorMangeCard professors={professorsData.professors} />
     </>
   );
 }
