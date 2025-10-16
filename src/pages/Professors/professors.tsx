@@ -6,6 +6,8 @@ import ProfessorListPage from "./professorlist";
 import { professors } from "@/data";
 import { professorQuery } from "@/api/query";
 import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import type { Professor } from "@/types";
 
 export default function ProfessorsPage() {
   const {
@@ -14,6 +16,30 @@ export default function ProfessorsPage() {
     isError: professorsError,
     refetch,
   } = useQuery(professorQuery);
+
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [selectedFaculty, setSelectedFaculty] = React.useState("all");
+  const [selectedRating, setSelectedRating] = React.useState("All Ratings");
+
+  const filteredProfessors = (professorsData?.professors || []).filter(
+    (professor: Professor) => {
+      const matchesSearchTerm = professor.name
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesFaculty =
+        selectedFaculty === "all" || professor.faculty === selectedFaculty;
+      let matchesRating = true;
+      if (selectedRating === "5 Stars")
+        matchesRating = professor.averageRate === 5;
+      else if (selectedRating === "4+ Stars")
+        matchesRating = (professor.averageRate || 0) >= 4;
+      else if (selectedRating === "3+ Stars")
+        matchesRating = (professor.averageRate || 0) >= 3;
+      // "All Ratings" keeps everything true
+
+      return matchesSearchTerm && matchesFaculty && matchesRating;
+    }
+  );
 
   if (professorsLoading) {
     return <div>Loading...</div>;
@@ -41,14 +67,22 @@ export default function ProfessorsPage() {
               type="text"
               placeholder="Search for professors or courses..."
               className="w-full outline-none border-none focus:ring-0"
+              value={searchTerm} // ✅ controlled value
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="mt-4 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
-              <FacultyDropdown />
+              <FacultyDropdown
+                value={selectedFaculty}
+                onChange={(value) => setSelectedFaculty(value)}
+              />
             </div>
             <div className="mt-4 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
-              <RatingDropdown />
+              <RatingDropdown
+                value={selectedRating}
+                onChange={(value) => setSelectedRating(value)}
+              />
             </div>
             <Button className="mt-4 bg-[#8B0000] text-white w-full sm:w-auto">
               Search
@@ -56,7 +90,7 @@ export default function ProfessorsPage() {
           </div>
         </div>
         {/* <CourseListPage courses={courses} /> */}
-        <ProfessorListPage professors={professorsData?.professors} />
+        <ProfessorListPage professors={filteredProfessors} />
       </>
     </>
   );
