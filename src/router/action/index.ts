@@ -86,3 +86,26 @@ export const reviewCourseAction = async ({ request }: ActionFunctionArgs) => {
     return { error: error.response?.data?.message || "Server error" };
   }
 };
+
+export const registerAction = async ({ request }: ActionFunctionArgs) => {
+  // request=user input to login
+  const formData = await request.formData();
+  const authData = {
+    email: formData.get("email"),
+  };
+
+  //   response=api response to user
+
+  try {
+    const response = await authApi.post("register", authData);
+    console.log("Register response:", response);
+    if (response.status == 200) {
+      return redirect("/register/otp");
+    }
+    return { error: response.data || "Register failed" };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data || { error: "Register failed" };
+    } else throw error;
+  }
+};

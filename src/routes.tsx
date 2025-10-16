@@ -23,6 +23,7 @@ import ManageProfessorsPage from "./pages/admin/manageProfessors";
 import {
   loginAction,
   logoutAction,
+  registerAction,
   reviewCourseAction,
   reviewProfessorAction,
 } from "@/router/action";
@@ -72,7 +73,7 @@ export const router = createBrowserRouter([
     path: "/register",
     Component: AuthRootLayout,
     children: [
-      { index: true, Component: SignUpPage },
+      { index: true, Component: SignUpPage, action: registerAction },
       { path: "otp", Component: OTPPage },
       { path: "create", Component: CreateAccForm },
     ],
