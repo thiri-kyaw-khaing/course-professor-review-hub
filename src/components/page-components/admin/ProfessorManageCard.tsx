@@ -24,6 +24,8 @@ import { useState } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import StarRating from "../StarRating";
 import ProfessorEditForm from "./professorEditForm";
+import api from "@/api";
+import { useProfessorsStore } from "@/store/professorStore";
 interface ProfessorMangeCardProps {
   // Define any props if needed
   professors?: Professor[];
@@ -32,11 +34,37 @@ export default function ProfessorMangeCard({
   professors,
 }: ProfessorMangeCardProps) {
   const imgUrl = import.meta.env.VITE_IMG_URL;
-  professors?.map((professor) => console.log(`${imgUrl + professor.image}`));
+
   //   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+
+  const { removeProfessor } = useProfessorsStore();
+
+  const handleDeleteProfessor = async (professorId: number) => {
+    if (!window.confirm("Are you sure you want to delete this professor?"))
+      return;
+
+    try {
+      // ✅ Simulate or perform real API call (same as Postman)
+      const res = await api.delete(
+        "/admins/professors",
+        { data: { professorId: professorId } } // <-- important: send body in DELETE request
+      );
+
+      if (res.data.success) {
+        alert(res.data.message || "Professor deleted successfully.");
+        // ✅ Remove it from local Zustand store
+        removeProfessor(professorId);
+      } else {
+        alert("Failed to delete professor. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting professor:", error);
+      alert("Something went wrong while deleting the professor.");
+    }
+  };
   return (
     <>
-      <div className="flex  lg:grid-cols-2 gap-4  lg:gap-8 sm:gap-6 flex-wrap justify-center">
+      <div className="flex lg:grid lg:grid-cols-2 gap-4  lg:gap-8 sm:gap-6 flex-wrap justify-center">
         {professors?.map((professor) => (
           <Card className="w-[600px]">
             <CardHeader className="flex items-center space-x-4">
@@ -71,7 +99,7 @@ export default function ProfessorMangeCard({
                 <h4 className="font-semibold mt-4 mb-2">Education:</h4>
                 <ul className="list-disc list-inside">
                   {professor.education?.map((edu, index) => (
-                    <li key={index}>{edu}</li>
+                    <li key={index}>{edu.degree}</li>
                   ))}
                 </ul>
               </div>
@@ -109,6 +137,7 @@ export default function ProfessorMangeCard({
                 <Button
                   variant="outline"
                   className="bg-[#8B0000] text-white hover:bg-red-700"
+                  onClick={() => handleDeleteProfessor(professor.id)}
                 >
                   Delete
                 </Button>

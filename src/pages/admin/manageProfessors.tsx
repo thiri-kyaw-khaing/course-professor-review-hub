@@ -16,7 +16,10 @@ import { Input } from "@/components/ui/input";
 import { courses, professors } from "@/data";
 import { Plus, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { Professor } from "@/types";
+import { fi } from "zod/v4/locales";
+import { useProfessorsStore } from "@/store/professorStore";
 
 export default function ManageProfessorsPage() {
   const {
@@ -26,7 +29,13 @@ export default function ManageProfessorsPage() {
     refetch,
   } = useQuery(professorQuery);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const { professors, setProfessors } = useProfessorsStore();
+  useEffect(() => {
+    if (professorsData?.professors) {
+      console.log("Fetched professors:", professorsData.professors);
+      setProfessors(professorsData.professors);
+    }
+  }, [professorsData, setProfessors]);
   if (professorsLoading) {
     return <div>Loading...</div>;
   }
@@ -34,6 +43,12 @@ export default function ManageProfessorsPage() {
   if (professorsError) {
     return <div>Error loading professors.</div>;
   }
+
+  const filteredProfessors = (professors || []).filter(
+    (professor: Professor) => {
+      return professor.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+  );
 
   return (
     <>
@@ -76,7 +91,7 @@ export default function ManageProfessorsPage() {
           </DialogContent>
         </Dialog>
       </div>
-      <ProfessorMangeCard professors={professorsData.professors} />
+      <ProfessorMangeCard professors={filteredProfessors} />
     </>
   );
 }

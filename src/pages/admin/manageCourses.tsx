@@ -14,8 +14,9 @@ import { Input } from "@/components/ui/input";
 import { courses } from "@/data";
 import { Plus, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Course } from "@/types";
+import { useCoursesStore } from "@/store/courseStore";
 
 export default function ManageCoursesPage() {
   const {
@@ -24,14 +25,20 @@ export default function ManageCoursesPage() {
     isError: coursesError,
   } = useQuery(courseQuery);
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredCourses = (coursesData?.courses || []).filter(
-    (course: Course) => {
-      return (
-        course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.code?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  const { courses, setCourses } = useCoursesStore();
+  const filteredCourses = (courses || []).filter((course: Course) => {
+    return (
+      course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.code?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+  useEffect(() => {
+    if (coursesData?.courses) {
+      console.log("Fetched courses:", coursesData.courses);
+      setCourses(coursesData.courses);
     }
-  );
+  }, [coursesData, setCourses]);
 
   if (coursesLoading) {
     return <div>Loading...</div>;
@@ -41,28 +48,6 @@ export default function ManageCoursesPage() {
     return <div>Error loading courses.</div>;
   }
 
-  // const handleDeleteReview = async (reviewId: number) => {
-  //   if (!window.confirm("Are you sure you want to delete this review?")) return;
-
-  //   try {
-  //     // ✅ Simulate or perform real API call (same as Postman)
-  //     const res = await api.delete(
-  //       "users/reviews",
-  //       { data: { reviewId: reviewId } } // <-- important: send body in DELETE request
-  //     );
-
-  //     if (res.data.success) {
-  //       alert(res.data.message || "Review deleted successfully.");
-  //       // ✅ Remove it from local Zustand store
-  //       removeReview(reviewId);
-  //     } else {
-  //       alert("Failed to delete review. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting review:", error);
-  //     alert("Something went wrong while deleting the review.");
-  //   }
-  // };
   return (
     <>
       <div>

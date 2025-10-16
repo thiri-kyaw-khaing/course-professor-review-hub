@@ -88,7 +88,7 @@ export default function ProfessorListPage({
                 <CardFooter className="flex flex-wrap gap-2 items-center">
                   <div>
                     <p className="">Education: </p>
-                    {professor.education.map((edu, index) => (
+                    {professor.education?.map((edu, index) => (
                       <div>
                         {/* <PrizeIcon className="inline mr-1 h-4 w-4"/> */}
                         <h1
