@@ -8,13 +8,28 @@ import { Link } from "react-router";
 import CourseListPage from "./CourseList";
 import { courseQuery } from "@/api/query";
 import { useQuery } from "@tanstack/react-query";
-
+import { useState } from "react";
+import type { Course } from "@/types";
 export default function Courses() {
   const {
     data: coursesData,
     isLoading: coursesLoading,
     isError: coursesError,
   } = useQuery(courseQuery);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFaculty, setSelectedFaculty] = useState("all");
+
+  const filteredCourses = (coursesData?.courses || []).filter(
+    (course: Course) => {
+      const matchesSearchTerm =
+        course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.code?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesFaculty =
+        selectedFaculty === "all" || course.faculty === selectedFaculty;
+      return matchesSearchTerm && matchesFaculty;
+    }
+  );
 
   if (coursesLoading) {
     return <div>Loading...</div>;
@@ -25,6 +40,7 @@ export default function Courses() {
   }
 
   // const courses = coursesData || [];
+
   return (
     <>
       {/* Search professor and course card */}
@@ -42,6 +58,8 @@ export default function Courses() {
             type="text"
             placeholder="Search for professors or courses..."
             className="w-full outline-none border-none focus:ring-0"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="flex flex-col sm:flex-row gap-4">
@@ -56,7 +74,7 @@ export default function Courses() {
           </Button>
         </div>
       </div>
-      <CourseListPage courses={coursesData?.courses || []} />
+      <CourseListPage courses={filteredCourses} />
     </>
   );
 }
