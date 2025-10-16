@@ -10,26 +10,45 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { set } from "zod";
 
 const names = [
-  "School of Cosmetic_Science",
-  "School of Health Science",
-  "School of Applied Digital Technology",
-  "School of Integrative_Medicine",
-  "School of Law",
-  "School of Liberal Arts",
-  "School of Management",
-  "School of Nursing",
-  "School of Science",
-  "School of Sinology",
-  "School of Social Innovation",
-  "School of Dentistry",
+  "all",
+  "School_of_Cosmetic_Science",
+  "School_of_Health_Science",
+  "School_of_Applied_Digital_Technology",
+  "School_of_Integrative_Medicine",
+  "School_of_Law",
+  "School_of_Liberal_Arts",
+  "School_of_Management",
+  "School_of_Nursing",
+  "School_of_Science",
+  "School_of_Sinology",
+  "School_of_Social_Innovation",
+  "School_of_Dentistry",
 ];
 
-export default function FacultyDropdown() {
+interface FacultyDropdownProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export default function FacultyDropdown({
+  value,
+  onChange,
+}: FacultyDropdownProps) {
   const [open, setOpen] = React.useState(false);
-  const [selectedName, setSelectedName] =
-    React.useState<string>("Select Faculty");
+  const [selectedName, setSelectedName] = React.useState<string>(
+    value
+      ? names.find((name) => name === value) || "Select Faculty"
+      : "Select Faculty"
+  );
+
+  const handleSelect = (name: string) => {
+    setSelectedName(name);
+    setOpen(false);
+    onChange(name);
+  };
 
   return (
     <div className="flex flex-col gap-3 w-full ">
@@ -59,8 +78,7 @@ export default function FacultyDropdown() {
                     open === true ? "bg-gray-200 dark:bg-gray-800" : ""
                   }`}
                   onClick={() => {
-                    setSelectedName(name);
-                    setOpen(false);
+                    handleSelect(name);
                   }}
                 >
                   {name}

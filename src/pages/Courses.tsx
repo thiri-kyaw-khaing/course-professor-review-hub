@@ -64,7 +64,10 @@ export default function Courses() {
         </div>
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="mt-4 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
-            <FacultyDropdown />
+            <FacultyDropdown
+              value={selectedFaculty}
+              onChange={(value) => setSelectedFaculty(value)}
+            />
           </div>
           <div className="mt-4 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
             <RatingDropdown />
