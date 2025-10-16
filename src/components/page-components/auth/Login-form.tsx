@@ -48,13 +48,13 @@ export function LoginForm({
     message?: string;
   };
 
-  console.log("Action Data:", actionData);
+  // console.log("Action Data:", actionData);
 
   const submit = useSubmit();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Send to /login action via React Router
-    console.log("Login form submitted:", values);
+    // console.log("Login form submitted:", values);
     submit(values, { method: "POST", action: "/login" });
   }
 

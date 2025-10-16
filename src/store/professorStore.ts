@@ -22,6 +22,12 @@ export const useProfessorsStore = create<ProfessorState & ProfessorActions>()(
         set((state) => ({
           professors: state.professors.filter((p) => p.id !== id),
         })),
+
+      addProfessor: (professor: Professor) => {
+        set((state) => ({
+          professors: [...state.professors, professor],
+        }));
+      },
     }),
     {
       name: "professor-storage", // unique key in localStorage

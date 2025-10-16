@@ -21,6 +21,7 @@ import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
 // import { homeLoader } from "@/router/loader";
 import {
+  createCourseAction,
   loginAction,
   logoutAction,
   registerAction,
@@ -83,7 +84,11 @@ export const router = createBrowserRouter([
     Component: AdminRootLayout,
     children: [
       { index: true, Component: AdminDashboardPage },
-      { path: "courses", Component: ManageCoursesPage },
+      {
+        path: "courses",
+        Component: ManageCoursesPage,
+        action: createCourseAction,
+      },
       { path: "professors", Component: ManageProfessorsPage },
       { path: "create", Component: CreateAccForm },
     ],

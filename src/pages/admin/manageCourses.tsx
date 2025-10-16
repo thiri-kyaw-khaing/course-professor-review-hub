@@ -19,10 +19,12 @@ import type { Course } from "@/types";
 import { useCoursesStore } from "@/store/courseStore";
 
 export default function ManageCoursesPage() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {
     data: coursesData,
     isLoading: coursesLoading,
     isError: coursesError,
+    refetch,
   } = useQuery(courseQuery);
   const [searchTerm, setSearchTerm] = useState("");
   const { courses, setCourses } = useCoursesStore();
@@ -35,7 +37,7 @@ export default function ManageCoursesPage() {
 
   useEffect(() => {
     if (coursesData?.courses) {
-      console.log("Fetched courses:", coursesData.courses);
+      // console.log("Fetched courses:", coursesData.courses);
       setCourses(coursesData.courses);
     }
   }, [coursesData, setCourses]);
@@ -69,7 +71,7 @@ export default function ManageCoursesPage() {
           />
         </div>
 
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-[#8B0000] text-white hover:bg-red-700">
               <Plus className="h-4 w-4 mr-2" />
@@ -84,7 +86,7 @@ export default function ManageCoursesPage() {
               </DialogDescription>
             </DialogHeader>
             {/* Course Forms */}
-            <CourseForm />
+            <CourseForm onClose={() => setIsDialogOpen(false)} />
           </DialogContent>
         </Dialog>
       </div>

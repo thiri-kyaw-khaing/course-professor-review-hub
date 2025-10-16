@@ -109,3 +109,25 @@ export const registerAction = async ({ request }: ActionFunctionArgs) => {
     } else throw error;
   }
 };
+
+export const createCourseAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const courseData = {
+    code: formData.get("courseCode"),
+    title: formData.get("courseName"),
+    credits: Number(formData.get("credits")),
+    faculty: formData.get("faculty"),
+    description: formData.get("description"),
+  };
+
+  try {
+    const response = await api.post("/admins/courses", courseData);
+    if (response.status === 201 || response.data.success) {
+      return redirect("/admin/courses");
+    } else {
+      return { error: response.data.message || "Failed to create course" };
+    }
+  } catch (error: any) {
+    return { error: error.response?.data?.message || "Server error" };
+  }
+};
