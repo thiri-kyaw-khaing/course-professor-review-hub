@@ -34,7 +34,7 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
           <Card className="w-[600px]">
             <CardHeader>
               <CardTitle>
-                {course.code}:{course.name}
+                {course.code}:{course.title}
               </CardTitle>
               <CardDescription>{course.faculty}</CardDescription>
             </CardHeader>

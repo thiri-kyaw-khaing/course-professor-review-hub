@@ -1,3 +1,4 @@
+import { courseQuery } from "@/api/query";
 import CourseForm from "@/components/page-components/admin/CourseForm";
 import CourseMangeCard from "@/components/page-components/admin/CourseMangeCard";
 import { Button } from "@/components/ui/button";
@@ -12,10 +13,56 @@ import {
 import { Input } from "@/components/ui/input";
 import { courses } from "@/data";
 import { Plus, Search } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import type { Course } from "@/types";
 
 export default function ManageCoursesPage() {
+  const {
+    data: coursesData,
+    isLoading: coursesLoading,
+    isError: coursesError,
+  } = useQuery(courseQuery);
   const [searchTerm, setSearchTerm] = useState("");
+  const filteredCourses = (coursesData?.courses || []).filter(
+    (course: Course) => {
+      return (
+        course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.code?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+  );
+
+  if (coursesLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (coursesError) {
+    return <div>Error loading courses.</div>;
+  }
+
+  // const handleDeleteReview = async (reviewId: number) => {
+  //   if (!window.confirm("Are you sure you want to delete this review?")) return;
+
+  //   try {
+  //     // ✅ Simulate or perform real API call (same as Postman)
+  //     const res = await api.delete(
+  //       "users/reviews",
+  //       { data: { reviewId: reviewId } } // <-- important: send body in DELETE request
+  //     );
+
+  //     if (res.data.success) {
+  //       alert(res.data.message || "Review deleted successfully.");
+  //       // ✅ Remove it from local Zustand store
+  //       removeReview(reviewId);
+  //     } else {
+  //       alert("Failed to delete review. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting review:", error);
+  //     alert("Something went wrong while deleting the review.");
+  //   }
+  // };
   return (
     <>
       <div>
@@ -56,7 +103,7 @@ export default function ManageCoursesPage() {
           </DialogContent>
         </Dialog>
       </div>
-      <CourseMangeCard courses={courses} />
+      <CourseMangeCard courses={filteredCourses} />
     </>
   );
 }
