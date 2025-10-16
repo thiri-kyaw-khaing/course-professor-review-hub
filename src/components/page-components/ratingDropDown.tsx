@@ -12,11 +12,24 @@ import {
 } from "@/components/ui/popover";
 
 const ratings = ["All Ratings", "5 Stars", "4+ Stars", "3+ Stars"];
-
-export default function RatingDropdown() {
+interface RatingDropdownProps {
+  value?: string;
+  onChange: (value: string) => void;
+}
+export default function RatingDropdown({
+  value,
+  onChange,
+}: RatingDropdownProps) {
   const [open, setOpen] = React.useState(false);
-  const [selectedName, setSelectedName] = React.useState<string>("Rating");
+  const [selectedName, setSelectedName] = React.useState<string>(
+    value ? ratings.find((r) => r === value) || "All Ratings" : "All Ratings"
+  );
 
+  const handleSelect = (name: string) => {
+    setSelectedName(name);
+    setOpen(false);
+    onChange(name);
+  };
   return (
     <div className="flex flex-col gap-3 w-full ">
       <div className="">
@@ -44,10 +57,7 @@ export default function RatingDropdown() {
                   className={`w-full px-4 py-2 text-left text-sm font-normal hover:bg-gray-100 dark:hover:bg-gray-700 ${
                     open === true ? "bg-gray-200 dark:bg-gray-800" : ""
                   }`}
-                  onClick={() => {
-                    setSelectedName(rating.toString());
-                    setOpen(false);
-                  }}
+                  onClick={() => handleSelect(rating)}
                 >
                   {rating}
                 </button>

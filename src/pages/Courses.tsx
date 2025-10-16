@@ -19,6 +19,7 @@ export default function Courses() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("all");
+  const [selectedRating, setSelectedRating] = useState("All Ratings");
 
   const filteredCourses = (coursesData?.courses || []).filter(
     (course: Course) => {
@@ -27,7 +28,16 @@ export default function Courses() {
         course.code?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFaculty =
         selectedFaculty === "all" || course.faculty === selectedFaculty;
-      return matchesSearchTerm && matchesFaculty;
+      let matchesRating = true;
+      if (selectedRating === "5 Stars")
+        matchesRating = course.averageRate === 5;
+      else if (selectedRating === "4+ Stars")
+        matchesRating = (course.averageRate || 0) >= 4;
+      else if (selectedRating === "3+ Stars")
+        matchesRating = (course.averageRate || 0) >= 3;
+      // "All Ratings" keeps everything true
+
+      return matchesSearchTerm && matchesFaculty && matchesRating;
     }
   );
 
@@ -70,7 +80,10 @@ export default function Courses() {
             />
           </div>
           <div className="mt-4 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
-            <RatingDropdown />
+            <RatingDropdown
+              value={selectedRating}
+              onChange={(value) => setSelectedRating(value)}
+            />
           </div>
           <Button className="mt-4 bg-[#8B0000] text-white w-full sm:w-auto">
             Search
