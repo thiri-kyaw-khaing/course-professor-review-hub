@@ -22,6 +22,7 @@ import { fi } from "zod/v4/locales";
 import { useProfessorsStore } from "@/store/professorStore";
 
 export default function ManageProfessorsPage() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const {
     data: professorsData,
     isLoading: professorsLoading,
@@ -71,9 +72,12 @@ export default function ManageProfessorsPage() {
           />
         </div>
 
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[#8B0000] text-white hover:bg-red-700">
+            <Button
+              className="bg-[#8B0000] text-white hover:bg-red-700"
+              onClick={() => setIsDialogOpen(true)}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Professor
             </Button>
@@ -87,7 +91,7 @@ export default function ManageProfessorsPage() {
               </DialogDescription>
             </DialogHeader>
             {/* Course Forms */}
-            <ProfessorForm />
+            <ProfessorForm onClose={() => setIsDialogOpen(false)} />
           </DialogContent>
         </Dialog>
       </div>

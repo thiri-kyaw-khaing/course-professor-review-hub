@@ -9,6 +9,7 @@ type ProfessorState = {
 type ProfessorActions = {
   setProfessors: (professors: Professor[]) => void;
   removeProfessor: (id: number) => void;
+  addProfessor: (professor: Professor) => void;
 };
 
 export const useProfessorsStore = create<ProfessorState & ProfessorActions>()(

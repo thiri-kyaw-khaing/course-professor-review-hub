@@ -62,12 +62,6 @@ export default function CourseForm({ onClose }: CourseFormProps) {
     formState: { errors },
     reset,
   } = form;
-  // const submit = useSubmit();
-  // function onSubmit(values: z.infer<typeof courseSchema>) {
-  //   console.log("Course form submitted:", values);
-  //   submit(values, { method: "POST", action: "/admin/courses" });
-  //   // You can handle form submission here, e.g., send data to an API
-  // }
 
   async function onSubmit(values: z.infer<typeof courseSchema>) {
     try {

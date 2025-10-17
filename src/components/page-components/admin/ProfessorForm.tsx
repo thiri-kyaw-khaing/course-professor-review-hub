@@ -113,72 +113,160 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import EducationInput from "./educationInput";
+import z from "zod";
+import { useQueryClient } from "@tanstack/react-query";
+import { useProfessorsStore } from "@/store/professorStore";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import api from "@/api";
+import { toast } from "sonner";
+interface ProfessorFormProps {
+  onClose?: () => void;
+}
 
-export default function ProfessorForm() {
-  // ✅ Form state
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    faculty: "",
-    education: [] as string[],
+const professorSchema = z.object({
+  // Use string for text input
+  name: z.string().min(2, "Name is required"),
+  email: z
+    .string()
+    .email()
+    .endsWith("@lamduan.mfu.ac.th", "Must be a valid university email"),
+  faculty: z.string().min(2, "Faculty is required"),
+  education: z.array(z.string()),
+});
+
+export default function ProfessorForm({ onClose }: ProfessorFormProps) {
+  const queryClient = useQueryClient();
+  const { addProfessor } = useProfessorsStore();
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const form = useForm<z.infer<typeof professorSchema>>({
+    resolver: zodResolver(professorSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      faculty: "",
+      education: [],
+    },
   });
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = form;
+
+  // // ✅ Form state
+  // const [formData, setFormData] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   faculty: "",
+  //   education: [] as string[],
+  // });
+  async function onSubmit(values: z.infer<typeof professorSchema>) {
+    try {
+      // Convert form values to match backend format
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("faculty", values.faculty);
+
+      // Convert array to comma-separated string (matches Postman)
+      formData.append("education", values.education.join(","));
+
+      // Append image if selected
+      if (selectedImage) formData.append("image", selectedImage);
+      for (const pair of formData.entries()) {
+        console.log("🧩", pair[0], "=>", pair[1]);
+      }
+      const res = await api.post("/admins/professors", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res.data.success) {
+        toast.success(res.data.message || "✅ Professor added successfully!");
+        console.log("Server response:", res.data);
+
+        // ✅ Update UI instantly (optional)
+        if (res.data.professor) addProfessor(res.data.professor);
+
+        // ✅ Invalidate the cached query → triggers automatic refetch
+        await queryClient.invalidateQueries({ queryKey: ["professors"] });
+        // Optionally reset form
+        reset();
+        onClose?.();
+        // Optionally close dialog if applicable
+      } else {
+        toast.error(res.data.message || "Failed to add professor.");
+        console.error("Server returned:", res.data);
+      }
+    } catch (error: any) {
+      console.error("Error submitting professor:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Something went wrong while adding the professor."
+      );
+    }
+  }
 
   // ✅ Education handlers
-  const handleEducationChange = (index: number, value: string) => {
-    setFormData((prev) => {
-      const updated = [...prev.education];
-      updated[index] = value;
-      return { ...prev, education: updated };
-    });
-  };
+  // const handleEducationChange = (index: number, value: string) => {
+  //   setFormData((prev) => {
+  //     const updated = [...prev.education];
+  //     updated[index] = value;
+  //     return { ...prev, education: updated };
+  //   });
+  // };
 
-  const handleAddEducation = (newValue: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      education: [...prev.education, newValue],
-    }));
-  };
+  // const handleAddEducation = (newValue: string) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     education: [...prev.education, newValue],
+  //   }));
+  // };
 
-  const handleRemoveEducation = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      education: prev.education.filter((_, i) => i !== index),
-    }));
-  };
+  // const handleRemoveEducation = (index: number) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     education: prev.education.filter((_, i) => i !== index),
+  //   }));
+  // };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Submitted Professor:", formData);
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Submitted Professor:", formData);
+  // };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-md space-y-6"
+    >
       <FieldSet>
         {/* Basic Info */}
         <div className="grid grid-cols-2 gap-4">
           <Field>
-            <FieldLabel htmlFor="firstName">First Name*</FieldLabel>
+            <FieldLabel htmlFor="name">Name*</FieldLabel>
             <Input
-              id="firstName"
-              value={formData.firstName}
-              onChange={(e) =>
-                setFormData({ ...formData, firstName: e.target.value })
-              }
+              id="name"
+              type="text"
               placeholder="John"
               required
+              {...register("name")}
             />
           </Field>
           <Field>
-            <FieldLabel htmlFor="lastName">Last Name*</FieldLabel>
+            <FieldLabel htmlFor="image">Profile Image</FieldLabel>
             <Input
-              id="lastName"
-              value={formData.lastName}
-              onChange={(e) =>
-                setFormData({ ...formData, lastName: e.target.value })
-              }
-              placeholder="Doe"
-              required
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                setSelectedImage(file || null);
+              }}
             />
           </Field>
 
@@ -187,10 +275,7 @@ export default function ProfessorForm() {
             <Input
               id="email"
               type="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              {...register("email")}
               placeholder="john.doe@example.com"
               required
             />
@@ -199,68 +284,58 @@ export default function ProfessorForm() {
           {/* Faculty Dropdown */}
           <Field className="w-full">
             <FieldLabel>Faculty</FieldLabel>
-            <Select
-              onValueChange={(val) =>
-                setFormData((prev) => ({ ...prev, faculty: val }))
-              }
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Choose faculty" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="School_of_Agro_Industry">
-                  School of Agro Industry
-                </SelectItem>
-                <SelectItem value="School_of_Cosmetic_Science">
-                  School of Cosmetic Science
-                </SelectItem>
-                <SelectItem value="School_of_Health_Science">
-                  School of Health Science
-                </SelectItem>
-                <SelectItem value="School_of_Applied_Digital_Technology">
-                  School of Applied Digital Technology
-                </SelectItem>
-                <SelectItem value="School_of_Integrative_Medicine">
-                  School of Integrative Medicine
-                </SelectItem>
-                <SelectItem value="School_of_Law">School of Law</SelectItem>
-                <SelectItem value="School_of_Liberal_Arts">
-                  School of Liberal Arts
-                </SelectItem>
-                <SelectItem value="School_of_Management">
-                  School of Management
-                </SelectItem>
-                <SelectItem value="School_of_Nursing">
-                  School of Nursing
-                </SelectItem>
-                <SelectItem value="School_of_Science">
-                  School of Science
-                </SelectItem>
-                <SelectItem value="School_of_Sinology">
-                  School of Sinology
-                </SelectItem>
-                <SelectItem value="School_of_Social_Innovation">
-                  School of Social Innovation
-                </SelectItem>
-                <SelectItem value="School_of_Dentistry">
-                  School of Dentistry
-                </SelectItem>
-              </SelectContent>
-            </Select>
+            <Controller
+              name="faculty"
+              control={form.control}
+              render={({ field }) => (
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="School_of_Agro_Industry">
+                      School of Agro Industry
+                    </SelectItem>
+                    <SelectItem value="School_of_Applied_Digital_Technology">
+                      School of Applied Digital Technology
+                    </SelectItem>
+                    <SelectItem value="School_of_Management">
+                      School of Management
+                    </SelectItem>
+                    <SelectItem value="School_of_Science">
+                      School of Science
+                    </SelectItem>
+                    <SelectItem value="School_of_Social_Innovation">
+                      School of Social Innovation
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </Field>
         </div>
 
         {/* ✅ EducationInput section */}
-        <FieldGroup>
-          <Field>
+        <Controller
+          name="education"
+          control={control}
+          render={({ field }) => (
             <EducationInput
-              value={formData.education}
-              onChange={handleEducationChange}
-              onAdd={handleAddEducation}
-              onRemove={handleRemoveEducation}
+              value={field.value || []}
+              onChange={(index, val) => {
+                const updated = [...(field.value || [])];
+                updated[index] = val;
+                field.onChange(updated);
+              }}
+              onAdd={(val) => field.onChange([...(field.value || []), val])}
+              onRemove={(index) => {
+                const updated = [...(field.value || [])];
+                updated.splice(index, 1);
+                field.onChange(updated);
+              }}
             />
-          </Field>
-        </FieldGroup>
+          )}
+        />
       </FieldSet>
 
       <div className="flex justify-end">
