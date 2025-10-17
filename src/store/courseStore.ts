@@ -10,6 +10,7 @@ type CourseActions = {
   setCourses: (courses: Course[]) => void;
   removeCourse: (id: number) => void;
   addCourse: (course: Course) => void;
+  updateCourse: (courseId: number, updated: Partial<Course>) => void;
 };
 
 export const useCoursesStore = create<CourseState & CourseActions>()(
@@ -22,6 +23,13 @@ export const useCoursesStore = create<CourseState & CourseActions>()(
       removeCourse: (id) =>
         set((state) => ({
           courses: state.courses.filter((c) => c.id !== id),
+        })),
+
+      updateCourse: (updated) =>
+        set((state) => ({
+          courses: state.courses.map((c) =>
+            c.id === updated.id ? { ...c, ...updated } : c
+          ),
         })),
 
       addCourse: (course) => {

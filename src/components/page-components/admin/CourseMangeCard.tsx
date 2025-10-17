@@ -53,7 +53,7 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
       alert("Something went wrong while deleting the course.");
     }
   };
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [openEditId, setOpenEditId] = useState<number | null>(null);
   return (
     <>
       <div className="flex lg:grid lg:grid-cols-2 gap-4  lg:gap-8 sm:gap-6 flex-wrap justify-center">
@@ -70,11 +70,14 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
             </CardContent>
             <CardFooter className="flex gap-4">
               <div>
-                <Dialog>
+                <Dialog
+                  open={openEditId === course.id}
+                  onOpenChange={(o) => setOpenEditId(o ? course.id : null)}
+                >
                   <DialogTrigger asChild>
                     <Button
                       className="bg-gray-300 text-black hover:bg-gray-400"
-                      onClick={() => setIsAddDialogOpen(true)}
+                      onClick={() => setOpenEditId(course.id)}
                     >
                       <Edit className="h-4 w-4" />
                       Edit
@@ -90,7 +93,11 @@ export default function CourseMangeCard({ courses }: CourseMangeCardProps) {
                     </DialogHeader>
                     {/* Course Forms */}
 
-                    <CourseEditForm key={course.id} course={course} />
+                    <CourseEditForm
+                      key={course.id}
+                      course={course}
+                      onClose={() => setOpenEditId(null)}
+                    />
                   </DialogContent>
                 </Dialog>
               </div>
