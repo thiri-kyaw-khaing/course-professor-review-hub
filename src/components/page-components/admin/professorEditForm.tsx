@@ -53,6 +53,7 @@ export default function ProfessorEditForm({
 
   const queryClient = useQueryClient();
   const { updateProfessor } = useProfessorsStore();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // ✅ Normalize professor.education into string[]
   const normalizedEducation = Array.isArray(professor.education)
@@ -88,6 +89,7 @@ export default function ProfessorEditForm({
     });
 
     try {
+      setErrorMessage(null);
       setSubmitting(true);
       const response = await api.patch("/admins/professors", {
         professorId: professor.id,
@@ -106,6 +108,11 @@ export default function ProfessorEditForm({
         if (onClose) onClose();
       }
     } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        "An error occurred while updating the course.";
+      setErrorMessage(message);
       console.error("❌ Error updating professor:", error);
       toast.error("Failed to update professor. Try again.");
     } finally {
@@ -225,7 +232,9 @@ export default function ProfessorEditForm({
           </Field>
         </FieldGroup>
       </FieldSet>
-
+      {errorMessage && (
+        <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+      )}
       {/* ✅ Submit button */}
       <div className="flex justify-end space-x-4">
         <Button

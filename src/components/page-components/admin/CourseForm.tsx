@@ -45,6 +45,7 @@ const courseSchema = z.object({
 export default function CourseForm({ onClose }: CourseFormProps) {
   const queryClient = useQueryClient();
   const { addCourse } = useCoursesStore();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const form = useForm<z.infer<typeof courseSchema>>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
@@ -64,6 +65,7 @@ export default function CourseForm({ onClose }: CourseFormProps) {
   } = form;
 
   async function onSubmit(values: z.infer<typeof courseSchema>) {
+    setErrorMessage(null);
     try {
       // Convert form values to match backend format
       const payload = {
@@ -94,6 +96,11 @@ export default function CourseForm({ onClose }: CourseFormProps) {
         console.error("Server returned:", res.data);
       }
     } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        "An error occurred while updating the course.";
+      setErrorMessage(message);
       console.error("Error submitting course:", error);
       toast.error(
         error.response?.data?.message ||
@@ -239,7 +246,9 @@ export default function CourseForm({ onClose }: CourseFormProps) {
           </Field>
         </FieldGroup>
       </FieldSet>
-
+      {errorMessage && (
+        <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+      )}
       {/* Submit Button */}
       <div className="flex justify-end">
         <Button

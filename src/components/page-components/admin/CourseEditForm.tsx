@@ -188,10 +188,7 @@ export default function CourseEditForm({
         </FieldSet>
 
         {errorMessage && (
-          <Alert variant="destructive" className="mt-4">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{errorMessage}</AlertDescription>
-          </Alert>
+          <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
         )}
 
         <div className="flex justify-end space-x-4">

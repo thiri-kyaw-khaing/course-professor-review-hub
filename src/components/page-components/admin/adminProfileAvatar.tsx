@@ -37,8 +37,8 @@ export default function ProfileAdminAvatar() {
 
           <DropdownMenuItem>
             <Form method="post" action="/logout">
-              <LogOut className="inline mr-2 h-4 w-4 text-[#8B0000]" />
               <button type="submit" className="w-full">
+                <LogOut className="inline mr-2 h-4 w-4 text-[#8B0000]" />
                 Log Out
               </button>
             </Form>

@@ -113,7 +113,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import EducationInput from "./educationInput";
-import z from "zod";
+import z, { set } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { useProfessorsStore } from "@/store/professorStore";
 import { Controller, useForm } from "react-hook-form";
@@ -139,7 +139,7 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
   const queryClient = useQueryClient();
   const { addProfessor } = useProfessorsStore();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const form = useForm<z.infer<typeof professorSchema>>({
     resolver: zodResolver(professorSchema),
     defaultValues: {
@@ -166,6 +166,7 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
   //   education: [] as string[],
   // });
   async function onSubmit(values: z.infer<typeof professorSchema>) {
+    setErrorMessage(null);
     try {
       // Convert form values to match backend format
       const formData = new FormData();
@@ -203,6 +204,11 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
         console.error("Server returned:", res.data);
       }
     } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        "An error occurred while updating the course.";
+      setErrorMessage(message);
       console.error("Error submitting professor:", error);
       toast.error(
         error.response?.data?.message ||
@@ -355,7 +361,9 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
           </p>
         )}
       </FieldSet>
-
+      {errorMessage && (
+        <p className="mt-2 text-sm text-red-600">{errorMessage}</p>
+      )}
       <div className="flex justify-end">
         <Button
           type="submit"
