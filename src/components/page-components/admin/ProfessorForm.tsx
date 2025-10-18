@@ -256,6 +256,9 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
               required
               {...register("name")}
             />
+            {errors.name && (
+              <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>
+            )}
           </Field>
           <Field>
             <FieldLabel htmlFor="image">Profile Image</FieldLabel>
@@ -279,6 +282,11 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
               placeholder="john.doe@example.com"
               required
             />
+            {errors.email && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </Field>
 
           {/* Faculty Dropdown */}
@@ -312,6 +320,11 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
                 </Select>
               )}
             />
+            {errors.faculty && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.faculty.message}
+              </p>
+            )}
           </Field>
         </div>
 
@@ -336,6 +349,11 @@ export default function ProfessorForm({ onClose }: ProfessorFormProps) {
             />
           )}
         />
+        {errors.education && (
+          <p className="text-sm text-red-600 mt-1">
+            {errors.education.message}
+          </p>
+        )}
       </FieldSet>
 
       <div className="flex justify-end">
