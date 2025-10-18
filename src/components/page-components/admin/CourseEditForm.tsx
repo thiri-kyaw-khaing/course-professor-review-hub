@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { Course } from "@/types";
-import { z } from "zod";
+import { set, z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCoursesStore } from "@/store/courseStore";
 import { Controller, useForm } from "react-hook-form";
@@ -23,14 +23,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form"; // ✅ Correct import
 import api from "@/api";
 import { toast } from "sonner";
-
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useState } from "react";
 const schema = z.object({
   courseCode: z
     .string()
     .min(2, "Course code is required")
     .max(7, "Max 7 chars"),
   courseName: z.string().min(2, "Course name is required"),
-  credits: z.coerce.number().min(1).max(4), // ✅ coerce handles string inputs
+  credits: z.coerce.number().min(1).max(4, "Max 4 credits"), // ✅ coerce handles string inputs
   faculty: z.string().min(2, "Faculty is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
 });
@@ -48,7 +49,7 @@ export default function CourseEditForm({
 }: CourseEditFormProps) {
   const queryClient = useQueryClient();
   const { updateCourse } = useCoursesStore();
-
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -62,6 +63,7 @@ export default function CourseEditForm({
 
   const onSubmit = async (values: FormValues) => {
     console.log("🔥 onSubmit triggered with:", values);
+    setErrorMessage(null);
     try {
       const response = await api.patch("/admins/courses", {
         courseId: course.id,
@@ -80,8 +82,16 @@ export default function CourseEditForm({
         if (onClose) onClose();
       }
     } catch (error) {
-      console.error("Error updating course:", error);
-      toast.error("❌ Failed to update course. Try again.");
+      // ✅ Extract message safely
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        "An error occurred while updating the course.";
+      setErrorMessage(message);
+      console.log("Error updating course:", message);
+      // ✅ Show toast (works reliably)
+
+      toast.error(`❌ Failed to update course: ${message}`);
     }
   };
 
@@ -125,6 +135,7 @@ export default function CourseEditForm({
                 placeholder="Introduction to Computer Science"
                 {...form.register("courseName")}
               />
+              {}
             </Field>
 
             {/* Department Dropdown */}
@@ -175,6 +186,13 @@ export default function CourseEditForm({
             </Field>
           </FieldGroup>
         </FieldSet>
+
+        {errorMessage && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
+        )}
 
         <div className="flex justify-end space-x-4">
           <Button
