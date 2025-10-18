@@ -5,6 +5,10 @@ export interface NavItem {
 }
 
 export type MainNavItem = NavItem;
+type Education = {
+  id: number;
+  degree: string;
+};
 
 export type Professor = {
   id: number;
@@ -16,7 +20,7 @@ export type Professor = {
   email: string;
   phone: string;
   specializations: string[]; // ["Software Engineering", "Database Systems"]
-  education: { degree: string }[]; // ["Ph.D. Computer Science - Chulalongkorn University", "M.Sc. Information Technology - MFU"]
+  education: (string | Education)[]; // ["Ph.D. Computer Science - Chulalongkorn University", "M.Sc. Information Technology - MFU"]
   image?: string;
   totalReviews: number;
   reviews?: { id: number; comment: string; rating: number }[];

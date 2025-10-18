@@ -19,12 +19,12 @@ export default function AdminDashboardPage() {
         Manage courses, professors, reviews, and view analytics
       </p>
 
-      <div className="flex mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-        <AdminDashboardCard
+      <div className="flex mt-6 grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-3">
+        {/* <AdminDashboardCard
           title="Total Students"
           description="11111"
           icon={<User2 className="text-[#8B0000]" size={40} />}
-        />
+        /> */}
         <AdminDashboardCard
           title="Total Courses"
           description="2222"

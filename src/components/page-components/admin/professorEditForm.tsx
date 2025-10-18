@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSet,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,200 +10,232 @@ import {
 } from "@/components/ui/select";
 import EducationInput from "./educationInput";
 import type { Professor } from "@/types";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
+import { useProfessorsStore } from "@/store/professorStore";
+import api from "@/api";
+import { toast } from "sonner";
 import { useState } from "react";
+
+// ✅ Zod schema that can handle either string[] or object[]
+const professorSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email format"),
+  faculty: z.string().min(2, "Faculty is required"),
+  education: z
+    .array(
+      z.union([
+        z.string(),
+        z.object({
+          id: z.number().optional(),
+          degree: z.string(),
+        }),
+      ])
+    )
+    .optional()
+    .default([]),
+});
+
+type FormValues = z.infer<typeof professorSchema>;
+
 interface ProfessorEditFormProps {
   professor: Professor;
+  onClose?: () => void;
 }
+
 export default function ProfessorEditForm({
   professor,
+  onClose,
 }: ProfessorEditFormProps) {
-  // Step 2: Set initial state from props
-  const [formData, setFormData] = useState({
-    name: professor.name || "",
-    email: professor.email || "",
-    faculty: professor.faculty || "",
-    // Add other fields as necessary
-    education: professor.education || [""],
+  console.log("✅ ProfessorEditForm rendered for", professor.name);
+
+  const queryClient = useQueryClient();
+  const { updateProfessor } = useProfessorsStore();
+
+  // ✅ Normalize professor.education into string[]
+  const normalizedEducation = Array.isArray(professor.education)
+    ? professor.education.map((edu: any) =>
+        typeof edu === "string" ? edu : edu.degree
+      )
+    : [];
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(professorSchema),
+    defaultValues: {
+      name: professor.name || "",
+      email: professor.email || "",
+      faculty: professor.faculty || "",
+      education: normalizedEducation,
+    },
   });
 
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const { register, control, formState } = form;
+  const { errors } = formState;
 
-  // Step 3: handle changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
-  const handleDepartmentChange = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      faculty: value,
-    }));
-  };
-  // Step 4: handle submit
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Updated course:", formData);
-    // TODO: call your API to update course
-  };
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleEducationChange = (index: number, value: string) => {
-    setFormData((prev) => {
-      const updated = [...prev.education]; // copy old array
-      updated[index] = value; // replace one value
-      return { ...prev, education: updated };
+  // ✅ Submit handler
+  const onSubmit = async (values: FormValues) => {
+    const sanitizedEducation = (values.education || []).map((edu) =>
+      typeof edu === "string" ? edu : edu.degree
+    );
+
+    console.log("🔥 onSubmit triggered with:", {
+      ...values,
+      education: sanitizedEducation,
     });
+
+    try {
+      setSubmitting(true);
+      const response = await api.patch("/admins/professors", {
+        professorId: professor.id,
+        name: values.name,
+        email: values.email,
+        faculty: values.faculty,
+        education: sanitizedEducation,
+      });
+
+      console.log("✅ Update response:", response);
+
+      if (response.status === 200) {
+        updateProfessor(professor.id, response.data);
+        await queryClient.invalidateQueries({ queryKey: ["professors"] });
+        toast.success("✅ Professor updated successfully!");
+        if (onClose) onClose();
+      }
+    } catch (error) {
+      console.error("❌ Error updating professor:", error);
+      toast.error("Failed to update professor. Try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  console.log("professor edit form data:", formData);
   return (
-    <div className="">
-      <div className="w-full max-w-md space-y-6">
-        <FieldSet>
-          {/* <FieldLegend>Address Information</FieldLegend>
-          <FieldDescription>
-            We need your address to deliver your order.
-          </FieldDescription> */}
-          {/* Name full width */}
-          <div className="grid grid-cols-1 mb-4">
-            <Field className="w-full">
-              <FieldLabel htmlFor="name">Name*</FieldLabel>
-              <Input
-                id="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                required
-                className="w-full"
-              />
-            </Field>
-          </div>
-
-          {/* Email + Faculty side by side */}
-          <div className="grid grid-cols-2 gap-4">
-            <Field className="w-full">
-              <FieldLabel htmlFor="email">Email*</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john.doe@example.com"
-                required
-                className="w-full"
-              />
-            </Field>
-
-            <Field className="w-full">
-              <FieldLabel>Faculty</FieldLabel>
-              <Select
-                value={formData.faculty}
-                onValueChange={handleDepartmentChange}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose faculty" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="School_of_Agro_Industry">
-                    School of Agro Industry
-                  </SelectItem>
-                  <SelectItem value="School_of_Cosmetic_Science">
-                    School of Cosmetic Science
-                  </SelectItem>
-                  <SelectItem value="School_of_Health_Science">
-                    School of Health Science
-                  </SelectItem>
-                  <SelectItem value="School_of_Applied_Digital_Technology">
-                    School of Applied Digital Technology
-                  </SelectItem>
-                  <SelectItem value="School_of_Integrative_Medicine">
-                    School of Integrative Medicine
-                  </SelectItem>
-                  <SelectItem value="School_of_Law">School of Law</SelectItem>
-                  <SelectItem value="School_of_Liberal_Arts">
-                    School of Liberal Arts
-                  </SelectItem>
-                  <SelectItem value="School_of_Management">
-                    School of Management
-                  </SelectItem>
-                  <SelectItem value="School_of_Nursing">
-                    School of Nursing
-                  </SelectItem>
-                  <SelectItem value="School_of_Science">
-                    School of Science
-                  </SelectItem>
-                  <SelectItem value="School_of_Sinology">
-                    School of Sinology
-                  </SelectItem>
-                  <SelectItem value="School_of_Social_Innovation">
-                    School of Social Innovation
-                  </SelectItem>
-                  <SelectItem value="School_of_Dentistry">
-                    School of Dentistry
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </Field>
-          </div>
-
-          <FieldGroup>
-            <Field>
-              <EducationInput
-                value={formData.education}
-                onChange={(index, value) =>
-                  setFormData((prev) => {
-                    const updated = [...prev.education];
-                    updated[index] = value;
-                    return { ...prev, education: updated };
-                  })
-                }
-                onAdd={(newValue) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    education: [...prev.education, newValue],
-                  }))
-                }
-                onRemove={(index) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    education: prev.education.filter((_, i) => i !== index),
-                  }))
-                }
-              />
-            </Field>
-
-            {/* 
-            <Field>
-              <FieldLabel htmlFor="description">Description</FieldLabel>
-              <textarea
-                id="description"
-                placeholder="Enter course description"
-                required
-                className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-[#8B0000] focus:ring focus:ring-[#8B0000] focus:ring-opacity-50"
-              />
-            </Field> */}
-          </FieldGroup>
-        </FieldSet>
-        <div className="flex justify-end space-x-4">
-          {/* <button
-            type="button"
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-          >
-            Cancel
-          </Button> */}
-          <Button
-            type="submit"
-            className="px-4 py-2 bg-[#8B0000] text-white rounded hover:bg-red-700"
-          >
-            Add Professor
-          </Button>
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="w-full max-w-md space-y-6"
+    >
+      <FieldSet>
+        {/* ✅ Name field */}
+        <div className="grid grid-cols-1 mb-4">
+          <Field className="w-full">
+            <FieldLabel htmlFor="name">Name*</FieldLabel>
+            <Input
+              id="name"
+              type="text"
+              placeholder="John Doe"
+              required
+              className="w-full"
+              {...register("name")}
+            />
+          </Field>
+          {errors.name && (
+            <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>
+          )}
         </div>
+
+        {/* ✅ Email + Faculty side by side */}
+        <div className="grid grid-cols-2 gap-4">
+          <Field className="w-full">
+            <FieldLabel htmlFor="email">Email*</FieldLabel>
+            <Input
+              id="email"
+              type="email"
+              placeholder="john.doe@mfu.ac.th"
+              required
+              className="w-full"
+              {...register("email")}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </Field>
+
+          <Field className="w-full">
+            <FieldLabel>Faculty*</FieldLabel>
+            <Controller
+              name="faculty"
+              control={control}
+              render={({ field }) => (
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="School_of_Agro_Industry">
+                      School of Agro Industry
+                    </SelectItem>
+                    <SelectItem value="School_of_Applied_Digital_Technology">
+                      School of Applied Digital Technology
+                    </SelectItem>
+                    <SelectItem value="School_of_Management">
+                      School of Management
+                    </SelectItem>
+                    <SelectItem value="School_of_Science">
+                      School of Science
+                    </SelectItem>
+                    <SelectItem value="School_of_Social_Innovation">
+                      School of Social Innovation
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.faculty && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.faculty.message}
+              </p>
+            )}
+          </Field>
+        </div>
+
+        {/* ✅ Education dynamic list */}
+        <FieldGroup>
+          <Field>
+            <Controller
+              name="education"
+              control={control}
+              render={({ field }) => (
+                <EducationInput
+                  value={field.value || []}
+                  onChange={(index, val) => {
+                    const updated = [...(field.value || [])];
+                    updated[index] = val;
+                    field.onChange(updated);
+                  }}
+                  onAdd={(val) => field.onChange([...(field.value || []), val])}
+                  onRemove={(index) => {
+                    const updated = [...(field.value || [])];
+                    updated.splice(index, 1);
+                    field.onChange(updated);
+                  }}
+                />
+              )}
+            />
+            {errors.education && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.education.message as string}
+              </p>
+            )}
+          </Field>
+        </FieldGroup>
+      </FieldSet>
+
+      {/* ✅ Submit button */}
+      <div className="flex justify-end space-x-4">
+        <Button
+          type="submit"
+          disabled={submitting}
+          className="px-4 py-2 bg-[#8B0000] text-white rounded hover:bg-red-700 disabled:opacity-50"
+        >
+          {submitting ? "Updating..." : "Update Professor"}
+        </Button>
       </div>
-    </div>
+    </form>
   );
 }

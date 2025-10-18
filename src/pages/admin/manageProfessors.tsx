@@ -13,12 +13,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { courses, professors } from "@/data";
 import { Plus, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { Professor } from "@/types";
-import { fi } from "zod/v4/locales";
 import { useProfessorsStore } from "@/store/professorStore";
 
 export default function ManageProfessorsPage() {
@@ -76,7 +74,7 @@ export default function ManageProfessorsPage() {
           <DialogTrigger asChild>
             <Button
               className="bg-[#8B0000] text-white hover:bg-red-700"
-              onClick={() => setIsDialogOpen(true)}
+              // onClick={() => setIsDialogOpen(true)}
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Professor

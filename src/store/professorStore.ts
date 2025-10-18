@@ -10,6 +10,7 @@ type ProfessorActions = {
   setProfessors: (professors: Professor[]) => void;
   removeProfessor: (id: number) => void;
   addProfessor: (professor: Professor) => void;
+  updateProfessor: (professorId: number, updatedProfessor: Professor) => void;
 };
 
 export const useProfessorsStore = create<ProfessorState & ProfessorActions>()(
@@ -24,11 +25,17 @@ export const useProfessorsStore = create<ProfessorState & ProfessorActions>()(
           professors: state.professors.filter((p) => p.id !== id),
         })),
 
-      addProfessor: (professor: Professor) => {
+      addProfessor: (professor: Professor) =>
         set((state) => ({
           professors: [...state.professors, professor],
-        }));
-      },
+        })),
+
+      updateProfessor: (professorId: number, updatedProfessor: Professor) =>
+        set((state) => ({
+          professors: state.professors.map((p) =>
+            p.id === professorId ? { ...p, ...updatedProfessor } : p
+          ),
+        })),
     }),
     {
       name: "professor-storage", // unique key in localStorage

@@ -62,6 +62,7 @@ export default function ProfessorMangeCard({
       alert("Something went wrong while deleting the professor.");
     }
   };
+  const [openEditId, setOpenEditId] = useState<number | null>(null);
   return (
     <>
       <div className="flex lg:grid lg:grid-cols-2 gap-4  lg:gap-8 sm:gap-6 flex-wrap justify-center">
@@ -106,13 +107,14 @@ export default function ProfessorMangeCard({
             </CardContent>
             <CardFooter className="flex gap-4">
               <div>
-                <Dialog>
+                <Dialog
+                  open={openEditId === professor.id}
+                  onOpenChange={(o) => setOpenEditId(o ? professor.id : null)}
+                >
                   <DialogTrigger asChild>
                     <Button
                       className="bg-gray-300 text-black hover:bg-gray-400"
-                      //   onClick={() => setIsAddDialogOpen(true)
-
-                      //   }
+                      onClick={() => setOpenEditId(professor.id)}
                     >
                       <Edit className="h-4 w-4" />
                       Edit
@@ -121,13 +123,17 @@ export default function ProfessorMangeCard({
                   <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Edit Professor</DialogTitle>
-                      <ProfessorEditForm professor={professor} />
+
                       {/* <DialogDescription>
                         Create a new course with all required information and
                         settings.
                       </DialogDescription> */}
                     </DialogHeader>
                     {/* Course Forms */}
+                    <ProfessorEditForm
+                      professor={professor}
+                      onClose={() => setOpenEditId(null)}
+                    />
 
                     {/* <CourseEditForm key={course.id} course={course} /> */}
                   </DialogContent>
