@@ -40,7 +40,17 @@ export const oneProfessorLoader = async ({ params }: LoaderFunctionArgs) => {
 
 export const otpLoader = async () => {
   const authStore = useAuthStore.getState();
+  console.log("OTP Loader - Auth Status:", authStore.status);
   if (authStore.status !== Status.otp) {
+    return redirect("/register");
+  }
+  return null;
+};
+
+export const createAccLoader = async () => {
+  const authStore = useAuthStore.getState();
+  console.log("Create Account Loader - Auth Status:", authStore.status);
+  if (authStore.status !== Status.confirm) {
     return redirect("/register");
   }
   return null;

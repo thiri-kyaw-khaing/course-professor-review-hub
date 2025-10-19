@@ -21,6 +21,7 @@ import ManageCoursesPage from "./pages/admin/manageCourses";
 import ManageProfessorsPage from "./pages/admin/manageProfessors";
 // import { homeLoader } from "@/router/loader";
 import {
+  createAccAction,
   createCourseAction,
   loginAction,
   logoutAction,
@@ -32,6 +33,7 @@ import {
 import { LoginForm } from "./components/page-components/auth/Login-form";
 import ErrorPage from "./pages/Error";
 import {
+  createAccLoader,
   oneCourseLoader,
   oneProfessorLoader,
   otpLoader,
@@ -81,7 +83,12 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: SignUpPage, action: registerAction },
       { path: "otp", Component: OTPPage, loader: otpLoader, action: otpAction },
-      { path: "create", Component: CreateAccForm },
+      {
+        path: "create",
+        Component: CreateAccForm,
+        loader: createAccLoader,
+        action: createAccAction,
+      },
     ],
   },
   {

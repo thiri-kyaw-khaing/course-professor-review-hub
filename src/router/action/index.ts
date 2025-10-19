@@ -145,6 +145,7 @@ export const otpAction = async ({ request }: ActionFunctionArgs) => {
   };
   try {
     const response = await api.post("verify", otpData);
+    console.log("OTP Verification Response:", response);
     if (response.status === 200 || response.data.success) {
       authStore.setAuth(
         response.data.email,
@@ -157,6 +158,34 @@ export const otpAction = async ({ request }: ActionFunctionArgs) => {
   } catch (error) {
     if (error instanceof AxiosError) {
       return error.response?.data || { error: "OTP verification failed" };
+    } else throw error;
+  }
+};
+
+export const createAccAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  const formData = await request.formData();
+  const accData = {
+    email: authStore.email,
+    password: formData.get("password"),
+    token: authStore.token,
+    faculty: formData.get("faculty"),
+  };
+  try {
+    const response = await api.post("confirm", accData);
+    if (response.status === 201 || response.data.success) {
+      authStore.setAuth(
+        response.data.email,
+        response.data.token,
+        Status.confirm
+      );
+      authStore.clearAuth();
+      return redirect("/login");
+    }
+    return { error: response.data || "Account creation failed" };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data || { error: "Account creation failed" };
     } else throw error;
   }
 };

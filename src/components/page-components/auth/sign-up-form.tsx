@@ -82,6 +82,11 @@ export function SignUpForm({
                   required
                   {...form.register("email")}
                 />
+                {form.formState.errors.email && (
+                  <p className="text-sm text-red-600 mt-1">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
               </div>{" "}
               <Button type="submit" className="w-full bg-[#8B0000] text-white">
                 {isSubmitting ? "Sending OTP..." : "Send OTP"}
