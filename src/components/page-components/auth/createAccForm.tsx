@@ -60,7 +60,7 @@ export default function CreateAccForm({
     // console.log(values);
     // setLoading(true);
     // Call api
-    submit(values, { method: "POST", action: "/register/confirm-password" });
+    submit(values, { method: "POST", action: "/register/create" });
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
