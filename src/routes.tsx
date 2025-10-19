@@ -24,13 +24,18 @@ import {
   createCourseAction,
   loginAction,
   logoutAction,
+  otpAction,
   registerAction,
   reviewCourseAction,
   reviewProfessorAction,
 } from "@/router/action";
 import { LoginForm } from "./components/page-components/auth/Login-form";
 import ErrorPage from "./pages/Error";
-import { oneCourseLoader, oneProfessorLoader } from "./router/loader";
+import {
+  oneCourseLoader,
+  oneProfessorLoader,
+  otpLoader,
+} from "./router/loader";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -75,7 +80,7 @@ export const router = createBrowserRouter([
     Component: AuthRootLayout,
     children: [
       { index: true, Component: SignUpPage, action: registerAction },
-      { path: "otp", Component: OTPPage },
+      { path: "otp", Component: OTPPage, loader: otpLoader, action: otpAction },
       { path: "create", Component: CreateAccForm },
     ],
   },

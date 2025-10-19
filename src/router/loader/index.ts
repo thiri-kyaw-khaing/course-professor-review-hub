@@ -5,7 +5,8 @@ import {
   oneProfessorQuery,
   queryClient,
 } from "@/api/query";
-import type { LoaderFunctionArgs } from "react-router-dom";
+import { Status, useAuthStore } from "@/store/authStore";
+import { redirect, type LoaderFunctionArgs } from "react-router-dom";
 
 // export const homeLoader = async () => {
 //   try {
@@ -35,6 +36,14 @@ export const oneProfessorLoader = async ({ params }: LoaderFunctionArgs) => {
     oneProfessorQuery(Number(params.professorId))
   );
   return { professorId: params.professorId };
+};
+
+export const otpLoader = async () => {
+  const authStore = useAuthStore.getState();
+  if (authStore.status !== Status.otp) {
+    return redirect("/register");
+  }
+  return null;
 };
 
 // Assuming you have a similar query for fetching a single professor

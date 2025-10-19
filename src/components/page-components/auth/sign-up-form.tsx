@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useActionData, useNavigation } from "react-router";
 
 const formSchema = z.object({
   email: z
@@ -36,6 +37,8 @@ export function SignUpForm({
   });
 
   const submit = useSubmit();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Send to /login action via React Router
@@ -81,7 +84,7 @@ export function SignUpForm({
                 />
               </div>{" "}
               <Button type="submit" className="w-full bg-[#8B0000] text-white">
-                Request OTP
+                {isSubmitting ? "Sending OTP..." : "Send OTP"}
               </Button>
               <div>
                 <p className="text-center text-sm  underline-offset-4 underline text-[#8B0000]">

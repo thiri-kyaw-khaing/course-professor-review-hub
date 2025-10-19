@@ -3,6 +3,7 @@ import { redirect } from "react-router-dom";
 import { AxiosError } from "axios";
 import { authApi } from "@/api";
 import api from "@/api";
+import { Status, useAuthStore } from "@/store/authStore";
 export const loginAction = async ({ request }: ActionFunctionArgs) => {
   // request=user input to login
   const formData = await request.formData();
@@ -88,6 +89,7 @@ export const reviewCourseAction = async ({ request }: ActionFunctionArgs) => {
 };
 
 export const registerAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
   // request=user input to login
   const formData = await request.formData();
   const authData = {
@@ -100,6 +102,7 @@ export const registerAction = async ({ request }: ActionFunctionArgs) => {
     const response = await authApi.post("register", authData);
     console.log("Register response:", response);
     if (response.status == 200) {
+      authStore.setAuth(response.data.email, response.data.token, Status.otp);
       return redirect("/register/otp");
     }
     return { error: response.data || "Register failed" };
@@ -129,5 +132,31 @@ export const createCourseAction = async ({ request }: ActionFunctionArgs) => {
     }
   } catch (error: any) {
     return { error: error.response?.data?.message || "Server error" };
+  }
+};
+
+export const otpAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  const formData = await request.formData();
+  const otpData = {
+    email: authStore.email,
+    otp: formData.get("otp"),
+    token: authStore.token,
+  };
+  try {
+    const response = await api.post("verify", otpData);
+    if (response.status === 200 || response.data.success) {
+      authStore.setAuth(
+        response.data.email,
+        response.data.token,
+        Status.confirm
+      );
+      return redirect("/register/create");
+    }
+    return { error: response.data || "OTP verification failed" };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data || { error: "OTP verification failed" };
+    } else throw error;
   }
 };
