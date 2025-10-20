@@ -1,4 +1,11 @@
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import {
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+} from "recharts";
 import { totalQuery } from "@/api/query";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,43 +19,51 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
+  index,
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-(midAngle ?? 0) * RADIAN);
-  const y = cy + radius * Math.sin(-(midAngle ?? 0) * RADIAN);
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   return (
     <text
       x={x}
       y={y}
-      fill="white"
+      fill="#000" // ✅ make visible (use black)
+      fontSize={14}
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
     >
-      {`${((percent ?? 1) * 100).toFixed(0)}%`}
+      {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
 };
 
 export default function PieChartComponent() {
-  const { data: total } = useQuery(totalQuery);
+  const { data: total, isLoading, error } = useQuery(totalQuery);
+
+  if (isLoading) return <p>Loading chart...</p>;
+  if (error) return <p>Failed to load data</p>;
+
   const data = [
-    { name: "Group B", value: total?.professors || 0 },
-    { name: "Group C", value: total?.reviews || 0 },
-    { name: "Group D", value: total?.courses || 0 },
+    { name: "Professors", value: total?.professors || 0 },
+    { name: "Reviews", value: total?.reviews || 0 },
+    { name: "Courses", value: total?.courses || 0 },
   ];
+
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <PieChart width={400} height={400}>
+      <PieChart>
         <Pie
           data={data}
           cx="50%"
           cy="50%"
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={80}
+          outerRadius={110} // ✅ slightly larger
           fill="#8884d8"
           dataKey="value"
+          isAnimationActive={false} // ✅ helps ensure label is rendered instantly
         >
           {data.map((entry, index) => (
             <Cell
@@ -57,6 +72,8 @@ export default function PieChartComponent() {
             />
           ))}
         </Pie>
+        <Tooltip />
+        <Legend />
       </PieChart>
     </ResponsiveContainer>
   );
