@@ -48,9 +48,9 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="mt-6 bg-white p-4 rounded-lg border w-[700px] mx-auto p-6">
-        <h2 className="text-xl font-semibold mb-4">Rating Distribution</h2>
+        <h2 className="text-xl font-semibold mb-4">Overall Distribution</h2>
         <p className="text-gray-500 mb-4">
-          Overall distribution of all ratings (1–5 stars)
+          Overall distribution of RateWise (Courses/Professors/Reviews)
         </p>
         <PieChartComponent />
       </div>
