@@ -1,11 +1,22 @@
 import { QueryClient } from "@tanstack/react-query";
 import api from "@/api/index";
 
+// export const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       staleTime: 5 * 60 * 1000, // 5 min
+//       // retry: 2,
+//     },
+//   },
+// });
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 min
-      // retry: 2,
+      staleTime: 5 * 60 * 1000, // cache for 5 minutes
+      retry: false, // no auto-retry on 429
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
     },
   },
 });
@@ -72,4 +83,24 @@ const fetchAllReviews = async () => {
 export const allReviewsQuery = {
   queryKey: ["all-reviews"],
   queryFn: () => fetchAllReviews(),
+};
+
+export const fetchUserProfile = async () => {
+  const response = await api.get("auth-check");
+  return response.data;
+};
+
+export const userProfileQuery = {
+  queryKey: ["user-profile"],
+  queryFn: () => fetchUserProfile(),
+};
+
+export const fetchTotal = async () => {
+  const response = await api.get("users/totals");
+  return response.data;
+};
+
+export const totalQuery = {
+  queryKey: ["totals"],
+  queryFn: () => fetchTotal(),
 };

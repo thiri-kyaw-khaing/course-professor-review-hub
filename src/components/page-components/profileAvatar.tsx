@@ -9,19 +9,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { UserInfo } from "@/types";
 import { BookOpen, Calendar, LogOut, User } from "lucide-react";
-import { Form } from "react-router";
+
+import { data, Form } from "react-router";
 interface ProfileAvatarProps {
   // Define any props if needed
   user: User;
 }
+import { userProfileQuery } from "@/api/query";
+import { useQuery } from "@tanstack/react-query";
 export default function ProfileAvatar({ user }: ProfileAvatarProps) {
+  const { data: userData } = useQuery(userProfileQuery);
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none">
           <Avatar className="h-10 w-10">
             <AvatarImage
-              src="/src/assets/profile3.jpeg"
+              src="https://github.com/shadcn.png"
               alt="Profile Picture"
               className="object-cover rounded-full"
             />
@@ -31,16 +35,16 @@ export default function ProfileAvatar({ user }: ProfileAvatarProps) {
         <DropdownMenuContent>
           <DropdownMenuLabel>
             <User className="inline mr-2 h-4 w-4 text-[#8B0000]" />
-            Anonymous Student {user.id}
+            Anonymous Student {userData?.userId}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <BookOpen className="inline mr-2 h-4 w-4 text-[#8B0000]" />
-            {user.faculty}
+            {userData?.Faculty}
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Calendar className="inline mr-2 h-4 w-4 text-[#8B0000]" />
-            {user.academicYear} Student
+            {userData?.Year} Student
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>

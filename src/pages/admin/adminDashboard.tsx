@@ -10,8 +10,13 @@ import {
   UserCog,
   UserSquare2,
 } from "lucide-react";
-
+import { totalQuery } from "@/api/query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+type total = number;
 export default function AdminDashboardPage() {
+  const { data: total } = useQuery(totalQuery);
+  console.log("Total Data:", total);
+
   return (
     <div>
       <h1 className="text-3xl font-semibold mt-4">Admin Dashboard</h1>
@@ -27,17 +32,17 @@ export default function AdminDashboardPage() {
         /> */}
         <AdminDashboardCard
           title="Total Courses"
-          description="2222"
+          description={total?.courses || "Loading..."}
           icon={<BookOpen className="text-[#8B0000]" size={40} />}
         />
         <AdminDashboardCard
           title="Total Professors"
-          description="3333"
+          description={total?.professors || "Loading..."}
           icon={<GraduationCap className="text-[#8B0000]" size={40} />}
         />
         <AdminDashboardCard
           title="Total Reviews"
-          description="5678"
+          description={total?.reviews || "Loading..."}
           icon={<MessageCircle className="text-[#8B0000]" size={40} />}
         />
       </div>

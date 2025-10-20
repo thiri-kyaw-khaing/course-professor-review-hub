@@ -1,11 +1,6 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+import { totalQuery } from "@/api/query";
+import { useQuery } from "@tanstack/react-query";
 
 const RADIAN = Math.PI / 180;
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -36,6 +31,12 @@ const renderCustomizedLabel = ({
 };
 
 export default function PieChartComponent() {
+  const { data: total } = useQuery(totalQuery);
+  const data = [
+    { name: "Group B", value: total?.professors || 0 },
+    { name: "Group C", value: total?.reviews || 0 },
+    { name: "Group D", value: total?.courses || 0 },
+  ];
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart width={400} height={400}>

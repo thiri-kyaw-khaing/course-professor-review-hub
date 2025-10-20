@@ -1,4 +1,4 @@
-import api from "@/api";
+import api, { authApi } from "@/api";
 import {
   courseQuery,
   oneCourseQuery,
@@ -17,6 +17,40 @@ import { redirect, type LoaderFunctionArgs } from "react-router-dom";
 //     throw error;
 //   }
 // };
+export const loginLoader = async () => {
+  try {
+    const response = await authApi.get("auth-check");
+    if (response.status !== 200) {
+      return null;
+    } else {
+      if (response.data.userRole === "ADMIN") {
+        return redirect("/admin");
+      } else {
+        return redirect("/");
+      }
+    }
+    // return redirect("/");
+  } catch (e) {
+    console.error("loginLoader error", e);
+  }
+};
+
+export async function authLoader(requiredRole?: "ADMIN" | "USER") {
+  try {
+    const res = await api.get("/auth-check"); // calls your backend /auth/check
+    const user = res.data;
+
+    // Role-based protection
+    if (requiredRole && user.userRole !== requiredRole) {
+      throw redirect("/login");
+    }
+
+    return user; // available in useLoaderData if needed
+  } catch (err) {
+    // if not logged in or expired token
+    throw redirect("/login");
+  }
+}
 
 export const oneCourseLoader = async ({ params }: LoaderFunctionArgs) => {
   if (!params.courseId) {

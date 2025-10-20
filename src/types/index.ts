@@ -75,3 +75,9 @@ export type UserInfo = {
   academicYear: number; // 2566
   avatarUrl?: string; // optional, for profile image
 };
+
+export type User = {
+  userId: number;
+  Faculty: string;
+  Year: string;
+};

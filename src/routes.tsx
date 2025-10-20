@@ -33,7 +33,9 @@ import {
 import { LoginForm } from "./components/page-components/auth/Login-form";
 import ErrorPage from "./pages/Error";
 import {
+  authLoader,
   createAccLoader,
+  loginLoader,
   oneCourseLoader,
   oneProfessorLoader,
   otpLoader,
@@ -42,6 +44,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    loader: () => authLoader("USER"),
     errorElement: <ErrorPage />,
     children: [
       { index: true, Component: HomePage },
@@ -81,7 +84,12 @@ export const router = createBrowserRouter([
     path: "/register",
     Component: AuthRootLayout,
     children: [
-      { index: true, Component: SignUpPage, action: registerAction },
+      {
+        index: true,
+        Component: SignUpPage,
+        action: registerAction,
+        loader: loginLoader,
+      },
       { path: "otp", Component: OTPPage, loader: otpLoader, action: otpAction },
       {
         path: "create",
@@ -93,6 +101,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
+    loader: () => authLoader("ADMIN"),
     Component: AdminRootLayout,
     children: [
       { index: true, Component: AdminDashboardPage },
@@ -109,6 +118,7 @@ export const router = createBrowserRouter([
     path: "/login",
     Component: LoginForm,
     action: loginAction,
+    loader: loginLoader,
   },
   {
     path: "/logout",
