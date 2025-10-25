@@ -11,8 +11,18 @@ import { Button } from "@/components/ui/button";
 import { useReviewsStore } from "@/store/reviewStore";
 import api from "@/api";
 import axios from "axios";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import MyReviewProfessorEdit from "./MyReviewProfessorEdit";
 
 export default function MyReviewProfessor({ review }: { review: Review }) {
+  const [openEditId, setOpenEditId] = useState<number | null>(null);
   const { removeReview } = useReviewsStore();
 
   const handleDeleteReview = async (reviewId: number) => {
@@ -55,14 +65,41 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
                   </span>
                 </div>
                 <div className="flex space-x-1 ml-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDeleteReview(review.id)}
-                    className="text-blue-600 hover:text-blue-700 p-1"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
+                  <div>
+                    <Dialog
+                      open={openEditId === review.id}
+                      onOpenChange={(o) => setOpenEditId(o ? review.id : null)}
+                    >
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setOpenEditId(review.id)}
+                          className="text-blue-600 hover:text-blue-700 p-1"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>Edit Your Professor Review</DialogTitle>
+
+                          {/* <DialogDescription>
+                        Create a new course with all required information and
+                        settings.
+                      </DialogDescription> */}
+                        </DialogHeader>
+                        {/* Course Forms */}
+                        <MyReviewProfessorEdit
+                          key={review.id}
+                          review={review}
+                          onClose={() => setOpenEditId(null)}
+                        />
+
+                        {/* <CourseEditForm key={course.id} course={course} /> */}
+                      </DialogContent>
+                    </Dialog>
+                  </div>
                   <Button
                     variant="ghost"
                     size="sm"
