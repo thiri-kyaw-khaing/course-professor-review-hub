@@ -79,7 +79,7 @@ export default function CourseDetailPage() {
             </div>
 
             <h1 className="text-xl font-semibold mt-4 text-gray-500">
-              {course.data?.faculty}
+              {course.data?.faculty.replace(/_/g, " ")}
             </h1>
 
             <div className="border border-gray-300 rounded-md mt-6 p-6">

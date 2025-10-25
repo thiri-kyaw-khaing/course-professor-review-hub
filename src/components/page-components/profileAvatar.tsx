@@ -40,7 +40,7 @@ export default function ProfileAvatar({ user }: ProfileAvatarProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <BookOpen className="inline mr-2 h-4 w-4 text-[#8B0000]" />
-            {userData?.Faculty}
+            {userData?.Faculty && userData.Faculty.replace(/_/g, " ")}
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Calendar className="inline mr-2 h-4 w-4 text-[#8B0000]" />

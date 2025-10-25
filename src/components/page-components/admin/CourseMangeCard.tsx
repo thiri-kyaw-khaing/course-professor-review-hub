@@ -189,7 +189,9 @@ export default function CourseManageCard({ courses }: CourseManageCardProps) {
             <CardTitle>
               {course.code}: {course.title}
             </CardTitle>
-            <CardDescription>{course.faculty}</CardDescription>
+            <CardDescription>
+              {course.faculty.replace(/_/g, " ")}
+            </CardDescription>
           </CardHeader>
 
           <CardContent>

@@ -82,7 +82,7 @@ export default function ProfessorMangeCard({
                   {professor.name}
                 </CardTitle>
                 <CardDescription className="text-sm text-gray-500">
-                  {professor.faculty}
+                  {professor.faculty.replace(/_/g, " ")}
                 </CardDescription>
               </div>
             </CardHeader>

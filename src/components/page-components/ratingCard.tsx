@@ -34,7 +34,7 @@ export default function RatingCard({
 
         <div>
           <h3 className="text-lg font-semibold">{name}</h3>
-          <p className="text-gray-500">{department}</p>
+          <p className="text-gray-500">{department.replace(/_/g, " ")}</p>
         </div>
 
         {/* Rating */}

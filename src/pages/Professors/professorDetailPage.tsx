@@ -95,7 +95,7 @@ export default function ProfessorDetailPage() {
                     <CardTitle>{professor.data.name}</CardTitle>
                     <div className="flex items-center gap-1 text-gray-600">
                       <GraduationCap className="inline mr-1 h-5 w-5" />
-                      <p>{professor.data.faculty}</p>
+                      <p>{professor.data.faculty.replace(/_/g, " ")}</p>
                     </div>
                     {/* <div className="flex items-center gap-1 text-gray-600">
                       <MapPin className="inline mr-1 h-4 w-4" />

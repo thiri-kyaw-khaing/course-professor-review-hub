@@ -44,7 +44,9 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
           <CardTitle>{review.professor?.name}</CardTitle>
           <CardDescription>
             <div className="flex flex-wrap mr-1 text-xs text-muted-foreground sm:mt-0">
-              {`Professor: ${review.professor?.name} (${review.professor?.faculty})`}
+              {`Professor: ${
+                review.professor?.name
+              } (${review.professor?.faculty.replace(/_/g, " ")})`}
               <div className="flex items-center gap-2 lg:ml-auto pr-2">
                 <div className="flex items-center gap-1 sm:gap-2">
                   <StarRating value={review.rating} readOnly />

@@ -110,7 +110,7 @@ export default function CourseRatingCard({
           <h3 className="font-semibold">{code}</h3>
           <h3 className="text-lg text-[#8B0000] font-medium">{name}</h3>
         </div>
-        <p className="text-gray-500 text-sm">{faculty}</p>
+        <p className="text-gray-500 text-sm">{faculty?.replace(/_/g, " ")}</p>
       </div>
 
       {/* Rating */}

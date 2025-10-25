@@ -36,7 +36,7 @@ export default function CourseCard({
         </div>
 
         <div className="flex items-center gap-2">
-          <p className="text-gray-600 text-sm">{faculty}</p>
+          <p className="text-gray-600 text-sm"> {faculty.replace(/_/g, " ")}</p>
           <h1>-</h1>
           <span className="text-gray-600 text-sm">{credits} credits</span>
         </div>
