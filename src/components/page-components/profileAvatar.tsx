@@ -25,11 +25,11 @@ export default function ProfileAvatar({ user }: ProfileAvatarProps) {
         <DropdownMenuTrigger className="outline-none">
           <Avatar className="h-10 w-10">
             <AvatarImage
-              src="https://github.com/shadcn.png"
+              src="/src/assets/admin-avatar.jpg"
               alt="Profile Picture"
               className="object-cover rounded-full"
             />
-            <AvatarFallback>A</AvatarFallback>
+            <AvatarFallback>{userData?.Year}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

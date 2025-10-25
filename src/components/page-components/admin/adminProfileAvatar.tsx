@@ -21,7 +21,7 @@ export default function ProfileAdminAvatar() {
         <DropdownMenuTrigger className="outline-none">
           <Avatar className="h-10 w-10">
             <AvatarImage
-              src="/src/assets/profile3.jpeg"
+              src="/src/assets/admin-avatar.jpg"
               alt="Profile Picture"
               className="object-cover rounded-full"
             />
