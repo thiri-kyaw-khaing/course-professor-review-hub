@@ -9,6 +9,7 @@ type ReviewState = {
 type ReviewActions = {
   setReviews: (reviews: Review[]) => void;
   removeReview: (id: number) => void;
+  updateReview: (updatedReview: Review) => void;
 };
 
 export const useReviewsStore = create<ReviewState & ReviewActions>()(
@@ -21,6 +22,12 @@ export const useReviewsStore = create<ReviewState & ReviewActions>()(
       removeReview: (id) =>
         set((state) => ({
           reviews: state.reviews.filter((r) => r.id !== id),
+        })),
+      updateReview: (updatedReview) =>
+        set((state) => ({
+          reviews: state.reviews.map((review) =>
+            review.id === updatedReview.id ? updatedReview : review
+          ),
         })),
     }),
     {

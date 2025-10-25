@@ -84,9 +84,6 @@ export default function ProfessorsPage() {
                 onChange={(value) => setSelectedRating(value)}
               />
             </div>
-            <Button className="mt-4 bg-[#8B0000] text-white w-full sm:w-auto">
-              Search
-            </Button>
           </div>
         </div>
         {/* <CourseListPage courses={courses} /> */}
