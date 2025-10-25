@@ -102,6 +102,11 @@ export default function CreateAccForm({
                   required
                   {...form.register("password")}
                 />
+                {form.formState.errors.password && (
+                  <p className="text-sm text-red-600 mt-1">
+                    {form.formState.errors.password.message}
+                  </p>
+                )}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="confirm-password">Confirm Password</Label>
@@ -112,6 +117,11 @@ export default function CreateAccForm({
                   required
                   {...form.register("confirmPassword")}
                 />
+                {form.formState.errors.confirmPassword && (
+                  <p className="text-sm text-red-600 mt-1">
+                    {form.formState.errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
               <div className="grid gap-3">
                 <Field className="w-full">

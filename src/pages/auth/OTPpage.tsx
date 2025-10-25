@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   InputOTP,
   InputOTPGroup,
@@ -32,8 +33,11 @@ export default function OTPPage() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="flex items-center justify-center min-h-screen"
+    >
+      <div className="bg-background flex flex-col items-center justify-center gap-6 p-6 md:p-10 border border-gray-200 rounded-lg max-w-md w-full mx-auto">
         <h1>Verification Code</h1>
         <p className="text-center text-sm text-muted-foreground">
           Please enter the verification code sent to your email.
@@ -47,9 +51,6 @@ export default function OTPPage() {
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
             <InputOTPSlot index={2} />
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
             <InputOTPSlot index={3} />
             <InputOTPSlot index={4} />
             <InputOTPSlot index={5} />
@@ -62,7 +63,7 @@ export default function OTPPage() {
           </p>
         )}
 
-        <Button type="submit" className="w-full bg-[#8B0000] text-white">
+        <Button type="submit" className="w-[200px] bg-[#8B0000] text-white">
           Verify
         </Button>
       </div>
