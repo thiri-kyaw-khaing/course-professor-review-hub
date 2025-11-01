@@ -25,7 +25,7 @@ export default function MyReviewCourseEdit({
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.put("users/reviews", {
+      const res = await api.patch("users/reviews", {
         reviewId: review.id,
         rating: Number(formData.rating),
         comment: formData.comment,
@@ -83,7 +83,11 @@ export default function MyReviewCourseEdit({
         <Button type="button" variant="outline" onClick={onClose}>
           Cancel
         </Button>
-        <Button type="submit" disabled={loading}>
+        <Button
+          type="submit"
+          disabled={loading}
+          className="bg-[#8B0000] text-white"
+        >
           {loading ? "Updating..." : "Save Changes"}
         </Button>
       </div>
