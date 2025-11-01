@@ -32,7 +32,6 @@ export default function MyReviewCourseEdit({
       });
 
       if (res.data.success) {
-        alert(res.data.message || "Review updated successfully.");
         onClose(); // close dialog
         window.location.reload(); // optional (we can later update store)
       } else {
