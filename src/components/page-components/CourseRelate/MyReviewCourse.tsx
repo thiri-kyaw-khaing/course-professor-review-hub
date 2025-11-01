@@ -19,16 +19,25 @@ import {
 } from "@/components/ui/dialog";
 import MyReviewCourseEdit from "./MyReviewCourseEdit";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 // import { useReviewsStore } from "@/store/reviewStore";
 
 export default function MyReviewCourse({ review }: { review: Review }) {
   // const { reviews, removeReview } = useReviewsStore();
   const [openEditId, setOpenEditId] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { removeReview } = useReviewsStore();
 
   const handleDeleteReview = async (reviewId: number) => {
-    if (!window.confirm("Are you sure you want to delete this review?")) return;
-
     try {
       // ✅ Simulate or perform real API call (same as Postman)
       const res = await api.delete(
@@ -37,8 +46,6 @@ export default function MyReviewCourse({ review }: { review: Review }) {
       );
 
       if (res.data.success) {
-        alert(res.data.message || "Review deleted successfully.");
-        // ✅ Remove it from local Zustand store
         removeReview(reviewId);
       } else {
         alert("Failed to delete review. Please try again.");
@@ -101,7 +108,38 @@ export default function MyReviewCourse({ review }: { review: Review }) {
                       </DialogContent>
                     </Dialog>
                   </div>
-                  <Button
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete this review?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteReview(review.id)}
+                          className="bg-[#8B0000] text-white hover:bg-red-700"
+                          disabled={isDeleting}
+                        >
+                          {isDeleting ? "Deleting..." : "Delete"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
+                  {/* <Button
                     // onClick={() => removeReview(review.id)}
                     variant="ghost"
                     size="sm"
@@ -109,7 +147,7 @@ export default function MyReviewCourse({ review }: { review: Review }) {
                     className="text-red-600 hover:text-red-700 p-1"
                   >
                     <Trash2 className="h-4 w-4" />
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>

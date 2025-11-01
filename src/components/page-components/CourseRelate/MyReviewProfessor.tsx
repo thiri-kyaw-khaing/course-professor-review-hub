@@ -10,7 +10,6 @@ import { Calendar, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useReviewsStore } from "@/store/reviewStore";
 import api from "@/api";
-import axios from "axios";
 import {
   Dialog,
   DialogContent,
@@ -20,13 +19,24 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import MyReviewProfessorEdit from "./MyReviewProfessorEdit";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function MyReviewProfessor({ review }: { review: Review }) {
   const [openEditId, setOpenEditId] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { removeReview } = useReviewsStore();
 
   const handleDeleteReview = async (reviewId: number) => {
-    if (!window.confirm("Are you sure you want to delete this review?")) return;
+    // if (!window.confirm("Are you sure you want to delete this review?")) return;
 
     try {
       // ✅ Simulate or perform real API call (same as Postman)
@@ -36,8 +46,6 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
       );
 
       if (res.data.success) {
-        alert(res.data.message || "Review deleted successfully.");
-        // ✅ Remove it from local Zustand store
         removeReview(reviewId);
       } else {
         alert("Failed to delete review. Please try again.");
@@ -100,14 +108,37 @@ export default function MyReviewProfessor({ review }: { review: Review }) {
                       </DialogContent>
                     </Dialog>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDeleteReview(review.id)}
-                    className="text-red-600 hover:text-red-700 p-1"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete this review?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteReview(review.id)}
+                          className="bg-[#8B0000] text-white hover:bg-red-700"
+                          disabled={isDeleting}
+                        >
+                          {isDeleting ? "Deleting..." : "Delete"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </div>

@@ -2,19 +2,9 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import type { Review } from "@/types";
-import StarRating from "../StarRating"; // ✅ import star rating
+import StarRating from "../StarRating";
 import api from "@/api";
 import React, { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 interface MyReviewProfessorEditProps {
   review: Review;
@@ -30,7 +20,6 @@ export default function MyReviewProfessorEdit({
     comment: review.comment || "",
   });
   const [loading, setLoading] = useState(false);
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +33,7 @@ export default function MyReviewProfessorEdit({
 
       if (res.data.success) {
         // alert(res.data.message || "Review updated successfully.");
-        setShowSuccessDialog(true);
+
         onClose(); // close dialog
         window.location.reload(); // optional (we can later update store)
       } else {
@@ -58,16 +47,10 @@ export default function MyReviewProfessorEdit({
     }
   };
 
-  const handleCloseSuccess = () => {
-    setShowSuccessDialog(false);
-    onClose();
-    window.location.reload();
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4 mt-2">
-        {/* ✅ Star Rating Field */}
+        {/*  Star Rating Field */}
         <Field>
           <FieldLabel>Rating</FieldLabel>
           <div className="flex items-center gap-2">
@@ -80,7 +63,7 @@ export default function MyReviewProfessorEdit({
             <span className="text-sm text-gray-500">{formData.rating} / 5</span>
           </div>
         </Field>
-        {/* ✅ Comment Field */}
+        {/*  Comment Field */}
         <Field>
           <FieldLabel htmlFor="comment">Your Comment</FieldLabel>
           <Textarea
@@ -95,7 +78,7 @@ export default function MyReviewProfessorEdit({
             }
           />
         </Field>
-        {/* ✅ Actions */}
+        {/*  Actions */}
         <div className="flex justify-end gap-2 pt-2">
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel

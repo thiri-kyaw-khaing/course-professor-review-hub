@@ -172,10 +172,10 @@ export default function CourseManageCard({ courses }: CourseManageCardProps) {
         console.log("✅ Course deleted:", courseId);
         removeCourse(courseId);
       } else {
-        console.error("❌ Delete failed:", res.data);
+        console.error(" Delete failed:", res.data);
       }
     } catch (error) {
-      console.error("❌ Error deleting course:", error);
+      console.error(" Error deleting course:", error);
     } finally {
       setIsDeleting(false);
     }
