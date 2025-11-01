@@ -132,7 +132,12 @@
 // }
 
 import { useQuery } from "@tanstack/react-query";
-import { courseQuery, professorQuery } from "@/api/query";
+import {
+  allReviewsQuery,
+  courseQuery,
+  professorQuery,
+  totalQuery,
+} from "@/api/query";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, TrendingUp, User } from "lucide-react";
@@ -156,7 +161,13 @@ export default function HomePage() {
     isError: coursesError,
   } = useQuery(courseQuery);
 
-  if (professorsLoading || coursesLoading) {
+  const {
+    data: totalReviewsData,
+    isLoading: totalLoading,
+    isError: totalError,
+  } = useQuery(allReviewsQuery);
+
+  if (professorsLoading || coursesLoading || totalLoading) {
     return (
       <div className="flex justify-center items-center h-screen text-gray-500">
         Loading data...
@@ -175,6 +186,7 @@ export default function HomePage() {
   // ✅ Safe fallback for undefined data
   const professors = professorsData?.professors ?? [];
   const courses = coursesData?.courses ?? [];
+  const totalReviews = totalReviewsData?.data ?? 0;
 
   return (
     <div className="space-y-4 p-4 md:p-6">
@@ -214,7 +226,7 @@ export default function HomePage() {
         />
         <Card
           title="Total Reviews"
-          description="5,678"
+          description={String(totalReviews.length)}
           icon={<Star size={60} />}
         />
       </div>
