@@ -1,73 +1,89 @@
-# React + TypeScript + Vite
+# 📚 RateWise
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**RateWise** is a web platform for Mae Fah Luang University students to **search, rate, and review academic courses and professors**.  
+It provides reliable feedback to help students make smarter registration choices and enables administrators to monitor course quality.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧰 Tech Stack
 
-## React Compiler
+**Frontend**
+- ⚡ [Vite](https://vitejs.dev/) – fast dev/build tool  
+- ⚛️ [React + TypeScript (TSX)](https://react.dev/) – modern, strongly typed UI  
+- 🎨 [Tailwind CSS](https://tailwindcss.com/) – utility-first styling  
+- 🔁 [TanStack Query](https://tanstack.com/query/latest) – smart data fetching and caching  
+- 📊 [Recharts](https://recharts.org/) – charting and analytics visualization  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Backend (planned / connected)**
+- Express.js + REST API  
+- MySQL database  
+- Redis cache  
+- Object storage for uploads
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ⚙️ Installation & Setup
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/ratewise.git
+cd ratewise
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 2. Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# 3. Start development server
+npm run dev
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# 4. Build production files
+npm run build
+````
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🚀 Features
+
+* 🔍 Search for courses and professors
+* ⭐ Rate and review classes
+* 💬 View and compare feedback
+* 📊 Visualize data using Recharts
+* ⚡ Live data updates via TanStack Query
+* 🎨 Responsive UI with Tailwind CSS
+
+---
+
+## 🔒 Security
+
+* HTTPS everywhere (via CloudFront/CDN)
+* Backend access only to database
+* Rate limiting & input validation
+
+---
+
+## 🧠 Future Enhancements
+
+* Authentication (student/admin login)
+* Admin dashboard for course management
+* Caching improvements (Redis)
+* Deployment on AWS or Vercel
+
+---
+
+## 🧑‍💻 Scripts
+
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start local development  |
+| `npm run build`   | Build production version |
+| `npm run preview` | Preview built app        |
+| `npm run lint`    | Check code quality       |
+
+---
+
+## 🧩 License
+
+This project is open-source and available under the **MIT License**.
+
+---
+
+**Made with ❤️ by Mae Fah Luang University Students**
