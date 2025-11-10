@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Frame_2 from "../../../../assets/Frame_2.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -81,7 +82,7 @@ export function LoginForm({
             >
               <div className="flex size-12 items-center justify-center rounded-full overflow-hidden">
                 <img
-                  src={siteConfig.logo}
+                  src={Frame_2}
                   alt="Logo"
                   className="h-12 w-12 object-contain"
                 />
