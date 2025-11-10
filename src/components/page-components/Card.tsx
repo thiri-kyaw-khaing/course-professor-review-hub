@@ -1,5 +1,3 @@
-import { PersonStandingIcon, User } from "lucide-react";
-
 export default function Card({
   title,
   description,

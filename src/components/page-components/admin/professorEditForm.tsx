@@ -11,6 +11,7 @@ import {
 import EducationInput from "./educationInput";
 import type { Professor } from "@/types";
 import { Controller, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
@@ -62,7 +63,7 @@ export default function ProfessorEditForm({
       )
     : [];
 
-  const form = useForm<FormValues>({
+  const form = useForm<any>({
     resolver: zodResolver(professorSchema),
     defaultValues: {
       name: professor.name || "",
@@ -78,8 +79,8 @@ export default function ProfessorEditForm({
   const [submitting, setSubmitting] = useState(false);
 
   // ✅ Submit handler
-  const onSubmit = async (values: FormValues) => {
-    const sanitizedEducation = (values.education || []).map((edu) =>
+  const onSubmit = async (values: any) => {
+    const sanitizedEducation = (values.education || []).map((edu: any) =>
       typeof edu === "string" ? edu : edu.degree
     );
 
@@ -107,7 +108,7 @@ export default function ProfessorEditForm({
         toast.success("✅ Professor updated successfully!");
         if (onClose) onClose();
       }
-    } catch (error) {
+    } catch (error: any) {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -140,7 +141,9 @@ export default function ProfessorEditForm({
             />
           </Field>
           {errors.name && (
-            <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>
+            <p className="text-sm text-red-600 mt-1">
+              {String(errors.name?.message)}
+            </p>
           )}
         </div>
 
@@ -158,7 +161,7 @@ export default function ProfessorEditForm({
             />
             {errors.email && (
               <p className="text-sm text-red-600 mt-1">
-                {errors.email.message}
+                {String(errors.email?.message)}
               </p>
             )}
           </Field>
@@ -195,7 +198,7 @@ export default function ProfessorEditForm({
             />
             {errors.faculty && (
               <p className="text-sm text-red-600 mt-1">
-                {errors.faculty.message}
+                {String(errors.faculty?.message)}
               </p>
             )}
           </Field>
@@ -209,7 +212,7 @@ export default function ProfessorEditForm({
               control={control}
               render={({ field }) => (
                 <EducationInput
-                  value={field.value || []}
+                  value={(field.value || []) as any}
                   onChange={(index, val) => {
                     const updated = [...(field.value || [])];
                     updated[index] = val;

@@ -1,7 +1,6 @@
 import type { Professor } from "@/types";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -85,17 +84,18 @@ export default function ProfessorListPage({
                 <CardFooter className="flex flex-wrap gap-2 items-center">
                   <div>
                     <p className="">Education: </p>
-                    {professor.education?.map((edu, index) => (
-                      <div>
-                        {/* <PrizeIcon className="inline mr-1 h-4 w-4"/> */}
-                        <h1
-                          key={index}
-                          className=" text-sm px-2 py-1  pl-2 mr-1 mb-1"
-                        >
-                          {edu.degree}
-                        </h1>
-                      </div>
-                    ))}
+                    {professor.education?.map((edu, index) => {
+                      const degree =
+                        typeof edu === "string" ? edu : (edu as any).degree;
+                      return (
+                        <div key={index}>
+                          {/* <PrizeIcon className="inline mr-1 h-4 w-4"/> */}
+                          <h1 className=" text-sm px-2 py-1  pl-2 mr-1 mb-1">
+                            {degree}
+                          </h1>
+                        </div>
+                      );
+                    })}
                   </div>
                 </CardFooter>
               </Card>

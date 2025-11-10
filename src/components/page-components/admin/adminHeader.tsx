@@ -1,7 +1,6 @@
 import { siteConfig } from "@/config/site";
 import Navigation from "../Navigation";
 import MobileNav from "../MobileNav";
-import ProfileAvatar from "../profileAvatar";
 import { currentUser } from "@/data";
 import ProfileAdminAvatar from "./adminProfileAvatar";
 
@@ -19,7 +18,7 @@ export default function AdminHeader() {
             <MobileNav items={siteConfig.adminMainNav} />
           </div>
           <div className="ml-4">
-            <ProfileAdminAvatar user={currentUser} />
+            <ProfileAdminAvatar />
           </div>
         </nav>
       </header>

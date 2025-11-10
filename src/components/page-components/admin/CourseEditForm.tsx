@@ -50,7 +50,7 @@ export default function CourseEditForm({
   const queryClient = useQueryClient();
   const { updateCourse } = useCoursesStore();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const form = useForm<FormValues>({
+  const form = useForm<any>({
     resolver: zodResolver(schema),
     defaultValues: {
       courseCode: course.code ?? "",
@@ -80,7 +80,7 @@ export default function CourseEditForm({
         toast.success("✅ Course updated successfully!");
         if (onClose) onClose();
       }
-    } catch (error) {
+    } catch (error: any) {
       // ✅ Extract message safely
       const message =
         error?.response?.data?.message ||

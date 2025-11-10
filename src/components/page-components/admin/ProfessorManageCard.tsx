@@ -17,6 +17,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Edit, Mail } from "lucide-react";
 
 import { useState } from "react";
@@ -35,28 +45,26 @@ export default function ProfessorMangeCard({
   const imgUrl = import.meta.env.VITE_IMG_URL;
 
   const { removeProfessor } = useProfessorsStore();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDeleteProfessor = async (professorId: number) => {
-    if (!window.confirm("Are you sure you want to delete this professor?"))
-      return;
-
     try {
-      // ✅ Simulate or perform real API call (same as Postman)
-      const res = await api.delete(
-        "/admins/professors",
-        { data: { professorId: professorId } } // <-- important: send body in DELETE request
-      );
+      setIsDeleting(true);
+      // perform API call
+      const res = await api.delete("/admins/professors", {
+        data: { professorId },
+      });
 
-      if (res.data.success) {
-        alert(res.data.message || "Professor deleted successfully.");
-        // ✅ Remove it from local Zustand store
+      if (res.data?.success) {
+        // remove from store
         removeProfessor(professorId);
       } else {
-        alert("Failed to delete professor. Please try again.");
+        console.error("Failed to delete professor:", res.data);
       }
     } catch (error) {
       console.error("Error deleting professor:", error);
-      alert("Something went wrong while deleting the professor.");
+    } finally {
+      setIsDeleting(false);
     }
   };
   const [openEditId, setOpenEditId] = useState<number | null>(null);
@@ -97,7 +105,9 @@ export default function ProfessorMangeCard({
                 <h4 className="font-semibold mt-4 mb-2">Education:</h4>
                 <ul className="list-disc list-inside">
                   {professor.education?.map((edu, index) => (
-                    <li key={index}>{edu.degree}</li>
+                    <li key={index}>
+                      {typeof edu === "string" ? edu : (edu as any).degree}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -132,13 +142,35 @@ export default function ProfessorMangeCard({
                 </Dialog>
               </div>
               <div>
-                <Button
-                  variant="outline"
-                  className="bg-[#8B0000] text-white hover:bg-red-700"
-                  onClick={() => handleDeleteProfessor(professor.id)}
-                >
-                  Delete
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="bg-[#8B0000] text-white hover:bg-red-700"
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to delete this professor?
+                      </AlertDialogTitle>
+                    </AlertDialogHeader>
+
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleDeleteProfessor(professor.id)}
+                        className="bg-[#8B0000] text-white hover:bg-red-700"
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? "Deleting..." : "Delete"}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </CardFooter>
           </Card>

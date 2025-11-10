@@ -10,10 +10,10 @@ import {
 import type { UserInfo } from "@/types";
 import { BookOpen, Calendar, LogOut, User } from "lucide-react";
 
-import { data, Form } from "react-router";
+import { Form } from "react-router";
+
 interface ProfileAvatarProps {
-  // Define any props if needed
-  user: User;
+  user?: UserInfo;
 }
 import { userProfileQuery } from "@/api/query";
 import { useQuery } from "@tanstack/react-query";

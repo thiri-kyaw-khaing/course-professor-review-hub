@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
 import StarRating from "../StarRating";
 
 interface CourseCardProps {
@@ -19,7 +17,6 @@ export default function CourseCard({
   credits,
   description,
   rating,
-  status,
 }: CourseCardProps) {
   return (
     <>

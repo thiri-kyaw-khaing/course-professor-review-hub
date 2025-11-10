@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { professors, reviews } from "@/data";
+
 import {
   ArrowLeft,
   GraduationCap,
@@ -22,7 +22,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  type JSXElementConstructor,
+  type Key,
+  type ReactElement,
+  type ReactNode,
+  type ReactPortal,
+} from "react";
 import { oneProfessorQuery } from "@/api/query";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { Review } from "@/types";
@@ -255,25 +263,13 @@ export default function ProfessorDetailPage() {
               <Card className="border border-gray-300 rounded-md p-6 w-full">
                 <h2 className="text-lg font-semibold mb-2">Education</h2>
                 <ul className="list-disc ml-5 text-sm text-gray-700">
-                  {professor.data.education.map((edu, index) => (
-                    <li key={index}>{edu.degree}</li>
+                  {professor.data.education.map((edu: any, index: number) => (
+                    <li key={index}>
+                      {typeof edu === "string" ? edu : edu.degree}
+                    </li>
                   ))}
                 </ul>
               </Card>
-
-              {/* <Card className="border border-gray-300 rounded-md p-6 w-full">
-                <h2 className="text-lg font-semibold ">Areas of Expertise</h2>
-                <ul className="list-disc ml-5 text-sm text-gray-700">
-                  {professor.specializations.map((e, i) => (
-                    <div
-                      key={i}
-                      className="inline-block bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-md mb-2"
-                    >
-                      {e}
-                    </div>
-                  ))}
-                </ul>
-              </Card> */}
             </div>
           </div>
         </div>

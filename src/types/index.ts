@@ -14,15 +14,16 @@ export type Professor = {
   id: number;
   name: string;
   title: string; // e.g., "Associate Professor"
-  averageRate: number; // e.g., 4.8
+  averageRate?: number; // e.g., 4.8
   faculty: string; // e.g., "School of Information Technology"
   office: string; // e.g., "IT Building, Room 301"
   email: string;
   phone: string;
   specializations: string[]; // ["Software Engineering", "Database Systems"]
-  education: (string | Education)[]; // ["Ph.D. Computer Science - Chulalongkorn University", "M.Sc. Information Technology - MFU"]
+  education: any[]; // allow strings or objects; keep flexible for fixtures and runtime data
   image?: string;
   totalReviews: number;
+  averageRating?: number; // backward-compatible alias for older data
   reviews?: { id: number; comment: string; rating: number }[];
   imageUrl?: string;
 };

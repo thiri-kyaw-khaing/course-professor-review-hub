@@ -25,10 +25,10 @@ export const useCoursesStore = create<CourseState & CourseActions>()(
           courses: state.courses.filter((c) => c.id !== id),
         })),
 
-      updateCourse: (updated) =>
+      updateCourse: (courseId, updated) =>
         set((state) => ({
-          courses: state.courses.map((c) =>
-            c.id === updated.id ? { ...c, ...updated } : c
+          courses: state.courses.map((c: any) =>
+            c.id === courseId ? { ...c, ...updated } : c
           ),
         })),
 
