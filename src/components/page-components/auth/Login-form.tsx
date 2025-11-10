@@ -69,7 +69,7 @@ export function LoginForm({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 w-full max-w-sm text-center"
+          className="flex flex-col gap-6 w-full max-w-sm text-center border border-gray-200 rounded-lg p-6 bg-background shadow-sm"
           autoComplete="off"
           noValidate
         >
@@ -80,13 +80,11 @@ export function LoginForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-12 items-center justify-center rounded-full overflow-hidden">
-                {siteConfig.logo && (
-                  <img
-                    src={siteConfig.logo}
-                    alt="Logo"
-                    className="h-12 w-12 object-contain"
-                  />
-                )}
+                <img
+                  src={siteConfig.logo}
+                  alt="Logo"
+                  className="h-12 w-12 object-contain"
+                />
               </div>
               <span className="sr-only">RateWise</span>
             </a>
