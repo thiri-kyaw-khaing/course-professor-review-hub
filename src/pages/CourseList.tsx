@@ -26,6 +26,7 @@ export default function CourseListPage({ courses }: CourseListPageProps) {
                 credits={course.credits}
                 description={course.description}
                 status={course.status}
+                rating={course.averageRate}
               />
             </Link>
           ))}

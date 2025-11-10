@@ -91,11 +91,6 @@ export default function MyReviewCourse({ review }: { review: Review }) {
                       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
                           <DialogTitle>Edit Your Professor Review</DialogTitle>
-
-                          {/* <DialogDescription>
-                        Create a new course with all required information and
-                        settings.
-                      </DialogDescription> */}
                         </DialogHeader>
                         {/* Course Forms */}
                         <MyReviewCourseEdit

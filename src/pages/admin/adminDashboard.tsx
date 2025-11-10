@@ -1,18 +1,8 @@
 import AdminDashboardCard from "@/components/page-components/admin/adminDashboardCard";
 import PieChartComponent from "@/components/page-components/admin/piechart";
-import {
-  BookOpen,
-  GraduationCap,
-  MessageCircle,
-  PieChart,
-  PieChartIcon,
-  User2,
-  UserCog,
-  UserSquare2,
-} from "lucide-react";
+import { BookOpen, GraduationCap, MessageCircle } from "lucide-react";
 import { totalQuery } from "@/api/query";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import TinyBarChart from "@/components/page-components/admin/barchart";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 type total = number;
@@ -44,11 +34,6 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="flex mt-6 grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-3">
-        {/* <AdminDashboardCard
-          title="Total Students"
-          description="11111"
-          icon={<User2 className="text-[#8B0000]" size={40} />}
-        /> */}
         <AdminDashboardCard
           title="Total Courses"
           description={total?.courses || "Loading..."}

@@ -18,8 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Edit, Mail } from "lucide-react";
-import CourseForm from "./CourseForm";
-import CourseEditForm from "./CourseEditForm";
+
 import { useState } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import StarRating from "../StarRating";
@@ -34,8 +33,6 @@ export default function ProfessorMangeCard({
   professors,
 }: ProfessorMangeCardProps) {
   const imgUrl = import.meta.env.VITE_IMG_URL;
-
-  //   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   const { removeProfessor } = useProfessorsStore();
 
@@ -123,11 +120,6 @@ export default function ProfessorMangeCard({
                   <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Edit Professor</DialogTitle>
-
-                      {/* <DialogDescription>
-                        Create a new course with all required information and
-                        settings.
-                      </DialogDescription> */}
                     </DialogHeader>
                     {/* Course Forms */}
                     <ProfessorEditForm

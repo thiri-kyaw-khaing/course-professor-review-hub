@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { Review } from "@/types";
-import StarRating from "../StarRating";
+import StarRating from "../page-components/StarRating";
 import { Calendar, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useReviewsStore } from "@/store/reviewStore";

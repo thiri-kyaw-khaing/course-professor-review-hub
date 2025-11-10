@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { courses } from "@/data";
-
 import { ArrowLeft, MessageSquare, PlusIcon, Star } from "lucide-react";
 import { Form, Link, useLoaderData, useParams } from "react-router-dom";
 import {
@@ -29,9 +27,7 @@ export default function CourseDetailPage() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const actionData = useActionData();
-  // const { courseId } = useParams();
 
-  // const course = courses.find((course) => course.id === Number(courseId));
   const filledStars = Math.floor(course?.averageRate || 0);
   const hasHalfStar = (course?.averageRate ?? 0) % 1 >= 0.5;
   const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
@@ -68,9 +64,7 @@ export default function CourseDetailPage() {
               <span className="text-3xl text-[#8B0000] font-semibold">
                 {course.data?.title}
               </span>
-              {/* <span className="border border-gray-300 rounded-md px-4 py-2 text-sm text-semibold ml-auto text-white bg-[#8B0000] items-end sm:items-start">
-              {course.credits} Credits
-            </span> */}
+
               <div className="mt-2 sm:mt-0 sm:ml-auto">
                 <span className="border border-gray-300 rounded-md px-4 py-2 text-sm font-semibold text-white bg-[#8B0000] w-fit whitespace-nowrap">
                   {course.data?.credits} Credits
@@ -96,28 +90,6 @@ export default function CourseDetailPage() {
             </h1>
             {/* Rating */}
             <div className="flex items-center mb-2 ml-auto mt-6 justify-center">
-              {/* {[...Array(filledStars)].map((_, i) => (
-                <Star
-                  key={`filled-${course.id}-${i}`}
-                  className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                />
-              ))}
-
-              {hasHalfStar && (
-                <div className="relative">
-                  <Star className="h-5 w-5 text-gray-300" />
-                  <div className="absolute left-0 top-0 w-1/2 overflow-hidden">
-                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  </div>
-                </div>
-              )}
-
-              {[...Array(emptyStars)].map((_, i) => (
-                <Star
-                  key={`empty-${course.id}-${i}`}
-                  className="h-5 w-5 text-gray-300"
-                />
-              ))} */}
               <StarRating value={course.data?.averageRate || 0} readOnly />
 
               <div className="flex text-center flex mt-2">
@@ -141,18 +113,7 @@ export default function CourseDetailPage() {
           <MessageSquare className="h-6 w-6" />
 
           <span className="text-lg ">Student Reviews</span>
-          {/* <Link
-            to={`/courses/${courseId}/reviews`}
-            className="text-sm text-blue-500 hover:underline ml-auto"
-          >
-            <Button
-              variant="secondary"
-              className="px-0 text-white bg-[#8B0000] items-center hover:bg-[#8B0000]"
-            >
-              <PlusIcon className=" h-4 w-4 text-white" />
-              Write a Review
-            </Button>
-          </Link> */}
+
           {/* Write review dialog */}
           <div className="ml-auto">
             <Dialog open={open} onOpenChange={setOpen}>
@@ -201,9 +162,6 @@ export default function CourseDetailPage() {
                       </div>
                     </div>
                     <DialogFooter>
-                      {/* <DialogClose asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </DialogClose> */}
                       <div className="flex flex-col items-center w-full">
                         {actionData && (
                           <p className="text-sm text-red-500">
@@ -245,28 +203,6 @@ export default function CourseDetailPage() {
                     </h1>
                     {/* Rating */}
                     <div className="flex items-center mb-2 ml-auto">
-                      {/* {[...Array(filledStars)].map((_, i) => (
-                        <Star
-                          key={`filled-${review.id}-${i}`}
-                          className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-
-                      {hasHalfStar && (
-                        <div className="relative">
-                          <Star className="h-5 w-5 text-gray-300" />
-                          <div className="absolute left-0 top-0 w-1/2 overflow-hidden">
-                            <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                          </div>
-                        </div>
-                      )}
-
-                      {[...Array(emptyStars)].map((_, i) => (
-                        <Star
-                          key={`empty-${review.id}-${i}`}
-                          className="h-5 w-5 text-gray-300"
-                        />
-                      ))} */}
                       <StarRating value={review?.rating || 0} readOnly />
 
                       <span className="ml-2 text-sm text-gray-600">
@@ -281,22 +217,6 @@ export default function CourseDetailPage() {
             })
           )}
         </div>
-        {/* <div className="border border-gray-300 rounded-md mt-6 p-6">
-          {course?.reviews && course.reviews.length === 0 ? (
-            <h2 className="text-lg font-semibold">No reviews found.</h2>
-          ) : (
-            course?.reviews?.map((review) => (
-              <div key={review.id} className="mb-4 border rounded-md p-4">
-                <h1 className="text-xl font-semibold text-sm mb-2">
-                  Anonymous Student
-                </h1>
-                <h3 className="text-md font-semibold">{review.rating}</h3>
-
-                <p className="text-gray-600">{review.comment}</p>
-              </div>
-            ))
-          )}
-        </div> */}
       </div>
     </>
   );

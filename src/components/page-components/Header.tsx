@@ -21,14 +21,5 @@ export default function Header() {
         </div>
       </nav>
     </header>
-    //      <nav className="container mx-auto flex items-center h-16 w-full max-w-screen-xl">
-    //   <Navigation items={siteConfig.mainNav} />
-    //   <MobileNav items={siteConfig.mainNav} />
-    //   <div className="flex flex-1 justify-end mr-8 lg:mr-12 gap-4">
-    //     <CartSheet />
-    //     <ModeToggle />
-    //     <AuthDropDown user={User} />
-    //   </div>
-    // </nav>
   );
 }

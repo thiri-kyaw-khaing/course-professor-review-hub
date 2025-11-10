@@ -1,6 +1,4 @@
 import { professorQuery } from "@/api/query";
-import CourseForm from "@/components/page-components/admin/CourseForm";
-import CourseMangeCard from "@/components/page-components/admin/CourseMangeCard";
 import ProfessorForm from "@/components/page-components/admin/ProfessorForm";
 import ProfessorMangeCard from "@/components/page-components/admin/ProfessorManageCard";
 import { Button } from "@/components/ui/button";

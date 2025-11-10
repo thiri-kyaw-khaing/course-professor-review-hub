@@ -2,7 +2,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import type { Review } from "@/types";
-import StarRating from "../StarRating";
+import StarRating from "../page-components/StarRating";
 import api from "@/api";
 import React, { useState } from "react";
 

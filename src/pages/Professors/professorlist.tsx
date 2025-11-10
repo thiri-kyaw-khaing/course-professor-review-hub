@@ -71,10 +71,7 @@ export default function ProfessorListPage({
                     <GraduationCap className="inline mr-1 h-5 w-5" />
                     <p>{professor.faculty.replace(/_/g, " ")}</p>
                   </div>
-                  {/* <div className="flex items-center gap-1 text-gray-600">
-                    <MapPin className="inline mr-1 h-4 w-4" />
-                    <p>{professor.office}</p>
-                  </div> */}
+
                   <div className="flex items-center gap-1 text-gray-600">
                     <Mail className="inline mr-1 h-4 w-4" />
                     <p>{professor.email}</p>

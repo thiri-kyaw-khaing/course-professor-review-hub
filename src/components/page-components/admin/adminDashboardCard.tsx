@@ -1,4 +1,3 @@
-import { User, User2 } from "lucide-react";
 interface AdminDashboardCardProps {
   title?: string;
   description?: string;

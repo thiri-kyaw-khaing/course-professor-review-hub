@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import StarRating from "../StarRating";
 
 interface CourseCardProps {
   code: string;
@@ -7,6 +8,7 @@ interface CourseCardProps {
   faculty: string;
   credits: number;
   description: string;
+  rating?: number;
   status?: "active" | "inactive";
 }
 
@@ -16,6 +18,7 @@ export default function CourseCard({
   faculty,
   credits,
   description,
+  rating,
   status,
 }: CourseCardProps) {
   return (
@@ -25,16 +28,11 @@ export default function CourseCard({
           <h2 className="text-xl font-semibold  text-[#8B0000]">{code}</h2>
 
           <h2 className="text-xl font-semibold text-[#8B0000]">{title}</h2>
-          {/* <span
-            className={cn(
-              "border rounded-md px-2 text-sm py-1 items-end w-fit gap-4",
-              status === "active" ? "bg-green-500" : "bg-red-500"
-            )}
-          >
-            {status}
-          </span> */}
         </div>
-
+        <div className="flex items-center gap-1 mt-1">
+          <StarRating value={rating ?? 0} readOnly={true} />
+          <span>{rating} / 5</span>
+        </div>
         <div className="flex items-center gap-2">
           <p className="text-gray-600 text-sm"> {faculty.replace(/_/g, " ")}</p>
           <h1>-</h1>

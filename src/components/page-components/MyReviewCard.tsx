@@ -1,16 +1,7 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import type { Review } from "@/types";
-import StarRating from "@/components/page-components/StarRating"; // Optional: for rating display
-import { Calendar } from "lucide-react";
+
 import MyReviewCourse from "./CourseRelate/MyReviewCourse";
-import MyReviewProfessor from "./CourseRelate/MyReviewProfessor";
+import MyReviewProfessor from "../professors/MyReviewProfessor";
 
 interface MyReviewCardProps {
   reviews?: Review[];

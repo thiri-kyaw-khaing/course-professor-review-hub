@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form"; // ✅ Correct import
 import api from "@/api";
 import { toast } from "sonner";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
 import { useState } from "react";
 const schema = z.object({
   courseCode: z
@@ -62,7 +62,6 @@ export default function CourseEditForm({
   });
 
   const onSubmit = async (values: FormValues) => {
-    console.log("🔥 onSubmit triggered with:", values);
     setErrorMessage(null);
     try {
       const response = await api.patch("/admins/courses", {

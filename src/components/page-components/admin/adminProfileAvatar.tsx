@@ -8,12 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Form } from "react-router";
-// import type { UserInfo } from "@/types";
+
 import { LogOut, User } from "lucide-react";
-// interface ProfileAdminAvatarProps {
-//   // Define any props if needed
-//   user: User;
-// }
+
 export default function ProfileAdminAvatar() {
   return (
     <div>
